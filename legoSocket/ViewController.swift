@@ -40,7 +40,7 @@ import UIKit
 
 class ViewController: UIViewController, UpdateDisplayDelegate {
   
-  func sensor(_ value:String) {
+  func port(_ value:String) {
     if value.contains("port1") {
       port1.text = value
     }
@@ -53,21 +53,18 @@ class ViewController: UIViewController, UpdateDisplayDelegate {
     if value.contains("port4") {
       port4.text = value
     }
-  }
-  
-  func motor(_ value:String) {
     if value.contains("portA") {
-        port1.text = value
-      }
-      if value.contains("portB") {
-        port2.text = value
-      }
-      if value.contains("portC") {
-        port3.text = value
-      }
-      if value.contains("portD") {
-        port4.text = value
-      }
+      portA.text = value
+    }
+    if value.contains("portB") {
+      portB.text = value
+    }
+    if value.contains("portC") {
+      portC.text = value
+    }
+    if value.contains("portD") {
+      portD.text = value
+    }
   }
 
   @IBOutlet weak var port1: UILabel!
@@ -75,19 +72,40 @@ class ViewController: UIViewController, UpdateDisplayDelegate {
   @IBOutlet weak var port3: UILabel!
   @IBOutlet weak var port4: UILabel!
   
+  @IBOutlet weak var portD: UILabel!
+  @IBOutlet weak var portC: UILabel!
+  @IBOutlet weak var portB: UILabel!
+  @IBOutlet weak var portA: UILabel!
+  
+  
   @IBAction func up(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "up\n")
+    chatRoom.sendMessage(message: "north\n")
   }
   @IBAction func down(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "down\n")
+    chatRoom.sendMessage(message: "south\n")
   }
   @IBAction func right(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "right\n")
+    chatRoom.sendMessage(message: "east\n")
   }
   @IBAction func left(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "left\n")
+    chatRoom.sendMessage(message: "west\n")
   }
 
+  @IBAction func northEast(_ sender: UIButton) {
+    chatRoom.sendMessage(message: "northEast\n")
+  }
+  
+  @IBAction func northWest(_ sender: UIButton) {
+    chatRoom.sendMessage(message: "northWest\n")
+  }
+  
+  @IBAction func southEast(_ sender: UIButton) {
+    chatRoom.sendMessage(message: "southEast\n")
+  }
+  
+  @IBAction func southWest(_ sender: UIButton) {
+    chatRoom.sendMessage(message: "southWest\n")
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
     chatRoom.delegate = self
