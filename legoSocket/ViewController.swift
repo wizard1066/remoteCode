@@ -269,9 +269,10 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
         chatRoom.stopChat()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-          self.performSegue(withIdentifier: "returnToConnect", sender: self)
-        })
+        self.performSegue(withIdentifier: "returnToConnect", sender: self)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//          self.performSegue(withIdentifier: "returnToConnect", sender: self)
+//        })
       }
       alertController.addAction(ignoreAction)
       alertController.addAction(okAction)
