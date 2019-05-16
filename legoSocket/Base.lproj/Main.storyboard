@@ -42,7 +42,6 @@
                                 <state key="normal" title="Connect"/>
                                 <connections>
                                     <action selector="connect:" destination="Ebu-k6-UAt" eventType="touchUpInside" id="aWm-06-q3q"/>
-                                    <action selector="connect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nrY-6z-und"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -309,9 +308,11 @@
                         <outlet property="southEastButton" destination="0en-JU-ghG" id="CS6-q3-1rH"/>
                         <outlet property="southWestButton" destination="Wvl-OH-N4s" id="9Gj-ac-Lr0"/>
                         <outlet property="westButton" destination="smJ-6R-IfM" id="6LP-fd-uJh"/>
+                        <segue destination="e9c-lK-GAJ" kind="unwind" identifier="returnToConnect" unwindAction="unwindToContainerVCWithSegue:" id="beF-Ya-wFv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="e9c-lK-GAJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="136.875" y="135.21126760563379"/>
         </scene>

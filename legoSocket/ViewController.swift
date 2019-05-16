@@ -40,46 +40,56 @@ import UIKit
 
 class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag {
 
+  
+
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
     switch blob[1] {
       case "north":
-        northButton.titleLabel?.text = blob[2]
+        northButton.setTitle(blob[2], for: .normal)
         break
       case "south":
-        southButton.titleLabel?.text = blob[2]
+        southButton.setTitle(blob[2], for: .normal)
         break
       case "east":
-        eastButton.titleLabel?.text = blob[2]
+        eastButton.setTitle(blob[2], for: .normal)
         break
       case "west":
-        westButton.titleLabel?.text = blob[2]
+        westButton.setTitle(blob[2], for: .normal)
         break
       case "central":
-        centralButton.titleLabel?.text = blob[2]
+        centralButton.setTitle(blob[2], for: .normal)
         break
       case "northeast":
-        northEastButton.titleLabel?.text = blob[2]
+        northEastButton.setTitle(blob[2], for: .normal)
         break
       case "northwest":
-        northWestButton.titleLabel?.text = blob[2]
+        northWestButton.setTitle(blob[2], for: .normal)
         break
       case "southeast":
-        southEastButton.titleLabel?.text = blob[2]
+        southEastButton.setTitle(blob[2], for: .normal)
         break
       case "southwest":
-        southWestButton.titleLabel?.text = blob[2]
+        southWestButton.setTitle(blob[2], for: .normal)
         break
       default:
-        ok("label syntax label:central:blah")
+        ok("label syntax label:oldName:newName")
     }
   }
+  
+    func bad(_ value: String) {
+      let alertController = UIAlertController(title: value, message: value, preferredStyle: .alert)
+      let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+      alertController.addAction(defaultAction)
+      self.present(alertController, animated: true, completion: nil)
+    }
 
   func ok(_ value: String) {
     let alertController = UIAlertController(title: value, message: value, preferredStyle: .alert)
-    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
-
+    alertController.addAction(defaultAction)
     self.present(alertController, animated: true, completion: nil)
   }
   
@@ -120,7 +130,6 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
   @IBOutlet weak var portC: UILabel!
   @IBOutlet weak var portB: UILabel!
   @IBOutlet weak var portA: UILabel!
-  
   
   @IBOutlet weak var northButton: UIButton!
   @IBOutlet weak var northEastButton: UIButton!
@@ -241,58 +250,6 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
     southEastButton.layer.cornerRadius = buttonCorner
     southEastButton.addGestureRecognizer(nineDigitShort)
     southEastButton.addGestureRecognizer(nineDigitLong)
-    
-
-  }
-  
-  @IBAction func north(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "north\n")
-    print("north Action")
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector (tap))
-    let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(long))
-    tapGesture.numberOfTapsRequired = 1
-    northButton.addGestureRecognizer(tapGesture)
-    northButton.addGestureRecognizer(longGesture)
-    
-  }
-//  @IBAction func south(_ sender: UIButton) {
-//    chatRoom.sendMessage(message: "south\n")
-//  }
-  @IBAction func east(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "east\n")
-  }
-  @IBAction func west(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "west\n")
-  }
-
-  @IBAction func northEast(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "northEast\n")
-  }
-  
-  @IBAction func northWest(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "northWest\n")
-  }
-  
-  @IBAction func southEast(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "southEast\n")
-  }
-  
-  @IBAction func southWest(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "southWest\n")
-  }
-  
-  @IBAction func central(_ sender: UIButton) {
-    chatRoom.sendMessage(message: "central\n")
-  }
-  
-  @objc func tap(sender:UITapGestureRecognizer) {
-    let pressed = "S" + String(sender.view?.tag ?? 0) + "\n"
-    chatRoom.sendMessage(message: pressed)
-  }
-
-  @objc func long(sender: UILongPressGestureRecognizer) {
-    let pressed = "L" + String(sender.view?.tag ?? 0) + "\n"
-    chatRoom.sendMessage(message: pressed)
   }
   
   override func viewDidLoad() {
@@ -302,6 +259,24 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
     chatRoom.connection = self
     chatRoom.rename = self
     configButtons()
+  }
+  
+  override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    
+    if motion == .motionShake {
+      print("shake")
+      let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
+      let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+      let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
+        chatRoom.stopChat()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+          self.performSegue(withIdentifier: "returnToConnect", sender: self)
+        })
+      }
+      alertController.addAction(ignoreAction)
+      alertController.addAction(okAction)
+      self.present(alertController, animated: true, completion: nil)
+    }
   }
 
 }
