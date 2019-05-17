@@ -40,36 +40,36 @@ import UIKit
 
 class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag {
 
-  
+  // format label:oldLabel:newLabel
 
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
     switch blob[1] {
-      case "north":
+      case "1":
         northButton.setTitle(blob[2], for: .normal)
         break
-      case "south":
+      case "8":
         southButton.setTitle(blob[2], for: .normal)
         break
-      case "east":
+      case "4":
         eastButton.setTitle(blob[2], for: .normal)
         break
-      case "west":
+      case "6":
         westButton.setTitle(blob[2], for: .normal)
         break
-      case "central":
+      case "5":
         centralButton.setTitle(blob[2], for: .normal)
         break
-      case "northeast":
+      case "2":
         northEastButton.setTitle(blob[2], for: .normal)
         break
-      case "northwest":
+      case "3":
         northWestButton.setTitle(blob[2], for: .normal)
         break
-      case "southeast":
+      case "7":
         southEastButton.setTitle(blob[2], for: .normal)
         break
-      case "southwest":
+      case "9":
         southWestButton.setTitle(blob[2], for: .normal)
         break
       default:
@@ -80,16 +80,19 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
     func bad(_ value: String) {
       let alertController = UIAlertController(title: value, message: value, preferredStyle: .alert)
       let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
       alertController.addAction(defaultAction)
-      self.present(alertController, animated: true, completion: nil)
+      self.present(alertController, animated: true, completion: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+          chatRoom.stopChat()
+          self.performSegue(withIdentifier: "returnToConnect", sender: self)
+        })
+      })
     }
 
   func ok(_ value: String) {
     let alertController = UIAlertController(title: value, message: value, preferredStyle: .alert)
     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
-    alertController.addAction(defaultAction)
     self.present(alertController, animated: true, completion: nil)
   }
   
@@ -262,7 +265,6 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
   }
   
   override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-    
     if motion == .motionShake {
       print("shake")
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
@@ -270,15 +272,11 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToConnect", sender: self)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//          self.performSegue(withIdentifier: "returnToConnect", sender: self)
-//        })
       }
       alertController.addAction(ignoreAction)
       alertController.addAction(okAction)
       self.present(alertController, animated: true, completion: nil)
     }
   }
-
 }
 
