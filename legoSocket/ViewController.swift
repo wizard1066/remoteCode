@@ -60,10 +60,10 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
       case "5":
         centralButton.setTitle(blob[2], for: .normal)
         break
-      case "2":
+      case "3":
         northEastButton.setTitle(blob[2], for: .normal)
         break
-      case "3":
+      case "2":
         northWestButton.setTitle(blob[2], for: .normal)
         break
       case "7":
