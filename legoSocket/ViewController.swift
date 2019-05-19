@@ -50,7 +50,7 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
       return // corrupted data
     }
     switch blob[1] {
-      case "1":
+      case "2":
         northButton.setTitle(blob[2], for: .normal)
         break
       case "8":
@@ -68,7 +68,7 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
       case "3":
         northEastButton.setTitle(blob[2], for: .normal)
         break
-      case "2":
+      case "1":
         northWestButton.setTitle(blob[2], for: .normal)
         break
       case "7":
