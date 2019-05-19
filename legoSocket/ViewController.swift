@@ -44,6 +44,11 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
 
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
+    // Change the labels on the buttons
+    print("blob.count",blob.count)
+    if blob.count < 2 {
+      return // corrupted data
+    }
     switch blob[1] {
       case "1":
         northButton.setTitle(blob[2], for: .normal)
@@ -73,8 +78,16 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
         southWestButton.setTitle(blob[2], for: .normal)
         break
       default:
-        ok("label syntax label:oldName:newName")
+//        ok("label syntax label:oldName:newName")
+        print("no")
     }
+    // Change the labels of the ports
+    for ports in xPort {
+      if blob[1] == ports.key {
+        xPort[ports.key] = blob[2]
+      }
+    }
+    print("xPort \(xPort)")
   }
   
     func bad(_ value: String) {
@@ -96,32 +109,47 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
     self.present(alertController, animated: true, completion: nil)
   }
   
+  var xPort:Dictionary = ["port1":"port1","port2":"port2","port3":"port3","port4":"port4","portA":"portA","portB":"portB","portC":"portC","portD":"portD"]
   
   func port(_ value:String) {
-    if value.contains("port1") {
-      port1.text = value
-    }
-    if value.contains("port2") {
-      port2.text = value
-    }
-    if value.contains("port3") {
-      port3.text = value
-    }
-    if value.contains("port4") {
-      port4.text = value
-    }
-    if value.contains("portA") {
-      portA.text = value
-    }
-    if value.contains("portB") {
-      portB.text = value
-    }
-    if value.contains("portC") {
-      portC.text = value
-    }
-    if value.contains("portD") {
-      portD.text = value
-    }
+    let blob = value.components(separatedBy: ":")
+//    print("value",value,"blob",blob)
+    switch blob[0] {
+      case "port1":
+        let replaced = value.replacingOccurrences(of: "port1", with: xPort["port1"]!)
+        port1.text = replaced
+        break
+      case "port2":
+        let replaced = value.replacingOccurrences(of: "port2", with: xPort["port2"]!)
+        port2.text = replaced
+        break
+      case "port3":
+        let replaced = value.replacingOccurrences(of: "port3", with: xPort["port3"]!)
+        port3.text = replaced
+        break
+      case "port4":
+        let replaced = value.replacingOccurrences(of: "port4", with: xPort["port4"]!)
+        port4.text = replaced
+        break
+      case "portA":
+        let replaced = value.replacingOccurrences(of: "portA", with: xPort["portA"]!)
+        portA.text = replaced
+        break
+      case "portB":
+        let replaced = value.replacingOccurrences(of: "portB", with: xPort["portB"]!)
+        portB.text = replaced
+        break
+      case "portC":
+        let replaced = value.replacingOccurrences(of: "portC", with: xPort["portC"]!)
+        portC.text = replaced
+        break
+      case "portD":
+        let replaced = value.replacingOccurrences(of: "portD", with: xPort["portD"]!)
+        portD.text = replaced
+        break
+      default:
+        print("syntax \(value)")
+      }
   }
 
   @IBOutlet weak var port1: UILabel!
@@ -155,14 +183,14 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
   @objc func openShortCall(sender : MyTapGesture) {
     let tag = sender.tag
     print("short:",tag!)
-    chatRoom.sendMessage(message: String(tag!))
+    chatRoom.sendMessage(message: tag!)
   }
   
   @objc func openLongCall(sender : MyLongGesture) {
     let tag = sender.tag
     if(sender.state == UIGestureRecognizer.State.began) {
       print("long:",tag!)
-      chatRoom.sendMessage(message: String(tag!))
+      chatRoom.sendMessage(message: tag!)
     }
   }
   
