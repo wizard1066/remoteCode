@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:legoSocket.xcodeproj">
+      location = "self:/Users/localadmin/Desktop/codeRemote/remoteCode.xcodeproj">
    </FileRef>
 </Workspace>

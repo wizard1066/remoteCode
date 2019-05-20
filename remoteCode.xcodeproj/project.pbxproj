@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7B1BF6EF2281700300C66DC0 /* legoSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = legoSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1BF6EF2281700300C66DC0 /* remoteCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remoteCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1BF6F22281700300C66DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B1BF6F42281700300C66DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7B1BF6F72281700300C66DC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		7B1BF6E62281700300C66DC0 = {
 			isa = PBXGroup;
 			children = (
-				7B1BF6F12281700300C66DC0 /* legoSocket */,
+				7B1BF6F12281700300C66DC0 /* remoteCode */,
 				7B1BF6F02281700300C66DC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		7B1BF6F02281700300C66DC0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7B1BF6EF2281700300C66DC0 /* legoSocket.app */,
+				7B1BF6EF2281700300C66DC0 /* remoteCode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7B1BF6F12281700300C66DC0 /* legoSocket */ = {
+		7B1BF6F12281700300C66DC0 /* remoteCode */ = {
 			isa = PBXGroup;
 			children = (
 				7BDF53EE228B2D8C009ED117 /* Shared.swift */,
@@ -70,15 +70,15 @@
 				7B1BF6FB2281700400C66DC0 /* LaunchScreen.storyboard */,
 				7B1BF6FE2281700400C66DC0 /* Info.plist */,
 			);
-			path = legoSocket;
+			path = remoteCode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7B1BF6EE2281700300C66DC0 /* legoSocket */ = {
+		7B1BF6EE2281700300C66DC0 /* remoteCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "legoSocket" */;
+			buildConfigurationList = 7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "remoteCode" */;
 			buildPhases = (
 				7B1BF6EB2281700300C66DC0 /* Sources */,
 				7B1BF6EC2281700300C66DC0 /* Frameworks */,
@@ -88,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = legoSocket;
+			name = remoteCode;
 			productName = legoSocket;
-			productReference = 7B1BF6EF2281700300C66DC0 /* legoSocket.app */;
+			productReference = 7B1BF6EF2281700300C66DC0 /* remoteCode.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -101,14 +101,14 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = ch.cqd.legoblue;
+				ORGANIZATIONNAME = ch.cqd.remoteCode;
 				TargetAttributes = {
 					7B1BF6EE2281700300C66DC0 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
 			};
-			buildConfigurationList = 7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "legoSocket" */;
+			buildConfigurationList = 7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "remoteCode" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7B1BF6EE2281700300C66DC0 /* legoSocket */,
+				7B1BF6EE2281700300C66DC0 /* remoteCode */,
 			);
 		};
 /* End PBXProject section */
@@ -296,13 +296,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CWGS87U262;
-				INFOPLIST_FILE = legoSocket/Info.plist;
+				INFOPLIST_FILE = remoteCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.legoblue.legoSocket;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,13 +315,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CWGS87U262;
-				INFOPLIST_FILE = legoSocket/Info.plist;
+				INFOPLIST_FILE = remoteCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.legoblue.legoSocket;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -331,7 +331,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "legoSocket" */ = {
+		7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "remoteCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B1BF6FF2281700400C66DC0 /* Debug */,
@@ -340,7 +340,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "legoSocket" */ = {
+		7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "remoteCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B1BF7022281700400C66DC0 /* Debug */,
