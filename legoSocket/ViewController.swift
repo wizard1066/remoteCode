@@ -41,11 +41,13 @@ import UIKit
 class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag {
 
   // format label:oldLabel:newLabel
-
+  @IBOutlet weak var topSV: UIStackView!
+  @IBOutlet weak var lowSV: UIStackView!
+  
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
     // Change the labels on the buttons
-    print("blob.count",blob.count)
+    print("blob.count",blob.count,value)
     if blob.count < 2 {
       return // corrupted data
     }
@@ -87,7 +89,12 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
         xPort[ports.key] = blob[2]
       }
     }
-    print("xPort \(xPort)")
+    // Change the text return when you hit keys
+    for button in xButton {
+      if blob[1] == button.key {
+        xButton[button.key] = blob[2]
+      }
+    }
   }
   
     func bad(_ value: String) {
@@ -110,6 +117,8 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
   }
   
   var xPort:Dictionary = ["port1":"port1","port2":"port2","port3":"port3","port4":"port4","portA":"portA","portB":"portB","portC":"portC","portD":"portD"]
+  
+  var xButton:Dictionary = ["1S":"1S","1L":"1L","2S":"2S","2L":"2L","3S":"3S","3L":"3L","4S":"4S","4L":"4L","5S":"5S","5L":"5L","6S":"6S","6L":"6L","7S":"7S","7L":"7L","8S":"8S","8L":"8L","9S":"9S","9L":"9L"]
   
   func port(_ value:String) {
     let blob = value.components(separatedBy: ":")
@@ -181,16 +190,18 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
   }
   
   @objc func openShortCall(sender : MyTapGesture) {
-    let tag = sender.tag
-    print("short:",tag!)
-    chatRoom.sendMessage(message: tag!)
+    let tag = String(sender.tag!)
+    print("short:",xButton[tag]!)
+    chatRoom.sendMessage(message: xButton[tag]!)
   }
   
   @objc func openLongCall(sender : MyLongGesture) {
-    let tag = sender.tag
     if(sender.state == UIGestureRecognizer.State.began) {
-      print("long:",tag!)
-      chatRoom.sendMessage(message: tag!)
+      let tag = String(sender.tag!)
+      if (xButton[tag] != nil) {
+        print("long:",xButton[tag]!)
+        chatRoom.sendMessage(message: xButton[tag]!)
+      }
     }
   }
   
@@ -290,6 +301,71 @@ class ViewController: UIViewController, UpdateDisplayDelegate, FeedBackConnectio
     chatRoom.connection = self
     chatRoom.rename = self
     configButtons()
+  }
+  
+  var appStart = true
+  
+  override func viewDidLayoutSubviews() {
+    if appStart {
+      appStart = false
+      detectOrientation()
+    }
+  }
+  
+    var topYaxisSV:NSLayoutConstraint!
+    var topXaxisSV:NSLayoutConstraint!
+    var lowYaxisSV:NSLayoutConstraint!
+    var lowXaxisSV:NSLayoutConstraint!
+  
+  func detectOrientation() {
+    topSV.translatesAutoresizingMaskIntoConstraints = false
+    lowSV.translatesAutoresizingMaskIntoConstraints = false
+    
+    let margins = view.layoutMarginsGuide
+
+    if UIDevice.current.orientation.isLandscape {
+        print("Landscape")
+        // do your stuff here for landscape
+        if topYaxisSV != nil {
+          topYaxisSV.isActive = false
+          topXaxisSV.isActive = false
+          lowYaxisSV.isActive = false
+          lowXaxisSV.isActive = false
+        }
+    
+        topYaxisSV = topSV.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: 1)
+        topYaxisSV.isActive = true
+        topXaxisSV = topSV.leftAnchor.constraint(equalToSystemSpacingAfter: margins.leftAnchor, multiplier: 1)
+        topXaxisSV.isActive = true
+    
+        lowYaxisSV = lowSV.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: 1)
+        lowYaxisSV.isActive = true
+        lowXaxisSV = lowSV.rightAnchor.constraint(equalToSystemSpacingAfter: margins.rightAnchor, multiplier: 1)
+        lowXaxisSV.isActive = true
+    } else {
+        print("Portrait")
+      
+        if topYaxisSV != nil {
+          topYaxisSV.isActive = false
+          topXaxisSV.isActive = false
+          lowYaxisSV.isActive = false
+          lowXaxisSV.isActive = false
+        }
+
+          topYaxisSV = topSV.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8)
+          topYaxisSV.isActive = true
+          topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
+          topXaxisSV.isActive = true
+      
+          lowYaxisSV = lowSV.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8)
+          lowYaxisSV.isActive = true
+          lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
+          lowXaxisSV.isActive = true
+    }
+}
+  
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    detectOrientation()
   }
   
   override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
