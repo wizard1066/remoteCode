@@ -13,12 +13,13 @@
 		7B1BF6FA2281700400C66DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BF6F92281700400C66DC0 /* Assets.xcassets */; };
 		7B1BF6FD2281700400C66DC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BF6FB2281700400C66DC0 /* LaunchScreen.storyboard */; };
 		7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1BF7042281703300C66DC0 /* ChatRoom.swift */; };
+		7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B91763B229535A200F9F9B3 /* AnalogVC.swift */; };
 		7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF53EA228B2CE4009ED117 /* SplashController.swift */; };
 		7BDF53EF228B2D8C009ED117 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF53EE228B2D8C009ED117 /* Shared.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7B1BF6EF2281700300C66DC0 /* remoteCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remoteCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1BF6EF2281700300C66DC0 /* robotRemote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = robotRemote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1BF6F22281700300C66DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B1BF6F42281700300C66DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7B1BF6F72281700300C66DC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -26,6 +27,7 @@
 		7B1BF6FC2281700400C66DC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B1BF6FE2281700400C66DC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B1BF7042281703300C66DC0 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		7B91763B229535A200F9F9B3 /* AnalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalogVC.swift; sourceTree = "<group>"; };
 		7BDF53EA228B2CE4009ED117 /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
 		7BDF53EE228B2D8C009ED117 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -44,7 +46,7 @@
 		7B1BF6E62281700300C66DC0 = {
 			isa = PBXGroup;
 			children = (
-				7B1BF6F12281700300C66DC0 /* remoteCode */,
+				7B1BF6F12281700300C66DC0 /* robotRemote */,
 				7B1BF6F02281700300C66DC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +54,12 @@
 		7B1BF6F02281700300C66DC0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7B1BF6EF2281700300C66DC0 /* remoteCode.app */,
+				7B1BF6EF2281700300C66DC0 /* robotRemote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7B1BF6F12281700300C66DC0 /* remoteCode */ = {
+		7B1BF6F12281700300C66DC0 /* robotRemote */ = {
 			isa = PBXGroup;
 			children = (
 				7BDF53EE228B2D8C009ED117 /* Shared.swift */,
@@ -65,20 +67,21 @@
 				7B1BF6F42281700300C66DC0 /* ViewController.swift */,
 				7B1BF7042281703300C66DC0 /* ChatRoom.swift */,
 				7B1BF6F62281700300C66DC0 /* Main.storyboard */,
+				7B91763B229535A200F9F9B3 /* AnalogVC.swift */,
 				7BDF53EA228B2CE4009ED117 /* SplashController.swift */,
 				7B1BF6F92281700400C66DC0 /* Assets.xcassets */,
 				7B1BF6FB2281700400C66DC0 /* LaunchScreen.storyboard */,
 				7B1BF6FE2281700400C66DC0 /* Info.plist */,
 			);
-			path = remoteCode;
+			path = robotRemote;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7B1BF6EE2281700300C66DC0 /* remoteCode */ = {
+		7B1BF6EE2281700300C66DC0 /* robotRemote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "remoteCode" */;
+			buildConfigurationList = 7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "robotRemote" */;
 			buildPhases = (
 				7B1BF6EB2281700300C66DC0 /* Sources */,
 				7B1BF6EC2281700300C66DC0 /* Frameworks */,
@@ -88,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = remoteCode;
+			name = robotRemote;
 			productName = legoSocket;
-			productReference = 7B1BF6EF2281700300C66DC0 /* remoteCode.app */;
+			productReference = 7B1BF6EF2281700300C66DC0 /* robotRemote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "remoteCode" */;
+			buildConfigurationList = 7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "robotRemote" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +124,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7B1BF6EE2281700300C66DC0 /* remoteCode */,
+				7B1BF6EE2281700300C66DC0 /* robotRemote */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */,
 				7BDF53EF228B2D8C009ED117 /* Shared.swift in Sources */,
 				7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */,
 				7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */,
@@ -296,13 +300,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CWGS87U262;
-				INFOPLIST_FILE = remoteCode/Info.plist;
+				INFOPLIST_FILE = robotRemote/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.robotRemote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,13 +319,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CWGS87U262;
-				INFOPLIST_FILE = remoteCode/Info.plist;
+				INFOPLIST_FILE = robotRemote/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.robotRemote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -331,7 +335,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "remoteCode" */ = {
+		7B1BF6EA2281700300C66DC0 /* Build configuration list for PBXProject "robotRemote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B1BF6FF2281700400C66DC0 /* Debug */,
@@ -340,7 +344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "remoteCode" */ = {
+		7B1BF7012281700400C66DC0 /* Build configuration list for PBXNativeTarget "robotRemote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B1BF7022281700400C66DC0 /* Debug */,
