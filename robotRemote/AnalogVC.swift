@@ -189,13 +189,13 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           lowXaxisSV.isActive = false
         }
 //          topYaxisSV = topSV.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8)
-          topYaxisSV = topSV.bottomAnchor.constraint(equalTo: touchPad.topAnchor, constant: -8)
+          topYaxisSV = topSV.bottomAnchor.constraint(equalTo: touchPad.topAnchor, constant: -32)
           topYaxisSV.isActive = true
           topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
           topXaxisSV.isActive = true
       
 //          lowYaxisSV = lowSV.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8)
-          lowYaxisSV = lowSV.topAnchor.constraint(equalTo: touchPad.bottomAnchor, constant: 8)
+          lowYaxisSV = lowSV.topAnchor.constraint(equalTo: touchPad.bottomAnchor, constant: 32)
           lowYaxisSV.isActive = true
           lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
           lowXaxisSV.isActive = true
