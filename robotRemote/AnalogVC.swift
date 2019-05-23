@@ -46,51 +46,46 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       self.present(alertController, animated: true, completion: {
         DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
           chatRoom.stopChat()
-          self.performSegue(withIdentifier: "returnToConnect", sender: self)
+          self.performSegue(withIdentifier: "returnToSegue", sender: self)
         })
       })
   }
   
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
-
-    switch blob[0] {
-      case "port1":
-        let replaced = value.replacingOccurrences(of: "port1", with: xPort["port1"]!)
-        port1.text = replaced
-        break
-      case "port2":
-        let replaced = value.replacingOccurrences(of: "port2", with: xPort["port2"]!)
-        port2.text = replaced
-        break
-      case "port3":
-        let replaced = value.replacingOccurrences(of: "port3", with: xPort["port3"]!)
-        port3.text = replaced
-        break
-      case "port4":
-        let replaced = value.replacingOccurrences(of: "port4", with: xPort["port4"]!)
-        port4.text = replaced
-        break
-      case "portA":
-        let replaced = value.replacingOccurrences(of: "portA", with: xPort["portA"]!)
-        portA.text = replaced
-        break
-      case "portB":
-        let replaced = value.replacingOccurrences(of: "portB", with: xPort["portB"]!)
-        portB.text = replaced
-        break
-      case "portC":
-        let replaced = value.replacingOccurrences(of: "portC", with: xPort["portC"]!)
-        portC.text = replaced
-        break
-      case "portD":
-        let replaced = value.replacingOccurrences(of: "portD", with: xPort["portD"]!)
-        portD.text = replaced
-        break
-      default:
-        print("syntax \(value)")
+    
+    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
+    let port1A = String(blob[0].last!)
+    let port2D = "port" + String(blob[0].last!)
+    let port2F = portAssign[port1A]
+    if xPort[port2D] != nil {
+      let replaced = value.replacingOccurrences(of: port2D, with: xPort[port2D]!)
+      if port2F!?.text != nil {
+        port2F!?.text = replaced
       }
+    }
   }
+  
+  class MyPortTapGesture: UITapGestureRecognizer {
+    var port:String?
+  }
+  
+  @objc func openPortTap(sender : MyPortTapGesture) {
+    let tag = "+:" + sender.port! + "\n"
+    print("openPortTap \(sender.port)")
+    chatRoom.sendMessage(message: tag)
+  }
+  
+  func configurePorts() {
+  let ports2D = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
+    for portVariable in ports2D {
+      let portTapGesture = MyPortTapGesture(target: self, action: #selector(self.openPortTap))
+      portTapGesture.port = portVariable.key
+      portTapGesture.numberOfTapsRequired = 1
+      portVariable.value?.addGestureRecognizer(portTapGesture)
+      portVariable.value?.isUserInteractionEnabled = true
+    }
+    }
   
   @IBOutlet weak var topSV: UIStackView!
   @IBOutlet weak var lowSV: UIStackView!
@@ -112,6 +107,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom.delegate = self
     chatRoom.connection = self
     chatRoom.rename = self
+    configurePorts()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -146,44 +142,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     let string2R = "@:\(joyX):\(joyY)"
     return string2R
     
-//    if xPosition < 0 && yPosition > 0 {
-//      let joyX = -round(xPosition / 120 * -10)/10
-//      let joyY = round(yPosition / 120 * 10)/10
-////      print("BL \(xPosition) \(yPosition) \(joyX) \(joyY)")
-//      let string2R = "@:\(joyX):\(joyY)"
-////      print("string2R \(string2R)\n")
-//      return string2R
-//    }
-//
-//    if xPosition > 0 && yPosition > 0 {
-//      let joyX = round(xPosition / 120 * 10)/10
-//      let joyY = round(yPosition / 120 * 10)/10
-////      print("BR \(xPosition) \(yPosition) \(joyX) \(joyY)")
-//      let string2R = "@:\(joyX):\(joyY)"
-////      print("string2R \(string2R)\n")
-//      return string2R
-//    }
-//
-//    if xPosition < 0 && yPosition < 0 {
-//      let joyX = -round(xPosition / 120 * -10)/10
-//      let joyY = -round(yPosition / 120 * -10)/10
-////      print("TL \(xPosition) \(yPosition) \(joyX) \(joyY)")
-//      let string2R = "@:\(joyX):\(joyY)"
-////      print("string2R \(string2R)\n")
-//      return string2R
-//    }
-//
-//    if xPosition > 0 && yPosition < 0 {
-//      let joyX = round(xPosition / 120 * 10)/10
-//      let joyY = -round(yPosition / 120 * -10)/10
-////      print("TR \(xPosition) \(yPosition) \(joyX) \(joyY)")
-//      let string2R = "@:\(joyX):\(joyY)"
-////      print("string2R \(string2R)\n")
-//      return string2R
-//    }
-////    let string2R = "@:\(0):\(0)"
-////    print("string2R \(string2R)\n")
-////    return string2R
+
   }
   
   override func viewDidLayoutSubviews() {
@@ -212,7 +171,6 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           lowYaxisSV.isActive = false
           lowXaxisSV.isActive = false
         }
-    
         topYaxisSV = topSV.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: 1)
         topYaxisSV.isActive = true
         topXaxisSV = topSV.leftAnchor.constraint(equalToSystemSpacingAfter: margins.leftAnchor, multiplier: 1)
@@ -230,7 +188,6 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           lowYaxisSV.isActive = false
           lowXaxisSV.isActive = false
         }
-
 //          topYaxisSV = topSV.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8)
           topYaxisSV = topSV.bottomAnchor.constraint(equalTo: touchPad.topAnchor, constant: -8)
           topYaxisSV.isActive = true
@@ -254,6 +211,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
+        chatRoom.sendMessage(message: "!\n")
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
@@ -262,7 +220,4 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       self.present(alertController, animated: true, completion: nil)
     }
   }
-  
-
-
 }

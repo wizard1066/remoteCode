@@ -13,6 +13,7 @@
 		7B1BF6FA2281700400C66DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BF6F92281700400C66DC0 /* Assets.xcassets */; };
 		7B1BF6FD2281700400C66DC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BF6FB2281700400C66DC0 /* LaunchScreen.storyboard */; };
 		7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1BF7042281703300C66DC0 /* ChatRoom.swift */; };
+		7B7C42BE2296DABB005026C7 /* MotionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C42BD2296DABB005026C7 /* MotionVC.swift */; };
 		7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B91763B229535A200F9F9B3 /* AnalogVC.swift */; };
 		7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF53EA228B2CE4009ED117 /* SplashController.swift */; };
 		7BDF53EF228B2D8C009ED117 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF53EE228B2D8C009ED117 /* Shared.swift */; };
@@ -27,6 +28,7 @@
 		7B1BF6FC2281700400C66DC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B1BF6FE2281700400C66DC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B1BF7042281703300C66DC0 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		7B7C42BD2296DABB005026C7 /* MotionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionVC.swift; sourceTree = "<group>"; };
 		7B91763B229535A200F9F9B3 /* AnalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalogVC.swift; sourceTree = "<group>"; };
 		7BDF53EA228B2CE4009ED117 /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
 		7BDF53EE228B2D8C009ED117 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				7B1BF6F42281700300C66DC0 /* ViewController.swift */,
 				7B1BF7042281703300C66DC0 /* ChatRoom.swift */,
 				7B1BF6F62281700300C66DC0 /* Main.storyboard */,
+				7B7C42BD2296DABB005026C7 /* MotionVC.swift */,
 				7B91763B229535A200F9F9B3 /* AnalogVC.swift */,
 				7BDF53EA228B2CE4009ED117 /* SplashController.swift */,
 				7B1BF6F92281700400C66DC0 /* Assets.xcassets */,
@@ -150,6 +153,7 @@
 				7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */,
 				7BDF53EF228B2D8C009ED117 /* Shared.swift in Sources */,
 				7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */,
+				7B7C42BE2296DABB005026C7 /* MotionVC.swift in Sources */,
 				7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */,
 				7B1BF6F52281700300C66DC0 /* ViewController.swift in Sources */,
 				7B1BF6F32281700300C66DC0 /* AppDelegate.swift in Sources */,
@@ -306,7 +310,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.robotRemote;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,7 +329,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.robotRemote;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cqd.remoteCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
