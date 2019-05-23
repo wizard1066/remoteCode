@@ -104,6 +104,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    detectOrientation()
     chatRoom.delegate = self
     chatRoom.connection = self
     chatRoom.rename = self
@@ -144,13 +145,14 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     
 
   }
+
   
-  override func viewDidLayoutSubviews() {
-    if appStart {
-      appStart = false
-      detectOrientation()
-    }
-  }
+//  override func viewDidLayoutSubviews() {
+//    if appStart {
+//      appStart = false
+//      detectOrientation()
+//    }
+//  }
   
     var topYaxisSV:NSLayoutConstraint!
     var topXaxisSV:NSLayoutConstraint!
