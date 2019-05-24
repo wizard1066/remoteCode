@@ -13,7 +13,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   func newName(_ value: String) {
      let blob = value.components(separatedBy: ":")
     // Change the labels on the buttons
-//    print("blob.count",blob.count,value)
+
     if blob.count <= 2 {
       return // corrupted data
     }
@@ -72,7 +72,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   @objc func openPortTap(sender : MyPortTapGesture) {
     let tag = "+:" + sender.port! + "\n"
-    print("openPortTap \(sender.port)")
+    
     chatRoom.sendMessage(message: tag)
   }
   
@@ -112,7 +112,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#\n")
+    chatRoom.sendMessage(message: "#:\n")
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -138,7 +138,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     
     let joyX = round(xPosition / 120 * 100)
     let joyY = round(yPosition / 120 * -100)
-    print("XX \(xPosition) \(yPosition) \(joyX) \(joyY)")
+    
     
     let string2R = "@:\(joyX):\(joyY)"
     return string2R
@@ -213,7 +213,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "!\n")
+        chatRoom.sendMessage(message: "!:\n")
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
