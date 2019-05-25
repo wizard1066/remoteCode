@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag {
+class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, UIGestureRecognizerDelegate {
 
   func newName(_ value: String) {
      let blob = value.components(separatedBy: ":")
@@ -51,17 +51,32 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       })
   }
   
+//  func port(_ value: String) {
+//    let blob = value.components(separatedBy: ":")
+//
+//    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
+//    let port1A = String(blob[0].last!)
+//    let port2D = "P" + String(blob[0].last!)
+//    let port2F = portAssign[port1A]
+//    if xPort[port2D] != nil {
+//      let replaced = value.replacingOccurrences(of: port2D, with: xPort[port2D]!)
+//      if port2F!?.text != nil {
+//        port2F!?.text = replaced
+//      }
+//    }
+//  }
+  
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
     
     let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-    let port1A = String(blob[0].last!)
-    let port2D = "port" + String(blob[0].last!)
-    let port2F = portAssign[port1A]
-    if xPort[port2D] != nil {
-      let replaced = value.replacingOccurrences(of: port2D, with: xPort[port2D]!)
-      if port2F!?.text != nil {
-        port2F!?.text = replaced
+    let port2A = blob[0] + blob[1]
+    let port2C = blob[0] + ":" + blob[1]
+    let port2B = portAssign[blob[1]]
+    if xPort[port2A] != nil {
+      let replaced = value.replacingOccurrences(of: port2C, with: xPort[port2A]!)
+      if port2B!?.text != nil {
+        port2B!?.text = replaced
       }
     }
   }
@@ -90,6 +105,9 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @IBOutlet weak var topSV: UIStackView!
   @IBOutlet weak var lowSV: UIStackView!
   
+  @IBOutlet weak var xFactor: UILabel!
+  @IBOutlet weak var yFactor: UILabel!
+  
   @IBOutlet weak var port1: UILabel!
   @IBOutlet weak var port2: UILabel!
   @IBOutlet weak var port3: UILabel!
@@ -100,7 +118,19 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @IBOutlet weak var portC: UILabel!
   @IBOutlet weak var portD: UILabel!
   
+  @IBOutlet weak var legoImage: UIImageView!
   @IBOutlet weak var touchPad: UIView!
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+       shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+        -> Bool {
+        return true
+      }
+  
+  @IBAction func unwindAnalogVC(segue: UIStoryboardSegue) {
+      print("AnalogVC")
+    }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -109,10 +139,34 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom.connection = self
     chatRoom.rename = self
     configurePorts()
+
+    let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+    edgePan.edges = .left
+    edgePan.delegate = self
+    let otherPan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(otherEdgeSwiped))
+    otherPan.edges = .right
+    otherPan.delegate = self
+    view.addGestureRecognizer(edgePan)
+    view.addGestureRecognizer(otherPan)
   }
   
+  @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+    if recognizer.state == .recognized {
+        
+        self.performSegue(withIdentifier: "returnToSegue", sender: self)
+    }
+}
+
+@objc func otherEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+    if recognizer.state == .recognized {
+        self.performSegue(withIdentifier: "returnToSegue", sender: self)
+    }
+}
+  
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:\n")
+    chatRoom.sendMessage(message: "#:")
+    analogVC = true
+    print("VCs dV \(digitalVC) aV \(analogVC) mV \(motionVC)")
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -121,13 +175,30 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       if position.x < 0 || position.y < 0 || position.x > 240 || position.y > 240 {
         // ignore it
       } else {
-        let figure2S = calcPoint(cord2D: position) + "\n"
+        let (joyX,joyY,figure2S) = calcPoint(cord2D: position)
+        if position.x > 128 && position.y < 128 {
+          legoImage.image = UIImage(named: "topRight")
+        }
+        if position.x < 128 && position.y < 128 {
+          legoImage.image = UIImage(named: "topLeft")
+        }
+        if position.x < 128 && position.y > 128 {
+          legoImage.image = UIImage(named: "lowLeft")
+        }
+        if position.x > 128 && position.y > 128 {
+          legoImage.image = UIImage(named: "lowRight")
+        }
+        xFactor.text = String(Int(joyX))
+        yFactor.text = String(Int(joyY))
+//         launch this on a timer
+//        self.legoImage.image = UIImage(named: "center")
+        
         chatRoom.sendMessage(message: figure2S)
       }
     }
   }
   
-  func calcPoint(cord2D: CGPoint) -> String {
+  func calcPoint(cord2D: CGPoint) -> (CGFloat, CGFloat, String) {
     // Need to subtract 120 cause the pad is 240 pixels wide
   
     let xPosition = cord2D.x - 120
@@ -141,7 +212,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     
     
     let string2R = "@:\(joyX):\(joyY)"
-    return string2R
+    return (joyX,joyY,string2R)
     
 
   }
@@ -213,7 +284,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "!:\n")
+        chatRoom.sendMessage(message: "!:")
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
@@ -222,4 +293,21 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       self.present(alertController, animated: true, completion: nil)
     }
   }
+}
+
+extension UIPanGestureRecognizer {
+
+    func isLeft(theViewYouArePassing: UIView) -> Bool {
+        let detectionLimit: CGFloat = 50
+        var vel : CGPoint = velocity(in: theViewYouArePassing)
+        if vel.x > detectionLimit {
+            print("Gesture went right")
+            return false
+        } else if vel.x < -detectionLimit {
+            print("Gesture went left")
+            return true
+        }
+        return true
+    }
+  
 }
