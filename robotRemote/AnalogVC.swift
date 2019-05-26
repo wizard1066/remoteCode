@@ -68,7 +68,9 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
-    
+    if  blob.count < 2 {
+      return
+    }
     let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
     let port2A = blob[0] + blob[1]
     let port2C = blob[0] + ":" + blob[1]
@@ -164,7 +166,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 }
   
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:")
+    chatRoom.sendMessage(message: "#:analog")
     analogVC = true
     print("VCs dV \(digitalVC) aV \(analogVC) mV \(motionVC)")
   }
@@ -172,6 +174,9 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   var position: CGPoint!
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    if timer != nil {
+            timer.invalidate()
+    }
     if let touch = event?.allTouches?.first {
       position = touch.location(in: touchPad)
       if position.x < 0 || position.y < 0 || position.x > 240 || position.y > 240 {
@@ -179,16 +184,16 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       } else {
         let (joyX,joyY,figure2S) = calcPoint(cord2D: position)
         if position.x > 128 && position.y < 128 {
-          legoImage.image = UIImage(named: "topRight")
+//          legoImage.image = UIImage(named: "topRight")
         }
         if position.x < 128 && position.y < 128 {
-          legoImage.image = UIImage(named: "topLeft")
+//          legoImage.image = UIImage(named: "topLeft")
         }
         if position.x < 128 && position.y > 128 {
-          legoImage.image = UIImage(named: "lowLeft")
+//          legoImage.image = UIImage(named: "lowLeft")
         }
         if position.x > 128 && position.y > 128 {
-          legoImage.image = UIImage(named: "lowRight")
+//          legoImage.image = UIImage(named: "lowRight")
         }
         xFactor.text = String(Int(joyX))
         yFactor.text = String(Int(joyY))
@@ -205,7 +210,9 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     loop = 4
-    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(slowDownAndStop), userInfo: nil, repeats: true)
+//    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(slowDownAndStop), userInfo: nil, repeats: true)
+    let figure2S = "@:0:0"
+    chatRoom.sendMessage(message: figure2S)
 }
 
 @objc func slowDownAndStop() {
