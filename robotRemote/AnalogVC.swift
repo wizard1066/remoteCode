@@ -169,9 +169,11 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     print("VCs dV \(digitalVC) aV \(analogVC) mV \(motionVC)")
   }
   
+  var position: CGPoint!
+  
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = event?.allTouches?.first {
-      let position:CGPoint = touch.location(in: touchPad)
+      position = touch.location(in: touchPad)
       if position.x < 0 || position.y < 0 || position.x > 240 || position.y > 240 {
         // ignore it
       } else {
@@ -195,6 +197,85 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         
         chatRoom.sendMessage(message: figure2S)
       }
+    }
+  }
+  
+  var timer:Timer!
+  var loop:Int = 0
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    loop = 4
+    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(slowDownAndStop), userInfo: nil, repeats: true)
+}
+
+@objc func slowDownAndStop() {
+  loop -= 1
+  
+  position.x = position.x + 120
+  position.y = position.y + 120
+  if position.x > position.y {
+//      let loop = Int(Float(position.x).squareRoot())
+//      for _ in 0 ... loop {
+        if position.x < 120 {
+          position.x = round(position.x * 2)
+        } else {
+          position.x = round(position.x / 2)
+        }
+    
+        if position.y < 120 {
+          position.y = round(position.y * 2)
+        } else {
+          position.y = round(position.y / 2)
+        }
+    
+    
+    
+//        let string2R = "@:\(position.x):\(position.y)"
+        let (_,_,figure2S) = calcPoint(cord2D: position)
+        chatRoom.sendMessage(message: figure2S)
+        
+        if loop == 0 {
+          let figure2S = "@:0:0"
+          position.y = 0
+          position.x = 0
+          chatRoom.sendMessage(message: figure2S)
+          if timer != nil {
+            timer.invalidate()
+          }
+//          break
+        }
+//      }
+    } else {
+//      let loop = Int(Float(position.y).squareRoot())
+//      for _ in 0 ... loop {
+    
+        if position.x < 120 {
+          position.x = round(position.x * -2)
+        } else {
+          position.x = round(position.x / 2)
+        }
+    
+        if position.y < 120 {
+          position.y = round(position.y * -2)
+        } else {
+          position.y = round(position.y / 2)
+        }
+        print("position \(position.x) \(position.y)")
+//        let string2R = "@:\(position.x):\(position.y)"
+        let (_,_,figure2S) = calcPoint(cord2D: position)
+        chatRoom.sendMessage(message: figure2S)
+        
+        if loop == 0 {
+          let figure2S = "@:0:0"
+          position.y = 0
+          position.x = 0
+          chatRoom.sendMessage(message: figure2S)
+          if timer != nil {
+            timer.invalidate()
+          }
+//          break
+        }
+//      }
     }
   }
   
