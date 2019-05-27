@@ -51,38 +51,6 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     })
   }
   
-  //  func port(_ value: String) {
-  //    let blob = value.components(separatedBy: ":")
-  //
-  //    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-  //    let port1A = String(blob[0].last!)
-  //    let port2D = "P" + String(blob[0].last!)
-  //    let port2F = portAssign[port1A]
-  //    if xPort[port2D] != nil {
-  //      let replaced = value.replacingOccurrences(of: port2D, with: xPort[port2D]!)
-  //      if port2F!?.text != nil {
-  //        port2F!?.text = replaced
-  //      }
-  //    }
-  //  }
-  
-//  func port(_ value: String) {
-//    let blob = value.components(separatedBy: ":")
-//    if  blob.count < 2 {
-//      return
-//    }
-//    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-//    let port2A = blob[0] + blob[1]
-//    let port2C = blob[0] + ":" + blob[1]
-//    let port2B = portAssign[blob[1]]
-//    if xPort[port2A] != nil {
-//      let replaced = value.replacingOccurrences(of: port2C, with: xPort[port2A]!)
-//      if port2B!?.text != nil {
-//        port2B!?.text = replaced
-//      }
-//    }
-//  }
-  
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
     if blob.count < 2 {
@@ -201,8 +169,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   override func viewDidAppear(_ animated: Bool) {
     chatRoom.sendMessage(message: "#:analog")
     analogVC = true
-    print("VCs dV \(digitalVC) aV \(analogVC) mV \(motionVC)")
-    print("fuck \(portNames)")
+ 
     confirmPortNames()
   }
   
@@ -218,18 +185,18 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         // ignore it
       } else {
         let (joyX,joyY,figure2S) = calcPoint(cord2D: position)
-        if position.x > 128 && position.y < 128 {
-          //          legoImage.image = UIImage(named: "topRight")
-        }
-        if position.x < 128 && position.y < 128 {
-          //          legoImage.image = UIImage(named: "topLeft")
-        }
-        if position.x < 128 && position.y > 128 {
-          //          legoImage.image = UIImage(named: "lowLeft")
-        }
-        if position.x > 128 && position.y > 128 {
-          //          legoImage.image = UIImage(named: "lowRight")
-        }
+//        if position.x > 128 && position.y < 128 {
+//          //          legoImage.image = UIImage(named: "topRight")
+//        }
+//        if position.x < 128 && position.y < 128 {
+//          //          legoImage.image = UIImage(named: "topLeft")
+//        }
+//        if position.x < 128 && position.y > 128 {
+//          //          legoImage.image = UIImage(named: "lowLeft")
+//        }
+//        if position.x > 128 && position.y > 128 {
+//          //          legoImage.image = UIImage(named: "lowRight")
+//        }
         xFactor.text = String(Int(joyX))
         yFactor.text = String(Int(joyY))
         //         launch this on a timer
@@ -284,12 +251,11 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         if timer != nil {
           timer.invalidate()
         }
-        //          break
+
       }
-      //      }
+
     } else {
-      //      let loop = Int(Float(position.y).squareRoot())
-      //      for _ in 0 ... loop {
+
       
       if position.x < 120 {
         position.x = round(position.x * -2)
@@ -302,8 +268,8 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       } else {
         position.y = round(position.y / 2)
       }
-      print("position \(position.x) \(position.y)")
-      //        let string2R = "@:\(position.x):\(position.y)"
+
+
       let (_,_,figure2S) = calcPoint(cord2D: position)
       chatRoom.sendMessage(message: figure2S)
       
@@ -341,12 +307,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   
-  //  override func viewDidLayoutSubviews() {
-  //    if appStart {
-  //      appStart = false
-  //      detectOrientation()
-  //    }
-  //  }
+
   
   var topYaxisSV:NSLayoutConstraint!
   var topXaxisSV:NSLayoutConstraint!
@@ -422,19 +383,3 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
 }
 
-extension UIPanGestureRecognizer {
-  
-  func isLeft(theViewYouArePassing: UIView) -> Bool {
-    let detectionLimit: CGFloat = 50
-    var vel : CGPoint = velocity(in: theViewYouArePassing)
-    if vel.x > detectionLimit {
-      print("Gesture went right")
-      return false
-    } else if vel.x < -detectionLimit {
-      print("Gesture went left")
-      return true
-    }
-    return true
-  }
-  
-}
