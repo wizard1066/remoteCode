@@ -66,19 +66,40 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   //    }
   //  }
   
+//  func port(_ value: String) {
+//    let blob = value.components(separatedBy: ":")
+//    if  blob.count < 2 {
+//      return
+//    }
+//    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
+//    let port2A = blob[0] + blob[1]
+//    let port2C = blob[0] + ":" + blob[1]
+//    let port2B = portAssign[blob[1]]
+//    if xPort[port2A] != nil {
+//      let replaced = value.replacingOccurrences(of: port2C, with: xPort[port2A]!)
+//      if port2B!?.text != nil {
+//        port2B!?.text = replaced
+//      }
+//    }
+//  }
+  
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
-    if  blob.count < 2 {
+    if blob.count < 2 {
       return
     }
-    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-    let port2A = blob[0] + blob[1]
-    let port2C = blob[0] + ":" + blob[1]
-    let port2B = portAssign[blob[1]]
+    
+    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+    let port2A = blob[0]
+    let port2B = portAssign[blob[0]]
     if xPort[port2A] != nil {
-      let replaced = value.replacingOccurrences(of: port2C, with: xPort[port2A]!)
+      let replaced = value.replacingOccurrences(of: port2A, with: xPort[port2A]!)
       if port2B!?.text != nil {
-        port2B!?.text = replaced
+        DispatchQueue.main.async {
+          port2B!?.text = replaced
+          self.view.setNeedsDisplay()
+        }
+        
       }
     }
   }
@@ -88,7 +109,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   @objc func openPortTap(sender : MyPortTapGesture) {
-    let tag = "+:" + sender.port! + "\n"
+    let tag = "+:port" + sender.port! + "\n"
     
     chatRoom.sendMessage(message: tag)
   }
@@ -161,6 +182,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     otherPan.delegate = self
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
+    chatRoom.sendMessage(message: "#:begin")
   }
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -376,6 +398,10 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     }
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    chatRoom.sendMessage(message: "#:end")
+}
+  
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     detectOrientation()
   }
@@ -385,7 +411,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "!:")
+        chatRoom.sendMessage(message: "#:exit")
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
