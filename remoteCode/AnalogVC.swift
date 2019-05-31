@@ -8,29 +8,89 @@
 
 import UIKit
 
-class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, UIGestureRecognizerDelegate {
+class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, PostAlert, UIGestureRecognizerDelegate {
   
-  func newName(_ value: String) {
+   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
+    
+    
+    if blob.count < 2 {
+      return
+    }
+    
+    let button2D = ["1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9]
+    
+    let color2D = ["black":UIColor.black,"blue":UIColor.blue,"brown":UIColor.brown,"cyan":UIColor.cyan,"green":UIColor.green,"magenta":UIColor.magenta,"orange":UIColor.orange,"purple":UIColor.purple,"red":UIColor.red,"yellow":UIColor.yellow,"white":UIColor.white,"clear":UIColor.clear]
+    
     // Change the labels on the buttons
     
-    if blob.count <= 2 {
-      return // corrupted data
-    }
     
-    // Change the labels of the ports
-    for ports in xPort {
-      if blob[1] == ports.key {
-        xPort[ports.key] = blob[2]
+    if blob[0] == "title" {
+      if button2D[blob[1]] != nil {
+//        button2D[blob[1]]!?.setTitle(blob[2], for: .normal)
+        ButtonNames[blob[1]] = blob[2]
       }
     }
-    // Change the text return when you hit keys
-    for button in xButton {
-      if blob[1] == button.key {
-        xButton[button.key] = blob[2]
+    
+   
+    
+    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+    
+    // Change the labels of the ports
+    if blob[0] == "title" {
+      for ports in xPort {
+        if blob[1] == ports.key {
+          
+          if portAssign[ports.key] != nil {
+            portAssign[ports.key]!?.text = blob[2]
+            portNames[blob[1]] = blob[2]
+          }
+          xPort[ports.key] = blob[2]
+          self.view.setNeedsDisplay()
+        }
+      }
+    }
+    // Change the text return when you hit keys + key name
+    if blob[0] == "tag" {
+      for button in xButton {
+        if blob[1] == button.key {
+          xButton[button.key] = blob[2]
+        }
       }
     }
   }
+  
+//  func newName(_ value: String) {
+//
+//    let button2D = ["1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9]
+//
+//    let blob = value.components(separatedBy: ":")
+//    // Change the labels on the buttons
+//
+//    if blob.count <= 2 {
+//      return // corrupted data
+//    }
+//
+//    // Change the labels of the ports
+//    for ports in xPort {
+//      if blob[1] == ports.key {
+//        xPort[ports.key] = blob[2]
+//      }
+//    }
+//    // Change the text return when you hit keys
+//    for button in xButton {
+//      if blob[1] == button.key {
+//        xButton[button.key] = blob[2]
+//      }
+//    }
+//
+//    if blob[0] == "title" {
+//      if button2D[blob[1]] != nil {
+//        button2D[blob[1]]!?.setTitle(blob[2], for: .normal)
+//        ButtonNames[blob[1]] = blob[2]
+//      }
+//    }
+//  }
   
   func ok(_ value: String) {
     let alertController = UIAlertController(title: value, message: value, preferredStyle: .alert)
@@ -76,8 +136,19 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     var port:String?
   }
   
+  class MyPortLong: UILongPressGestureRecognizer {
+    var port:String?
+  }
+  
+  @objc func openPortLong(sender : MyPortLong) {
+    let tag = sender.port! + "Q"
+    if sender.state == .recognized {
+    chatRoom.sendMessage(message: tag)
+    }
+  }
+  
   @objc func openPortTap(sender : MyPortTapGesture) {
-    let tag = "+:port" + sender.port! + "\n"
+    let tag = sender.port! + "P"
     
     chatRoom.sendMessage(message: tag)
   }
@@ -90,6 +161,9 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       portTapGesture.numberOfTapsRequired = 1
       portVariable.value?.addGestureRecognizer(portTapGesture)
       portVariable.value?.isUserInteractionEnabled = true
+      let portLong = MyPortLong(target: self, action: #selector(self.openPortLong(sender:)))
+      portLong.port = portVariable.key
+      portVariable.value?.addGestureRecognizer(portLong)
     }
   }
   
@@ -140,6 +214,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom.delegate = self
     chatRoom.connection = self
     chatRoom.rename = self
+    chatRoom.warning = self
     configurePorts()
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
@@ -372,7 +447,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "#:exit")
+        chatRoom.sendMessage(message: "#:disconnect")
         chatRoom.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
@@ -380,6 +455,16 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       alertController.addAction(okAction)
       self.present(alertController, animated: true, completion: nil)
     }
+  }
+  
+  func postAlert(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    self.present(alert, animated: true, completion: nil)
+
+    // delays execution of code to dismiss
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+      alert.dismiss(animated: true, completion: nil)
+    })
   }
 }
 
