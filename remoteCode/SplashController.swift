@@ -144,7 +144,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     ipaddress.delegate = self
     portNumber.delegate = self
     connectLabel.isEnabled = false
-    
+    print("self.view.bounds \(self.view.bounds)")
   }
   
   override func viewDidAppear(_ animated: Bool) {

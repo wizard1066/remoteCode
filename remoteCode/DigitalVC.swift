@@ -49,6 +49,8 @@ class MyLongGesture: UILongPressGestureRecognizer {
 class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, PostAlert, UIGestureRecognizerDelegate {
   
   // format label:oldLabel:newLabel
+  @IBOutlet weak var vctype: UILabel!
+  
   @IBOutlet weak var topSV: UIStackView!
   @IBOutlet weak var lowSV: UIStackView!
   
@@ -327,7 +329,6 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     chatRoom.rename = self
     chatRoom.warning = self
     configButtons()
-    
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
     edgePan.edges = .left

@@ -253,7 +253,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="ibo-2Y-ys9">
-                                <rect key="frame" x="197" y="122" width="21" height="114.33333333333333"/>
+                                <rect key="frame" x="197" y="93" width="21" height="114.33333333333333"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVn-3m-k2P">
@@ -282,12 +282,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="digital" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfI-7s-eYx">
-                                <rect key="frame" x="157.33333333333334" y="20" width="99.666666666666657" height="32"/>
-                                <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="HA2-Tw-TfX">
                                 <rect key="frame" x="195" y="505.99999999999994" width="22.666666666666668" height="114.33333333333333"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -318,18 +312,22 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="digital" translatesAutoresizingMaskIntoConstraints="NO" id="5yk-AE-4jS">
+                                <rect key="frame" x="47" y="84" width="320" height="568"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DsI-E2-T2q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-67" id="26K-RU-nVB"/>
+                            <constraint firstItem="5yk-AE-4jS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5sn-6F-tc9"/>
                             <constraint firstItem="Vuw-ew-YcP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="67" id="D0c-B2-ESt"/>
                             <constraint firstItem="WMd-ar-uOY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="68" id="DUO-qJ-Wvj"/>
                             <constraint firstItem="0en-JU-ghG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="68" id="FRb-p3-CUf"/>
+                            <constraint firstItem="5yk-AE-4jS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FyK-tM-Uhs"/>
                             <constraint firstItem="dOG-pP-K69" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-66" id="Gzc-Ie-aCc"/>
                             <constraint firstItem="N79-Dt-R6L" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L9E-r2-vxj"/>
                             <constraint firstItem="DsI-E2-T2q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-66" id="Mwf-mf-TlG"/>
                             <constraint firstItem="0en-JU-ghG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="67" id="Oxd-W6-Tfk"/>
-                            <constraint firstItem="kfI-7s-eYx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QmM-Eh-tOI"/>
                             <constraint firstItem="WMd-ar-uOY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-66" id="Vcn-6Q-T9r"/>
                             <constraint firstItem="N79-Dt-R6L" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Wn3-TC-moq"/>
                             <constraint firstItem="smJ-6R-IfM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XIW-VK-bTE"/>
@@ -337,7 +335,6 @@
                             <constraint firstItem="Vuw-ew-YcP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zp8-6S-yM1"/>
                             <constraint firstItem="tFx-tT-sCA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="aie-kS-1TK"/>
                             <constraint firstItem="tFx-tT-sCA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="68" id="p6E-2Q-2pc"/>
-                            <constraint firstItem="kfI-7s-eYx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rqL-0U-dPV"/>
                             <constraint firstItem="dOG-pP-K69" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v5w-t3-hu8"/>
                             <constraint firstItem="smJ-6R-IfM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-67" id="v8L-wr-rL0"/>
                             <constraint firstItem="Wvl-OH-N4s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-67" id="zUw-N8-mig"/>
@@ -375,7 +372,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="e9c-lK-GAJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="460" y="-143"/>
+            <point key="canvasLocation" x="459.4202898550725" y="-143.47826086956522"/>
         </scene>
         <!--MotionVC-->
         <scene sceneID="bDA-g4-S9a">
@@ -477,12 +474,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="motion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLF-dY-3tB">
-                                <rect key="frame" x="150.66666666666666" y="20" width="112.99999999999997" height="32"/>
-                                <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNw-Nm-UDF">
                                 <rect key="frame" x="159" y="320" width="96" height="96"/>
                                 <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -497,15 +488,18 @@
                                     <action selector="theAction:" destination="jsS-HB-d5i" eventType="touchUpInside" id="gOh-qU-PaZ"/>
                                 </connections>
                             </button>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="motion" translatesAutoresizingMaskIntoConstraints="NO" id="WpI-Ew-coD">
+                                <rect key="frame" x="47" y="164" width="320" height="568"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="CLF-dY-3tB" firstAttribute="top" secondItem="C5r-Rm-ykj" secondAttribute="top" id="0h9-UT-1Rd"/>
                             <constraint firstItem="lNw-Nm-UDF" firstAttribute="centerY" secondItem="Zn3-2v-Hm2" secondAttribute="centerY" id="3u0-y7-YEV"/>
+                            <constraint firstItem="WpI-Ew-coD" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="QgW-9h-OHB"/>
                             <constraint firstItem="C5r-Rm-ykj" firstAttribute="bottom" secondItem="9nm-wo-ldz" secondAttribute="bottom" constant="20.5" id="hSv-NO-fcE"/>
+                            <constraint firstItem="WpI-Ew-coD" firstAttribute="centerY" secondItem="Zn3-2v-Hm2" secondAttribute="centerY" constant="80" id="kG3-n8-2s4"/>
                             <constraint firstItem="lNw-Nm-UDF" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="n9G-aW-ZOv"/>
                             <constraint firstItem="9nm-wo-ldz" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="tMJ-ee-QXb"/>
-                            <constraint firstItem="CLF-dY-3tB" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="zRr-4N-zdG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C5r-Rm-ykj"/>
                     </view>
@@ -593,12 +587,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="analog" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ln-me-yjv">
-                                <rect key="frame" x="156.33333333333334" y="20" width="101.66666666666666" height="32"/>
-                                <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="Qgv-OE-xLe">
                                 <rect key="frame" x="197" y="515" width="22.666666666666668" height="145.66666666666666"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -635,13 +623,16 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="analog" translatesAutoresizingMaskIntoConstraints="NO" id="gJs-ji-8HG">
+                                <rect key="frame" x="47" y="84" width="320" height="568"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="2Ln-me-yjv" firstAttribute="centerX" secondItem="wBR-LO-GGN" secondAttribute="centerX" id="KD1-xg-uV7"/>
-                            <constraint firstItem="2Ln-me-yjv" firstAttribute="top" secondItem="hWt-ja-m78" secondAttribute="top" id="QWG-uA-oQV"/>
+                            <constraint firstItem="gJs-ji-8HG" firstAttribute="centerY" secondItem="wBR-LO-GGN" secondAttribute="centerY" id="3jl-6A-VsX"/>
                             <constraint firstItem="NSl-gR-TtY" firstAttribute="centerX" secondItem="wBR-LO-GGN" secondAttribute="centerX" id="UdY-kx-D0Y"/>
                             <constraint firstItem="NSl-gR-TtY" firstAttribute="centerY" secondItem="wBR-LO-GGN" secondAttribute="centerY" id="f7z-of-sUn"/>
+                            <constraint firstItem="gJs-ji-8HG" firstAttribute="centerX" secondItem="wBR-LO-GGN" secondAttribute="centerX" id="fcL-Ge-iv9"/>
                             <constraint firstItem="ajY-Az-517" firstAttribute="centerY" secondItem="wBR-LO-GGN" secondAttribute="centerY" id="gPQ-fi-tbe"/>
                             <constraint firstItem="ajY-Az-517" firstAttribute="centerX" secondItem="wBR-LO-GGN" secondAttribute="centerX" id="yh5-Ca-XUe"/>
                         </constraints>
@@ -675,5 +666,8 @@
     </scenes>
     <resources>
         <image name="Crosshair" width="800" height="800"/>
+        <image name="analog" width="320" height="568"/>
+        <image name="digital" width="320" height="568"/>
+        <image name="motion" width="320" height="568"/>
     </resources>
 </document>
