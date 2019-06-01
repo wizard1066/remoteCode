@@ -120,6 +120,9 @@ class ChatRoom: NSObject, StreamDelegate {
     
     let values = str.components(separatedBy: "\n")
     for v2 in values {
+      if v2 == "%:pong" {
+        ping()
+      }
       if v2.first == "P" { // port
         delegate?.port(v2)
       } else {
@@ -134,39 +137,34 @@ class ChatRoom: NSObject, StreamDelegate {
     }
   }
   
-//  var timer:Timer!
-//  var pongd:Int = 0
-//  var pingd:Int = 0
-//
-//  func confirmConnected() {
-//    DispatchQueue.main.async {
-//      self.timer = Timer.scheduledTimer(timeInterval: 8, target: self, selector: #selector(self.pingPong), userInfo: nil, repeats: true)
-//    }
-//  }
-//
-//  var ppingd: Int!
-//  var ppongd: Int!
-//
-//  @objc func pingPong() {
-//    print("pingPong pingd \(pingd) pongd \(pongd)")
-//    if pingd == ppingd {
-//      print("ping missed")
-//      warning?.postAlert(title: "Network", message: "Network Busy")
-//      pingd = 0
-//      pongd = 0
-//      ping(0)
-//    }
-//    ppingd = pingd
-//    ppongd = pongd
-//  }
-//
-//  func ping(_ sender:Int) {
-//    pingd = Int(sender) + 1
-//    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//      let message2S = "#:ping:" + String(self.pingd) + ":"
-//        self.sendMessage(message: message2S)
-//    })
-//  }
+var timer:Timer!
+
+  func confirmConnected() {
+    DispatchQueue.main.async {
+      self.timer = Timer.scheduledTimer(timeInterval: 8, target: self, selector: #selector(self.pingPong), userInfo: nil, repeats: true)
+    }
+  }
+
+  var pingd: Int!
+
+  @objc func pingPong() {
+    pingd = pingd + 1
+    print("pingd \(pingd)")
+    if pingd > 8 {
+      print("ping missed")
+      warning?.postAlert(title: "Network", message: "Lost Network")
+      ping()
+    }
+  }
+
+  func ping() {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
+        print("%:ping")
+        self.pingd = 0
+        let message2S = "%:ping"
+        self.sendMessage(message: message2S)
+      })
+  }
   
   var sendConnected = true
   
@@ -179,8 +177,8 @@ class ChatRoom: NSObject, StreamDelegate {
         self.sendConnected = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
           self.sendMessage(message: "#:connected")
-//          self.ping(0)
-//          self.confirmConnected()
+          self.ping()
+          self.confirmConnected()
           })
         }
         break

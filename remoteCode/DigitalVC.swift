@@ -66,15 +66,18 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     
     // Change the labels on the buttons
     
+    
     if blob[0] == "hide" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.isHidden = true
+        self.view.setNeedsDisplay()
       }
     }
     
     if blob[0] == "show" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.isHidden = false
+        self.view.setNeedsDisplay()
       }
     }
     
@@ -82,20 +85,24 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.setTitle(blob[2], for: .normal)
         ButtonNames[blob[1]] = blob[2]
+        self.view.setNeedsDisplay()
       }
     }
     
     if blob[0] == "bcolor" || blob[0] == "bcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.backgroundColor = color2D[blob[2]]
+        self.view.setNeedsDisplay()
       }
     }
     
     if blob[0] == "fcolor" || blob[0] == "fcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.setTitleColor(color2D[blob[2]], for: .normal)
+        self.view.setNeedsDisplay()
       }
     }
+    
     
     let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
     
