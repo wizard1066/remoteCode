@@ -53,6 +53,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   
   @IBOutlet weak var topSV: UIStackView!
   @IBOutlet weak var lowSV: UIStackView!
+  @IBOutlet weak var nineButtonGroupSV: UIStackView!
   
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
@@ -62,9 +63,14 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       return
     }
     
-    let button2D = ["1":northWestButton,"2":northButton,"3":northEastButton,"4":westButton,"5":centralButton,"6":eastButton,"7":southWestButton,"8":southButton,"9":southEastButton]
+    let button2D = ["1S":northWestButton,"2S":northButton,"3S":northEastButton,"4S":westButton,"5S":centralButton,"6S":eastButton,"7S":southWestButton,"8S":southButton,"9S":southEastButton]
+    
+    let button3D = ["1L":northWestButton,"2L":northButton,"3L":northEastButton,"4L":westButton,"5L":centralButton,"6L":eastButton,"7L":southWestButton,"8L":southButton,"9L":southEastButton]
     
     let color2D = ["black":UIColor.black,"blue":UIColor.blue,"brown":UIColor.brown,"cyan":UIColor.cyan,"green":UIColor.green,"magenta":UIColor.magenta,"orange":UIColor.orange,"purple":UIColor.purple,"red":UIColor.red,"yellow":UIColor.yellow,"white":UIColor.white,"clear":UIColor.clear]
+    
+    let port2D = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
+    let port3D = ["1Q":port1,"2Q":port2,"3Q":port3,"4Q":port4,"AQ":portA,"BQ":portB,"CQ":portC,"DQ":portD]
     
     // Change the labels on the buttons
     
@@ -73,6 +79,12 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.isHidden = true
         self.view.setNeedsDisplay()
+        hidden[blob[1]] = true
+      }
+      if port2D[blob[1]] != nil {
+        port2D[blob[1]]!?.isHidden = true
+        self.view.setNeedsDisplay()
+        hidden[blob[1]] = true
       }
     }
     
@@ -80,13 +92,20 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.isHidden = false
         self.view.setNeedsDisplay()
+        hidden[blob[1]] = false
+      }
+      if port2D[blob[1]] != nil {
+        port2D[blob[1]]!?.isHidden = false
+        self.view.setNeedsDisplay()
+        hidden[blob[1]] = false
       }
     }
+    
     
     if blob[0] == "title" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.setTitle(blob[2], for: .normal)
-        ButtonNames[blob[1]] = blob[2]
+        buttonNames[blob[1]] = blob[2]
         self.view.setNeedsDisplay()
       }
     }
@@ -94,7 +113,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     if blob[0] == "bcolor" || blob[0] == "bcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.backgroundColor = color2D[blob[2]]
-        ButtonColors[blob[1]] = color2D[blob[2]]
+        buttonColors[blob[1]] = color2D[blob[2]]
         self.view.setNeedsDisplay()
       }
     }
@@ -102,21 +121,21 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     if blob[0] == "fcolor" || blob[0] == "fcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.setTitleColor(color2D[blob[2]], for: .normal)
-        FontColors[blob[1]] = color2D[blob[2]]
+        fontColors[blob[1]] = color2D[blob[2]]
         self.view.setNeedsDisplay()
       }
     }
     
     
-    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
     
     // Change the labels of the ports
     if blob[0] == "title" {
       for ports in xPort {
         if blob[1] == ports.key {
           
-          if portAssign[ports.key] != nil {
-            portAssign[ports.key]!?.text = blob[2]
+          if port2D[ports.key] != nil {
+            port2D[ports.key]!?.text = blob[2]
             portNames[blob[1]] = blob[2]
           }
           xPort[ports.key] = blob[2]
@@ -177,36 +196,54 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   }
   
   func confirmCustomization() {
-    
-    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-    let buttonAssign = ["1":northWestButton,"2":northButton,"3":northEastButton,"4":westButton,"5":centralButton,"6":eastButton,"7":southWestButton,"8":southButton,"9":southEastButton]
+  
+  let button2D = ["1S":northWestButton,"2S":northButton,"3S":northEastButton,"4S":westButton,"5S":centralButton,"6S":eastButton,"7S":southWestButton,"8S":southButton,"9S":southEastButton]
+  
+    let port2D = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
+//    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
+//    let buttonAssign = ["1":northWestButton,"2":northButton,"3":northEastButton,"4":westButton,"5":centralButton,"6":eastButton,"7":southWestButton,"8":southButton,"9":southEastButton]
+
+
     if portNames.count != 0 {
-      for ports in portAssign {
+      for ports in port2D {
         if portNames[ports.key] != nil {
-          portAssign[ports.key]!?.text = portNames[ports.key]
+          port2D[ports.key]!?.text = portNames[ports.key]
         }
       }
     }
-    if ButtonNames.count != 0 {
-      for buttons in buttonAssign {
-        if ButtonNames[buttons.key] != nil {
-          buttonAssign[buttons.key]!?.setTitle(ButtonNames[buttons.key], for: .normal)
-        }
-      }
-    }
-    
-    if FontColors.count != 0 {
-      for buttons in buttonAssign {
-        if FontColors[buttons.key] != nil {
-          buttonAssign[buttons.key]!?.setTitleColor(FontColors[buttons.key], for: .normal)
+    if buttonNames.count != 0 {
+      for buttons in button2D {
+        if buttonNames[buttons.key] != nil {
+          button2D[buttons.key]!?.setTitle(buttonNames[buttons.key], for: .normal)
         }
       }
     }
     
-    if ButtonColors.count != 0 {
-      for buttons in buttonAssign {
-        if ButtonColors[buttons.key] != nil {
-          buttonAssign[buttons.key]!?.backgroundColor = ButtonColors[buttons.key]
+    if fontColors.count != 0 {
+      for buttons in button2D {
+        if fontColors[buttons.key] != nil {
+          button2D[buttons.key]!?.setTitleColor(fontColors[buttons.key], for: .normal)
+        }
+      }
+    }
+    
+    if buttonColors.count != 0 {
+      for buttons in button2D {
+        if buttonColors[buttons.key] != nil {
+          button2D[buttons.key]!?.backgroundColor = buttonColors[buttons.key]
+        }
+      }
+    }
+    
+    if hidden.count != 0 {
+      for buttons in button2D {
+        if hidden[buttons.key] != nil {
+          button2D[buttons.key]!?.isHidden = hidden[buttons.key]!
+        }
+      }
+      for ports in port2D {
+        if hidden[ports.key] != nil {
+          port2D[ports.key]!?.isHidden = hidden[ports.key]!
         }
       }
     }
@@ -407,13 +444,13 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       }
       
       
-      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: northButton.topAnchor, constant: -32)
+      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: nineButtonGroupSV.topAnchor, constant: -32)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
       
-      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: southButton.bottomAnchor, constant: 32)
+      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: nineButtonGroupSV.bottomAnchor, constant: 32)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       lowXaxisSV.isActive = true

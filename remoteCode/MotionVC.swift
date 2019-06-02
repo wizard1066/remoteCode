@@ -406,7 +406,7 @@ if sender.state == .began {
     if blob[0] == "title" {
       if button2D[blob[1]] != nil {
 //        button2D[blob[1]]!?.setTitle(blob[2], for: .normal)
-        ButtonNames[blob[1]] = blob[2]
+        buttonNames[blob[1]] = blob[2]
       }
     }
     
