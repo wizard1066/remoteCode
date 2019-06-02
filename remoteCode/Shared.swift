@@ -20,6 +20,8 @@ var chatRoom:ChatRoom!
 
   var portNames:[String:String] = [:]
   var ButtonNames:[String:String] = [:]
+  var ButtonColors:[String:UIColor] = [:]
+  var FontColors:[String:UIColor] = [:]
 
 func listViewControllers() {
   print("other")

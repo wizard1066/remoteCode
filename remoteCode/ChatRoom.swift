@@ -47,6 +47,26 @@ class ChatRoom: NSObject, StreamDelegate {
     self.status = false
     output = ""
     super.init()
+    NotificationCenter.default.addObserver(self, selector: #selector(ChatRoom.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
+    heartbeat = UserDefaults.standard.bool(forKey: "HeartBeat")
+  }
+  
+  var heartbeat = true
+  
+  @objc func defaultsChanged(){
+    
+    heartbeat = UserDefaults.standard.bool(forKey: "HeartBeat")
+    
+    if self.heartbeat {
+      self.ping()
+      self.confirmConnected()
+    } else {
+      if timer != nil {
+        timer.invalidate()
+        timer = nil
+      }
+    }
+    
   }
   
   var username = ""
@@ -177,8 +197,10 @@ var timer:Timer!
         self.sendConnected = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
           self.sendMessage(message: "#:connected")
-          self.ping()
-          self.confirmConnected()
+          if self.heartbeat {
+            self.ping()
+            self.confirmConnected()
+          }
           })
         }
         break
@@ -195,26 +217,30 @@ var timer:Timer!
     case Stream.Event.endEncountered:
       //        print("ConnectionClosed")
       aStream.remove(from: RunLoop.current, forMode: RunLoop.Mode.default)
-//      if timer != nil {
-//        timer.invalidate()
-//      }
+
       connection?.bad("ConnectionClosed")
+      if timer != nil {
+        timer.invalidate()
+        timer = nil
+      }
       break
       
     case Stream.Event.errorOccurred:
-      //      print("ConnectionFailed")
-//      if timer != nil {
-//        timer.invalidate()
-//      }
+
       connection?.bad("ConnectionFailed")
+      if timer != nil {
+        timer.invalidate()
+        timer = nil
+      }
       break
       
     default:
-      //        print("ConnectionError")
-//      if timer != nil {
-//        timer.invalidate()
-//      }
+
       connection?.bad("ConnectionError")
+      if timer != nil {
+        timer.invalidate()
+        timer = nil
+      }
       break
     }
   }

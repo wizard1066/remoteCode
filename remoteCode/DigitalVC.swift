@@ -94,6 +94,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     if blob[0] == "bcolor" || blob[0] == "bcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.backgroundColor = color2D[blob[2]]
+        ButtonColors[blob[1]] = color2D[blob[2]]
         self.view.setNeedsDisplay()
       }
     }
@@ -101,6 +102,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     if blob[0] == "fcolor" || blob[0] == "fcolour" {
       if button2D[blob[1]] != nil {
         button2D[blob[1]]!?.setTitleColor(color2D[blob[2]], for: .normal)
+        FontColors[blob[1]] = color2D[blob[2]]
         self.view.setNeedsDisplay()
       }
     }
@@ -151,28 +153,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     self.present(alertController, animated: true, completion: nil)
   }
   
-  func portOLD(_ value: String) {
-    
-    let blob = value.components(separatedBy: ":")
-    if blob.count < 2 {
-      return
-    }
-    
-    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
-    let port2A = blob[0] + blob[1]
-    let port2C = blob[0] + ":" + blob[1]
-    let port2B = portAssign[blob[1]]
-    if xPort[port2A] != nil {
-      let replaced = value.replacingOccurrences(of: port2C, with: xPort[port2A]!)
-      if port2B!?.text != nil {
-        DispatchQueue.main.async {
-          port2B!?.text = replaced
-          self.view.setNeedsDisplay()
-        }
-        
-      }
-    }
-  }
+
   
   func port(_ value: String) {
     let blob = value.components(separatedBy: ":")
@@ -195,7 +176,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     }
   }
   
-  func confirmPortNames() {
+  func confirmCustomization() {
     
     let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
     let buttonAssign = ["1":northWestButton,"2":northButton,"3":northEastButton,"4":westButton,"5":centralButton,"6":eastButton,"7":southWestButton,"8":southButton,"9":southEastButton]
@@ -213,6 +194,24 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
         }
       }
     }
+    
+    if FontColors.count != 0 {
+      for buttons in buttonAssign {
+        if FontColors[buttons.key] != nil {
+          buttonAssign[buttons.key]!?.setTitleColor(FontColors[buttons.key], for: .normal)
+        }
+      }
+    }
+    
+    if ButtonColors.count != 0 {
+      for buttons in buttonAssign {
+        if ButtonColors[buttons.key] != nil {
+          buttonAssign[buttons.key]!?.backgroundColor = ButtonColors[buttons.key]
+        }
+      }
+    }
+    
+    
     self.view.setNeedsDisplay()
   }
   
@@ -431,7 +430,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     chatRoom.sendMessage(message: "#:digital")
     digitalVC = true
     
-    confirmPortNames()
+    confirmCustomization()
   }
   
   

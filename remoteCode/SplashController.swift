@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegate {
+class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegate, PostAlert {
   
   @IBAction func digitalButton(_ sender: Any) {
     if ok2Connect {
@@ -78,9 +78,6 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     if chatRoom.returnOutStatus() == InputStream.Status.closed {
       connectLabel.setTitle("Connect", for: .normal)
       
-      
-      
-      
       self.digitalOut.isEnabled = false
       self.analogOut.isEnabled = false
       self.motionOut.isEnabled = false
@@ -144,11 +141,14 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     ipaddress.delegate = self
     portNumber.delegate = self
     connectLabel.isEnabled = false
-    print("self.view.bounds \(self.view.bounds)")
+    doDefault()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     animate_images()
+    if chatRoom != nil {
+      chatRoom.warning = self
+    }
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -256,5 +256,23 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     }
   }
   
+  func doDefault() {
   
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+  
+        UserDefaults.standard.set(version, forKey: "version_preference")
+        UserDefaults.standard.set(build, forKey: "build_preference")
+  
+  }
+  
+  func postAlert(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    self.present(alert, animated: true, completion: nil)
+
+    // delays execution of code to dismiss
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+      alert.dismiss(animated: true, completion: nil)
+    })
+  }
 }
