@@ -198,13 +198,13 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         lowYaxisSV.isActive = false
         lowXaxisSV.isActive = false
       }
-      //          topYaxisSV = topSV.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8)
+    
       topYaxisSV = topSV.bottomAnchor.constraint(equalTo: theButton.topAnchor, constant: -32)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
-      //          lowYaxisSV = lowSV.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8)
+    
       lowYaxisSV = lowSV.topAnchor.constraint(equalTo: theButton.bottomAnchor, constant: 32)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
@@ -273,13 +273,13 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     let hitMe = UITapGestureRecognizer(target: self, action: #selector(toggleMotion))
     let hitMeLong = UILongPressGestureRecognizer(target: self, action: #selector(longMotion))
     hitMe.numberOfTapsRequired = 1
-//    hitMeLong.minimumPressDuration = 1.0
+
     theButton.addGestureRecognizer(hitMe)
     theButton.addGestureRecognizer(hitMeLong)
   }
   
   @objc func toggleMotion(sender: UITapGestureRecognizer) {
-//    self.theButton.image = UIImage(named: "center")
+
 
     if sender.state == .recognized {
       chatRoom.sendMessage(message: "XS")
@@ -287,7 +287,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   @objc func longMotion(sender: UITapGestureRecognizer) {
-//    self.theButton.image = UIImage(named: "center")
+
 if sender.state == .began {
     chatRoom.sendMessage(message: "XL")
   }
@@ -361,9 +361,9 @@ if sender.state == .began {
     }
     
     
-//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+
     let portAssign = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
-//    let portTrans = ["P1":"1P","P2":"2P","P3":"3P","P4":"4P","PA":"AP","PB":"BP","PC":"CP","PD":"DP"]
+
     let port2A = blob[0]
     let port2B = portAssign[blob[0]]
 //    let port2C = portTrans[blob[0]]!
@@ -378,27 +378,7 @@ if sender.state == .began {
       }
     }
   }
-  
-//  func port(_ value: String) {
-//    let blob = value.components(separatedBy: ":")
-//    if blob.count < 2 {
-//      return
-//    }
-//
-//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
-//    let port2A = blob[0]
-//    let port2B = portAssign[blob[0]]
-//    if oPort[port2A] != nil {
-//      let replaced = value.replacingOccurrences(of: port2A, with: oPort[port2A]!)
-//      if port2B!?.text != nil {
-//        DispatchQueue.main.async {
-//          port2B!?.text = replaced
-//          self.view.setNeedsDisplay()
-//        }
-//
-//      }
-//    }
-//  }
+
   
   func confirmPortNames() {
     let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]

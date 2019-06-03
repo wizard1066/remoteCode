@@ -127,7 +127,6 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     }
     
     
-//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
     
     // Change the labels of the ports
     if blob[0] == "title" {
@@ -181,9 +180,9 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     }
     
     
-//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+
     let portAssign = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
-//    let portTrans = ["P1":"1P","P2":"2P","P3":"3P","P4":"4P","PA":"AP","PB":"BP","PC":"CP","PD":"DP"]
+
     let port2A = blob[0]
     let port2B = portAssign[blob[0]]
 //    let port2C = portTrans[blob[0]]!
@@ -204,8 +203,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   let button2D = ["1S":northWestButton,"2S":northButton,"3S":northEastButton,"4S":westButton,"5S":centralButton,"6S":eastButton,"7S":southWestButton,"8S":southButton,"9S":southEastButton]
   
     let port2D = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
-//    let portAssign = ["1":port1,"2":port2,"3":port3,"4":port4,"A":portA,"B":portB,"C":portC,"D":portD]
-//    let buttonAssign = ["1":northWestButton,"2":northButton,"3":northEastButton,"4":westButton,"5":centralButton,"6":eastButton,"7":southWestButton,"8":southButton,"9":southEastButton]
+
 
 
     if portNames.count != 0 {
