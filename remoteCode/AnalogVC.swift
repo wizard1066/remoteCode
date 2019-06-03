@@ -22,6 +22,8 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     
     let color2D = ["black":UIColor.black,"blue":UIColor.blue,"brown":UIColor.brown,"cyan":UIColor.cyan,"green":UIColor.green,"magenta":UIColor.magenta,"orange":UIColor.orange,"purple":UIColor.purple,"red":UIColor.red,"yellow":UIColor.yellow,"white":UIColor.white,"clear":UIColor.clear]
     
+    let port2D = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
+    
     // Change the labels on the buttons
     
     
@@ -31,20 +33,38 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       }
     }
     
+    if blob[0] == "hide" {
+
+      if port2D[blob[1]] != nil {
+        port2D[blob[1]]!?.isHidden = true
+        self.view.setNeedsDisplay()
+        hidden[blob[1]] = true
+      }
+    }
+    
+    if blob[0] == "show" {
+
+      if port2D[blob[1]] != nil {
+        port2D[blob[1]]!?.isHidden = false
+        self.view.setNeedsDisplay()
+        hidden[blob[1]] = false
+      }
+    }
+    
    
     
-    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
     
     // Change the labels of the ports
     if blob[0] == "title" {
-      for ports in xPort {
+      for ports in iPort {
         if blob[1] == ports.key {
           
-          if portAssign[ports.key] != nil {
-            portAssign[ports.key]!?.text = blob[2]
+          if port2D[ports.key] != nil {
+            port2D[ports.key]!?.text = blob[2]
             portNames[blob[1]] = blob[2]
           }
-          xPort[ports.key] = blob[2]
+          iPort[ports.key] = blob[2]
           self.view.setNeedsDisplay()
         }
       }
@@ -116,11 +136,15 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       return
     }
     
-    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+    
+//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+    let portAssign = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
+//    let portTrans = ["P1":"1P","P2":"2P","P3":"3P","P4":"4P","PA":"AP","PB":"BP","PC":"CP","PD":"DP"]
     let port2A = blob[0]
     let port2B = portAssign[blob[0]]
-    if xPort[port2A] != nil {
-      let replaced = value.replacingOccurrences(of: port2A, with: xPort[port2A]!)
+//    let port2C = portTrans[blob[0]]!
+    if iPort[port2A] != nil {
+      let replaced = value.replacingOccurrences(of: port2A, with: iPort[port2A]!)
       if port2B!?.text != nil {
         DispatchQueue.main.async {
           port2B!?.text = replaced
@@ -130,6 +154,27 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       }
     }
   }
+  
+//  func port(_ value: String) {
+//    let blob = value.components(separatedBy: ":")
+//    if blob.count < 2 {
+//      return
+//    }
+//    
+//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+//    let port2A = blob[0]
+//    let port2B = portAssign[blob[0]]
+//    if oPort[port2A] != nil {
+//      let replaced = value.replacingOccurrences(of: port2A, with: oPort[port2A]!)
+//      if port2B!?.text != nil {
+//        DispatchQueue.main.async {
+//          port2B!?.text = replaced
+//          self.view.setNeedsDisplay()
+//        }
+//        
+//      }
+//    }
+//  }
   
   class MyPortTapGesture: UITapGestureRecognizer {
     var port:String?
@@ -167,14 +212,26 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   func confirmPortNames() {
-    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+//    let portAssign = ["P1":port1,"P2":port2,"P3":port3,"P4":port4,"PA":portA,"PB":portB,"PC":portC,"PD":portD]
+    let port2D = ["1P":port1,"2P":port2,"3P":port3,"4P":port4,"AP":portA,"BP":portB,"CP":portC,"DP":portD]
     if portNames.count != 0 {
-      for ports in portAssign {
+      for ports in port2D {
         if portNames[ports.key] != nil {
-          portAssign[ports.key]!?.text = portNames[ports.key]
+          port2D[ports.key]!?.text = portNames[ports.key]
         }
       }
     }
+    
+    if hidden.count != 0 {
+      
+      for ports in port2D {
+        if hidden[ports.key] != nil {
+          port2D[ports.key]!?.isHidden = hidden[ports.key]!
+        }
+      }
+    }
+    
+    
   }
   
   @IBOutlet weak var topSV: UIStackView!

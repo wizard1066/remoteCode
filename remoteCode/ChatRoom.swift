@@ -133,6 +133,8 @@ class ChatRoom: NSObject, StreamDelegate {
   let alignment = MemoryLayout<Int>.alignment
   
   func readMessage() {
+    let ports:Set = ["1P","2P","3P","4P","AP","BP","CP","DP"]
+    let config:Set = ["fcolor","bcolor","tag","title","hide","show","disable","enable"]
     let info = UnsafeMutablePointer<UInt8>.allocate(capacity: maxReadLength)
     inputStream.read(info, maxLength: maxReadLength)
     
@@ -140,15 +142,19 @@ class ChatRoom: NSObject, StreamDelegate {
     
     let values = str.components(separatedBy: "\n")
     for v2 in values {
+      let parts = v2.components(separatedBy: ":")
       if v2 == "%:pong" {
         ping()
       }
-      if v2.first == "P" { // port
+      if ports.contains(parts[0]) { // port
         delegate?.port(v2)
       } else {
-        if v2.first == "p" || v2.first == "t" || v2.first == "f" || v2.first == "b" || v2.first == "h" || v2.first == "s" { // label or tag foreground or background
+        if config.contains(parts[0]) {
           rename?.newName(v2)
         }
+      }
+      if v2.first == "r" {
+        // remote slave
       }
     }
     defer {
