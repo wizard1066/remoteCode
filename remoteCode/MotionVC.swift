@@ -33,7 +33,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           let figure2S = "@:0:0:0"
           yCord = 0
           xCord = 0
-          chatRoom.sendMessage(message: figure2S)
+          chatRoom?.sendMessage(message: figure2S)
         }
       }
   }
@@ -106,7 +106,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 //        }
         
         let message2D = "@:" + rollLabel + ":" + pitchLabel + ":" + yawLabel
-        chatRoom.sendMessage(message: message2D)
+        chatRoom?.sendMessage(message: message2D)
         
         
       }
@@ -120,10 +120,10 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 //    motionUpdates()
     theButton.layer.cornerRadius = 48
     
-    chatRoom.delegate = self
-    chatRoom.connection = self
-    chatRoom.rename = self
-    chatRoom.warning = self
+    chatRoom?.delegate = self
+    chatRoom?.connection = self
+    chatRoom?.rename = self
+    chatRoom?.warning = self
     configurePorts()
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
@@ -134,7 +134,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     otherPan.delegate = self
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
-    chatRoom.sendMessage(message: "#:begin")
+    chatRoom?.sendMessage(message: "#:begin")
   }
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -152,7 +152,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:motion")
+    chatRoom?.sendMessage(message: "#:motion")
     motionVC = true
    
 //    configTheButton()
@@ -213,7 +213,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:end")
+    chatRoom?.sendMessage(message: "#:end")
 }
   
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -225,8 +225,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "#:disconnect")
-        chatRoom.stopChat()
+        chatRoom?.sendMessage(message: "#:disconnect")
+        chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
       alertController.addAction(ignoreAction)
@@ -246,13 +246,13 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func openPortLong(sender : MyPortLong) {
     let tag = sender.port! + "Q"
     if sender.state == .recognized {
-    chatRoom.sendMessage(message: tag)
+    chatRoom?.sendMessage(message: tag)
     }
   }
   
   @objc func openPortTap(sender : MyPortTapGesture) {
     let tag = sender.port! + "P"
-    chatRoom.sendMessage(message: tag)
+    chatRoom?.sendMessage(message: tag)
   }
   
   func configurePorts() {
@@ -282,14 +282,14 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 
     if sender.state == .recognized {
-      chatRoom.sendMessage(message: "XS")
+      chatRoom?.sendMessage(message: "XS")
     }
   }
   
   @objc func longMotion(sender: UITapGestureRecognizer) {
 
 if sender.state == .began {
-    chatRoom.sendMessage(message: "XL")
+    chatRoom?.sendMessage(message: "XL")
   }
   }
   
@@ -313,13 +313,13 @@ if sender.state == .began {
       }
       
       let string2R = "@:\(xCord):\(yCord):0"
-      chatRoom.sendMessage(message: string2R)
+      chatRoom?.sendMessage(message: string2R)
       
       if loop == 0 {
         let figure2S = "@:0:0:0"
         yCord = 0
         xCord = 0
-        chatRoom.sendMessage(message: figure2S)
+        chatRoom?.sendMessage(message: figure2S)
         if timer != nil {
           timer.invalidate()
         }
@@ -338,13 +338,13 @@ if sender.state == .began {
       }
       
       let string2R = "@:\(xCord):\(yCord):0"
-      chatRoom.sendMessage(message: string2R)
+      chatRoom?.sendMessage(message: string2R)
       
       if loop == 0 {
         let figure2S = "@:0:0:0"
         yCord = 0
         xCord = 0
-        chatRoom.sendMessage(message: figure2S)
+        chatRoom?.sendMessage(message: figure2S)
         if timer != nil {
           timer.invalidate()
         }
@@ -484,7 +484,7 @@ if sender.state == .began {
     alertController.addAction(defaultAction)
     self.present(alertController, animated: true, completion: {
       DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
-        chatRoom.stopChat()
+        chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       })
     })

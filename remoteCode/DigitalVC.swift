@@ -158,7 +158,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     alertController.addAction(defaultAction)
     self.present(alertController, animated: true, completion: {
       DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
-        chatRoom.stopChat()
+        chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       })
     })
@@ -279,7 +279,8 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   @objc func openShortCall(sender : MyTapGesture) {
     let tag = String(sender.tag!)
     if sender.state == .recognized {
-      chatRoom.sendMessage(message: xButton[tag]!)
+//      chatRoom?.sendMessage(message: xButton[tag]!)
+      sendMessage(message: xButton[tag]!)
     }
   }
   
@@ -288,7 +289,8 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       let tag = String(sender.tag!)
       if (xButton[tag] != nil) {
       if sender.state == .began {
-        chatRoom.sendMessage(message: xButton[tag]!)
+//        chatRoom?.sendMessage(message: xButton[tag]!)
+        sendMessage(message: xButton[tag]!)
       }
       }
     }
@@ -305,14 +307,16 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   @objc func openPortLong(sender : MyPortLong) {
     let tag = sender.port! + "Q"
     if sender.state == .recognized {
-    chatRoom.sendMessage(message: tag)
+//    chatRoom?.sendMessage(message: tag)
+    sendMessage(message: tag)
     }
   }
   
   @objc func openPortTap(sender : MyPortTapGesture) {
     let tag = sender.port! + "P"
     if sender.state == .recognized {
-    chatRoom.sendMessage(message: tag)
+//    chatRoom?.sendMessage(message: tag)
+    sendMessage(message: tag)
     }
   }
   
@@ -362,10 +366,12 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   override func viewDidLoad() {
     super.viewDidLoad()
     detectOrientation()
-    chatRoom.delegate = self
-    chatRoom.connection = self
-    chatRoom.rename = self
-    chatRoom.warning = self
+    
+    chatRoom?.delegate = self
+    chatRoom?.connection = self
+    chatRoom?.rename = self
+    chatRoom?.warning = self
+    
     configButtons()
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
@@ -376,12 +382,15 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     otherPan.delegate = self
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
-    chatRoom.sendMessage(message: "#:begin")
+    sendMessage(message: "#:begin")
+    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:end")
+    sendMessage(message: "#:end")
 }
+
+
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
@@ -401,7 +410,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   }
   
   @IBAction func debug(_ sender: Any) {
-    chatRoom.stopChat()
+    chatRoom?.stopChat()
     self.performSegue(withIdentifier: "go2motion", sender: self)
   }
   
@@ -466,7 +475,8 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:digital")
+//    chatRoom?.sendMessage(message: "#:digital")
+    sendMessage(message: "#:digital")
     digitalVC = true
     
     confirmCustomization()
@@ -479,8 +489,9 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "#:disconnect")
-        chatRoom.stopChat()
+//        chatRoom?.sendMessage(message: "#:disconnect")
+        sendMessage(message: "#:disconnect")
+        chatRoom?.stopChat()
         
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }

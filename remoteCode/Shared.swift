@@ -8,7 +8,17 @@
 
 import UIKit
 
-var chatRoom:ChatRoom!
+var chatRoom:ChatRoom?
+var colorService:ColorService!
+var colorSearch:ColorSearch!
+
+func sendMessage(message: String) {
+    if chatRoom != nil {
+      chatRoom?.sendMessage(message: message)
+    } else {
+      colorSearch.send(colorName: message)
+    }
+  }
 
 //  var xPort:Dictionary = ["P1":"P1","P2":"P2","P3":"P3","P4":"P4","PA":"PA","PB":"PB","PC":"PC","PD":"PD"]
   var iPort:Dictionary = ["1P":"1P","2P":"2P","3P":"3P","4P":"4P","AP":"AP","BP":"BP","CP":"CP","DP":"DP"]
@@ -25,6 +35,8 @@ var chatRoom:ChatRoom!
   var buttonColors:[String:UIColor] = [:]
   var fontColors:[String:UIColor] = [:]
   var hidden:[String:Bool] = [:]
+
+  var peerConnection = false
 
 func listViewControllers() {
   print("other")

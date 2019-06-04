@@ -94,7 +94,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     alertController.addAction(defaultAction)
     self.present(alertController, animated: true, completion: {
       DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
-        chatRoom.stopChat()
+        chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       })
     })
@@ -138,14 +138,14 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func openPortLong(sender : MyPortLong) {
     let tag = sender.port! + "Q"
     if sender.state == .recognized {
-    chatRoom.sendMessage(message: tag)
+    chatRoom?.sendMessage(message: tag)
     }
   }
   
   @objc func openPortTap(sender : MyPortTapGesture) {
     let tag = sender.port! + "P"
     
-    chatRoom.sendMessage(message: tag)
+    chatRoom?.sendMessage(message: tag)
   }
   
   func configurePorts() {
@@ -218,10 +218,10 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   override func viewDidLoad() {
     super.viewDidLoad()
     detectOrientation()
-    chatRoom.delegate = self
-    chatRoom.connection = self
-    chatRoom.rename = self
-    chatRoom.warning = self
+    chatRoom?.delegate = self
+    chatRoom?.connection = self
+    chatRoom?.rename = self
+    chatRoom?.warning = self
     configurePorts()
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
@@ -232,7 +232,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     otherPan.delegate = self
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
-    chatRoom.sendMessage(message: "#:begin")
+    chatRoom?.sendMessage(message: "#:begin")
   }
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -249,7 +249,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:analog")
+    chatRoom?.sendMessage(message: "#:analog")
     analogVC = true
  
     confirmPortNames()
@@ -284,7 +284,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         //         launch this on a timer
         //        self.legoImage.image = UIImage(named: "center")
         
-        chatRoom.sendMessage(message: figure2S)
+        chatRoom?.sendMessage(message: figure2S)
       }
     }
   }
@@ -296,7 +296,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     loop = 4
     //    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(slowDownAndStop), userInfo: nil, repeats: true)
     let figure2S = "@:0:0"
-    chatRoom.sendMessage(message: figure2S)
+    chatRoom?.sendMessage(message: figure2S)
   }
   
   @objc func slowDownAndStop() {
@@ -323,13 +323,13 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       
       //        let string2R = "@:\(position.x):\(position.y)"
       let (_,_,figure2S) = calcPoint(cord2D: position)
-      chatRoom.sendMessage(message: figure2S)
+      chatRoom?.sendMessage(message: figure2S)
       
       if loop == 0 {
         let figure2S = "@:0:0"
         position.y = 0
         position.x = 0
-        chatRoom.sendMessage(message: figure2S)
+        chatRoom?.sendMessage(message: figure2S)
         if timer != nil {
           timer.invalidate()
         }
@@ -353,13 +353,13 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 
       let (_,_,figure2S) = calcPoint(cord2D: position)
-      chatRoom.sendMessage(message: figure2S)
+      chatRoom?.sendMessage(message: figure2S)
       
       if loop == 0 {
         let figure2S = "@:0:0"
         position.y = 0
         position.x = 0
-        chatRoom.sendMessage(message: figure2S)
+        chatRoom?.sendMessage(message: figure2S)
         if timer != nil {
           timer.invalidate()
         }
@@ -442,7 +442,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-    chatRoom.sendMessage(message: "#:end")
+    chatRoom?.sendMessage(message: "#:end")
 }
   
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -454,8 +454,8 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "#:disconnect")
-        chatRoom.stopChat()
+        chatRoom?.sendMessage(message: "#:disconnect")
+        chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }
       alertController.addAction(ignoreAction)

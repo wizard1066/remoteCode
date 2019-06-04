@@ -15,6 +15,8 @@
 		7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1BF7042281703300C66DC0 /* ChatRoom.swift */; };
 		7B591DB622A3C7EE00F4C437 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B591DB522A3C7EE00F4C437 /* Settings.bundle */; };
 		7B591DB822A40F6D00F4C437 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B591DB722A40F6D00F4C437 /* GameVC.swift */; };
+		7B7595D422A5A78C00E24A91 /* ColorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7595D322A5A78C00E24A91 /* ColorService.swift */; };
+		7B7595D622A65D8F00E24A91 /* ColorSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7595D522A65D8F00E24A91 /* ColorSearch.swift */; };
 		7B7C42BE2296DABB005026C7 /* MotionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C42BD2296DABB005026C7 /* MotionVC.swift */; };
 		7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B91763B229535A200F9F9B3 /* AnalogVC.swift */; };
 		7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF53EA228B2CE4009ED117 /* SplashController.swift */; };
@@ -32,6 +34,8 @@
 		7B1BF7042281703300C66DC0 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		7B591DB522A3C7EE00F4C437 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		7B591DB722A40F6D00F4C437 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
+		7B7595D322A5A78C00E24A91 /* ColorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorService.swift; sourceTree = "<group>"; };
+		7B7595D522A65D8F00E24A91 /* ColorSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSearch.swift; sourceTree = "<group>"; };
 		7B7C42BD2296DABB005026C7 /* MotionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionVC.swift; sourceTree = "<group>"; };
 		7B91763B229535A200F9F9B3 /* AnalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalogVC.swift; sourceTree = "<group>"; };
 		7BDF53EA228B2CE4009ED117 /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				7B7C42BD2296DABB005026C7 /* MotionVC.swift */,
 				7B1BF7042281703300C66DC0 /* ChatRoom.swift */,
 				7B1BF6F62281700300C66DC0 /* Main.storyboard */,
+				7B7595D322A5A78C00E24A91 /* ColorService.swift */,
+				7B7595D522A65D8F00E24A91 /* ColorSearch.swift */,
 				7B591DB722A40F6D00F4C437 /* GameVC.swift */,
 				7BDF53EA228B2CE4009ED117 /* SplashController.swift */,
 				7B1BF6F92281700400C66DC0 /* Assets.xcassets */,
@@ -160,9 +166,11 @@
 				7B91763C229535A200F9F9B3 /* AnalogVC.swift in Sources */,
 				7BDF53EF228B2D8C009ED117 /* Shared.swift in Sources */,
 				7B591DB822A40F6D00F4C437 /* GameVC.swift in Sources */,
+				7B7595D422A5A78C00E24A91 /* ColorService.swift in Sources */,
 				7BDF53EB228B2CE4009ED117 /* SplashController.swift in Sources */,
 				7B7C42BE2296DABB005026C7 /* MotionVC.swift in Sources */,
 				7B1BF7052281703300C66DC0 /* ChatRoom.swift in Sources */,
+				7B7595D622A65D8F00E24A91 /* ColorSearch.swift in Sources */,
 				7B1BF6F52281700300C66DC0 /* DigitalVC.swift in Sources */,
 				7B1BF6F32281700300C66DC0 /* AppDelegate.swift in Sources */,
 			);

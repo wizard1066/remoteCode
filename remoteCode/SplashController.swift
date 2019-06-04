@@ -8,17 +8,35 @@
 
 import UIKit
 
-class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegate, PostAlert {
+class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegate, PostAlert, ColorSearchDelegate {
+
+  func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
+    print("connected \(connectedDevices)")
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+      self.digitalOut.isEnabled = true
+      self.analogOut.isEnabled = true
+      self.motionOut.isEnabled = true
+      peerConnection = true
+      })
+    
+  }
+  
+  func colorChanged(manager: ColorSearch, colorString: String) {
+    print("color \(colorString)")
+  }
+  
+
+  
   
   @IBAction func digitalButton(_ sender: Any) {
-    if ok2Connect {
+    if ok2Connect || peerConnection {
       self.performSegue(withIdentifier: "digital", sender: nil)
     }
   }
   
   @IBOutlet weak var digitalOut: UIButton!
   @IBAction func analogButton(_ sender: Any) {
-    if ok2Connect {
+    if ok2Connect || peerConnection {
       self.performSegue(withIdentifier: "analog", sender: nil)
     }
   }
@@ -28,12 +46,21 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   @IBOutlet weak var motionOut: UIButton!
   @IBAction func motionButton(_ sender: Any) {
-    if ok2Connect {
+    if ok2Connect || peerConnection {
+      colorService = ColorService()
+      
       self.performSegue(withIdentifier: "motion", sender: nil)
     }
   }
   
   
+  @IBOutlet weak var gameOut: UIButton!
+  @IBAction func gameButton(_ sender: Any) {
+  if ok2Connect {
+    colorSearch.stopSearch()
+    self.performSegue(withIdentifier: "game", sender: nil)
+    }
+  }
   
   
   @IBOutlet weak var imgView: UIImageView!
@@ -75,7 +102,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   var nextVC:String?
   
   @IBAction func unwindToContainerVC(segue: UIStoryboardSegue) {
-    if chatRoom.returnOutStatus() == InputStream.Status.closed {
+    if chatRoom?.returnOutStatus() == InputStream.Status.closed {
       connectLabel.setTitle("Connect", for: .normal)
       
       self.digitalOut.isEnabled = false
@@ -114,12 +141,12 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
 //      let connect2G = "10.182.81.130"
       chatRoom = ChatRoom(host: connect2G, port: UInt32(port2G!))
       //      chatRoom.delegate = self
-      chatRoom.connection = self
+      chatRoom?.connection = self
       
-      chatRoom.setupNetworkCommunication()
+      chatRoom?.setupNetworkCommunication()
       
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-        if chatRoom.returnOutStatus() == InputStream.Status.open {
+        if chatRoom?.returnOutStatus() == InputStream.Status.open {
           self.connectLabel.setTitle("Connected", for: .normal)
           self.connectLabel.isEnabled = false
           self.ipaddress.isEnabled = false
@@ -128,6 +155,8 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
           self.digitalOut.isEnabled = true
           self.analogOut.isEnabled = true
           self.motionOut.isEnabled = true
+          self.gameOut.isEnabled = true
+          
 //          chatRoom.confirmConnected()
         }
       })
@@ -142,12 +171,17 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     portNumber.delegate = self
     connectLabel.isEnabled = false
     doDefault()
+    colorSearch = ColorSearch()
+    colorSearch.delegate = self
+    
+    
+    
   }
   
   override func viewDidAppear(_ animated: Bool) {
     animate_images()
     if chatRoom != nil {
-      chatRoom.warning = self
+      chatRoom?.warning = self
     }
   }
   
@@ -236,8 +270,8 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-        chatRoom.sendMessage(message: "#:disconnect")
-        chatRoom.stopChat()
+        chatRoom?.sendMessage(message: "#:disconnect")
+        chatRoom?.stopChat()
         
         self.connectLabel.setTitle("Connect", for: .normal)
         self.connectLabel.isEnabled = true
