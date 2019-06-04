@@ -18,30 +18,91 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF9-ad-OqT">
-                                <rect key="frame" x="192" y="87" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Red"/>
-                                <connections>
-                                    <action selector="redTapped:" destination="CrF-sV-4JV" eventType="touchUpInside" id="tbm-bW-h2G"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtC-LI-0FO">
-                                <rect key="frame" x="185" y="165" width="44" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Yellow"/>
-                                <connections>
-                                    <action selector="yellowTapped:" destination="CrF-sV-4JV" eventType="touchUpInside" id="fnD-Mw-Mi3"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Fcu-7t-8ES">
+                                <rect key="frame" x="36" y="193" width="342" height="350"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6L-7b-GY2">
+                                        <rect key="frame" x="121" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" name="findHighlightColor" catalog="System" colorSpace="catalog"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="3Pu-x0-Z9S"/>
+                                            <constraint firstAttribute="height" constant="100" id="v91-u7-XNK"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="up-y"/>
+                                        <connections>
+                                            <action selector="upAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="vhv-yC-pIf"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="Pu8-EL-uP6">
+                                        <rect key="frame" x="0.0" y="125" width="342" height="100"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gdu-ci-qVE">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="YNv-oq-Gp6"/>
+                                                    <constraint firstAttribute="width" constant="100" id="atV-Iz-W7b"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="left-y"/>
+                                                <connections>
+                                                    <action selector="leftAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="IHa-zf-ILq"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5xI-dd-iZI">
+                                                <rect key="frame" x="121" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="Fny-wh-0kF"/>
+                                                    <constraint firstAttribute="height" constant="100" id="vEc-LG-yad"/>
+                                                </constraints>
+                                                <state key="normal" title="Switch"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTf-uH-K1k">
+                                                <rect key="frame" x="242" y="0.0" width="100" height="100"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="EQb-1a-Bdt"/>
+                                                    <constraint firstAttribute="height" constant="100" id="Emu-qD-oXE"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="right-y"/>
+                                                <connections>
+                                                    <action selector="rightAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="jGi-lq-nWM"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HbD-9g-NGr">
+                                        <rect key="frame" x="121" y="250" width="100" height="100"/>
+                                        <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="Gqo-zS-jfP"/>
+                                            <constraint firstAttribute="height" constant="100" id="rHQ-ip-w0b"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="down-y"/>
+                                        <connections>
+                                            <action selector="downAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="Tov-yW-EHQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Fcu-7t-8ES" firstAttribute="centerY" secondItem="dpI-Zd-KeY" secondAttribute="centerY" id="GrC-a9-PaQ"/>
+                            <constraint firstItem="Fcu-7t-8ES" firstAttribute="centerX" secondItem="dpI-Zd-KeY" secondAttribute="centerX" id="hLi-gn-A3I"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="tGR-h1-qtO"/>
                     </view>
+                    <connections>
+                        <outlet property="centOut" destination="5xI-dd-iZI" id="Jl8-ZO-bmE"/>
+                        <outlet property="downOut" destination="HbD-9g-NGr" id="3HI-Ez-lnl"/>
+                        <outlet property="leftOut" destination="Gdu-ci-qVE" id="hAD-16-u3e"/>
+                        <outlet property="rightOut" destination="lTf-uH-K1k" id="z7n-9r-8Ji"/>
+                        <outlet property="upOut" destination="P6L-7b-GY2" id="y48-lm-xOg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nBG-Nf-ghA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-378" y="-576"/>
+            <point key="canvasLocation" x="-378.26086956521743" y="-576.35869565217399"/>
         </scene>
         <!--Splash Controller-->
         <scene sceneID="Mg4-s4-FfY">
@@ -712,6 +773,10 @@
         <image name="Crosshair" width="800" height="800"/>
         <image name="analog" width="320" height="568"/>
         <image name="digital" width="320" height="568"/>
+        <image name="down-y" width="100" height="100"/>
+        <image name="left-y" width="100" height="100"/>
         <image name="motion" width="320" height="568"/>
+        <image name="right-y" width="100" height="100"/>
+        <image name="up-y" width="100" height="100"/>
     </resources>
 </document>

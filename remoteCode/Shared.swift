@@ -16,7 +16,7 @@ func sendMessage(message: String) {
     if chatRoom != nil {
       chatRoom?.sendMessage(message: message)
     } else {
-      colorSearch.send(colorName: message)
+      colorSearch.send(colorName: colorSearch.uniqueID + message)
     }
   }
 
