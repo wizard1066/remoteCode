@@ -116,10 +116,16 @@ extension ColorService : MCSessionDelegate {
     }
   
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-      NSLog("%@", "didReceiveData: \(data.count) bytes")
+//      NSLog("%@", "didReceiveData: \(data.count) bytes")
         let str = String(data: data, encoding: .utf8)!
-        chatRoom?.sendMessage(message: str)
-//        self.delegate?.colorChanged(manager: self, colorString: str)
+//        chatRoom?.sendMessage(message: str)
+        let parts = str.components(separatedBy: ":")
+        let tagX = tag["R"]
+        if parts.count > 5 {
+          let bon = tagX! & Int(parts[2])!
+          print("parts \(parts) tag \(tagX) bon \(bon)")
+          self.delegate?.colorChanged(manager: self, colorString: str)
+        }
     }
 
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

@@ -11,12 +11,42 @@ import UIKit
 var chatRoom:ChatRoom?
 var colorService:ColorService!
 var colorSearch:ColorSearch!
+var uniqueID: String = "R"
+var tag:[String:Int] = [:]
+
+enum team: String {
+  case R
+  case Y
+  case G
+  case B
+  
+  func color() -> String {
+    return self.rawValue
+  }
+}
 
 func sendMessage(message: String) {
     if chatRoom != nil {
       chatRoom?.sendMessage(message: message)
     } else {
-      colorSearch.send(colorName: colorSearch.uniqueID + message)
+      let peas = message.components(separatedBy: ":")
+      print("peas \(peas) \(peas.count)")
+      var match = 0
+      if peas.count == 3 {
+        let xCord = peas[1]
+        let yCord = peas[2]
+        if Float(xCord)! > 0 {
+          match = 1
+        } else {
+          match = 4
+        }
+        if Float(yCord)! < 0 {
+          match = match + 2
+        } else {
+          match = match + 8
+        }
+      }
+      colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
     }
   }
 

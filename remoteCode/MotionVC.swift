@@ -269,29 +269,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     }
   }
   
-  func configTheButton() {
-    let hitMe = UITapGestureRecognizer(target: self, action: #selector(toggleMotion))
-    let hitMeLong = UILongPressGestureRecognizer(target: self, action: #selector(longMotion))
-    hitMe.numberOfTapsRequired = 1
-
-    theButton.addGestureRecognizer(hitMe)
-    theButton.addGestureRecognizer(hitMeLong)
-  }
   
-  @objc func toggleMotion(sender: UITapGestureRecognizer) {
-
-
-    if sender.state == .recognized {
-      chatRoom?.sendMessage(message: "XS")
-    }
-  }
-  
-  @objc func longMotion(sender: UITapGestureRecognizer) {
-
-if sender.state == .began {
-    chatRoom?.sendMessage(message: "XL")
-  }
-  }
   
   var timer:Timer!
   var loop:Int = 0

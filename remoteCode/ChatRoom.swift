@@ -153,9 +153,6 @@ class ChatRoom: NSObject, StreamDelegate {
           rename?.newName(v2)
         }
       }
-      if v2.first == "r" {
-        // remote slave
-      }
     }
     defer {
       info.deinitialize(count: str.count)

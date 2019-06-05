@@ -165,6 +165,38 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   @IBOutlet weak var connectLabel: UIButton!
   
+  var uniqueID:String!
+  
+  func configImgView() {
+    let hitMe = UITapGestureRecognizer(target: self, action: #selector(toggleMotion))
+    let hitMeLong = UILongPressGestureRecognizer(target: self, action: #selector(longMotion))
+    hitMe.numberOfTapsRequired = 1
+
+    imgView.addGestureRecognizer(hitMe)
+    imgView.addGestureRecognizer(hitMeLong)
+  }
+  
+  var colors = ["R","G","B","Y"]
+  var indexOf = 0
+  
+  func flip() -> String {
+    if indexOf > 2 {
+      indexOf = 0
+    } else {
+      indexOf = indexOf + 1
+    }
+    return(colors[indexOf])
+  }
+  
+  @objc func toggleMotion(sender: UITapGestureRecognizer) {
+    uniqueID = flip()
+    print("uniqueID \(uniqueID)")
+  }
+  
+  @objc func longMotion(sender: UITapGestureRecognizer) {
+    // do something else
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     ipaddress.delegate = self
@@ -173,9 +205,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     doDefault()
     colorSearch = ColorSearch()
     colorSearch.delegate = self
-    
-    
-    
+    configImgView() 
   }
   
   override func viewDidAppear(_ animated: Bool) {
