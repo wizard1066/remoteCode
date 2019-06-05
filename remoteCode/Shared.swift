@@ -30,20 +30,20 @@ func sendMessage(message: String) {
       chatRoom?.sendMessage(message: message)
     } else {
       let peas = message.components(separatedBy: ":")
-      print("peas \(peas) \(peas.count)")
+//      print("peas \(peas) \(peas.count)")
       var match = 0
-      if peas.count == 3 {
-        let xCord = peas[1]
-        let yCord = peas[2]
-        if Float(xCord)! > 0 {
-          match = 1
+      if peas.count == 3 || peas.count == 4 {
+        let roll = peas[1]
+        let pitch = peas[2]
+        if Float(pitch)! > 0 {
+          match = 1 // forward
         } else {
-          match = 4
+          match = 4 // back
         }
-        if Float(yCord)! > 0 {
-          match = 2
+        if Float(roll)! > 0 {
+          match = match + 2 // right
         } else {
-          match = 8
+          match = match + 8 // left
         }
       }
       colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)

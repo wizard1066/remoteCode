@@ -599,14 +599,39 @@
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="motion" translatesAutoresizingMaskIntoConstraints="NO" id="WpI-Ew-coD">
                                 <rect key="frame" x="-184" y="41" width="320" height="568"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="101" translatesAutoresizingMaskIntoConstraints="NO" id="UC9-iQ-ujr">
+                                <rect key="frame" x="60.333333333333343" y="659.66666666666663" width="293.66666666666663" height="20.333333333333371"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pitch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FW0-g3-aya">
+                                        <rect key="frame" x="0.0" y="0.0" width="38.333333333333336" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="roll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uv1-3g-OlN">
+                                        <rect key="frame" x="139.33333333333331" y="0.0" width="23.333333333333343" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yaw" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-r6-6Vm">
+                                        <rect key="frame" x="263.66666666666669" y="0.0" width="30" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lNw-Nm-UDF" firstAttribute="centerY" secondItem="Zn3-2v-Hm2" secondAttribute="centerY" id="3u0-y7-YEV"/>
                             <constraint firstItem="WpI-Ew-coD" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="QgW-9h-OHB"/>
                             <constraint firstItem="C5r-Rm-ykj" firstAttribute="bottom" secondItem="9nm-wo-ldz" secondAttribute="bottom" constant="20.5" id="hSv-NO-fcE"/>
+                            <constraint firstItem="UC9-iQ-ujr" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="i3j-ml-ijC"/>
                             <constraint firstItem="WpI-Ew-coD" firstAttribute="centerY" secondItem="Zn3-2v-Hm2" secondAttribute="centerY" constant="80" id="kG3-n8-2s4"/>
                             <constraint firstItem="lNw-Nm-UDF" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="n9G-aW-ZOv"/>
+                            <constraint firstItem="9nm-wo-ldz" firstAttribute="top" secondItem="UC9-iQ-ujr" secondAttribute="bottom" constant="19.670000000000002" id="sgz-Ke-a2O"/>
                             <constraint firstItem="9nm-wo-ldz" firstAttribute="centerX" secondItem="Zn3-2v-Hm2" secondAttribute="centerX" id="tMJ-ee-QXb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C5r-Rm-ykj"/>

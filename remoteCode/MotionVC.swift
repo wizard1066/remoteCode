@@ -66,11 +66,11 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   var ymoving = false
   var refresh = 0.1
   
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-    -> Bool {
-      return true
-  }
+//  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+//                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+//    -> Bool {
+//      return true
+//  }
   
   @IBAction func unwindMotionVC(segue: UIStoryboardSegue) {
     print("MotionVC")
@@ -229,7 +229,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
       let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-//        chatRoom?.sendMessage(message: "#:disconnect")
+
         sendMessage(message: "#:disconnect")
         chatRoom?.stopChat()
         self.performSegue(withIdentifier: "returnToSegue", sender: self)

@@ -81,10 +81,10 @@ extension ColorService : MCNearbyServiceAdvertiserDelegate {
 
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
-        if peers[peerID.displayName] == nil {
+//        if peers[peerID.displayName] == nil {
           invitationHandler(true, self.session)
-          peers[peerID.displayName] = true
-        }
+//          peers[peerID.displayName] = true
+//        }
     }
   
 }
@@ -121,10 +121,17 @@ extension ColorService : MCSessionDelegate {
 //        chatRoom?.sendMessage(message: str)
         let parts = str.components(separatedBy: ":")
         let tagX = tag["R"]
+        if tagX == nil {
+          return
+        }
+//        let tagX = 3
         if parts.count > 5 {
           let bon = tagX! & Int(parts[2])!
-          print("parts \(parts) tag \(tagX) bon \(bon)")
-          self.delegate?.colorChanged(manager: self, colorString: str)
+//          print("parts \(parts) tag \(tagX) bon \(bon)")
+          if bon > 0 {
+            print("parts \(parts) tag \(tagX) bon \(bon) fuck \(tag["R"])")
+          }
+//          self.delegate?.colorChanged(manager: self, colorString: str)
         }
     }
 
