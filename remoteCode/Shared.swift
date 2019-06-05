@@ -40,10 +40,10 @@ func sendMessage(message: String) {
         } else {
           match = 4
         }
-        if Float(yCord)! < 0 {
-          match = match + 2
+        if Float(yCord)! > 0 {
+          match = 2
         } else {
-          match = match + 8
+          match = 8
         }
       }
       colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
