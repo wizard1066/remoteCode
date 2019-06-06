@@ -120,21 +120,23 @@ extension ColorService : MCSessionDelegate {
         let str = String(data: data, encoding: .utf8)!
 //        chatRoom?.sendMessage(message: str)
         let parts = str.components(separatedBy: ":")
-        let tagX = tag["R"]
-        if tagX == nil {
+      
+      
+        // this is needed cause the stupid system connects to itself...
+        if tag[parts[1]] == nil {
           return
         }
-//        let tagX = 3
-        if parts.count > 5 {
-          let bon = tagX! & Int(parts[2])!
-//          print("parts \(parts) tag \(tagX) bon \(bon)")
-          if bon > 0 {
-            print("parts \(parts) ")
-            let transmit = parts.dropFirst(3).joined(separator: ":")
-            chatRoom?.sendMessage(message: transmit)
+      
+          if parts.count > 5 {
+            let tagX = tag[parts[1]]
+            let bon = tagX! & Int(parts[2])!
+            if bon > 0 {
+              print("parts \(parts) ")
+              let transmit = parts.dropFirst(3).joined(separator: ":")
+              chatRoom?.sendMessage(message: transmit)
+            }
           }
-//          self.delegate?.colorChanged(manager: self, colorString: str)
-        }
+      
     }
 
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

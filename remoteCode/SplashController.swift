@@ -191,6 +191,18 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   @objc func toggleMotion(sender: UITapGestureRecognizer) {
     uniqueID = flip()
     print("uniqueID \(uniqueID)")
+    switch uniqueID {
+      case "R":
+        imgView.image = UIImage(named: "red")
+      case "G":
+        imgView.image = UIImage(named: "green")
+      case "B":
+        imgView.image = UIImage(named: "blue")
+      case "Y":
+        imgView.image = UIImage(named: "yellow")
+      default:
+        print("stupid switch statement")
+    }
   }
   
   @objc func longMotion(sender: UITapGestureRecognizer) {
@@ -209,7 +221,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    animate_images()
+//    animate_images()
     if chatRoom != nil {
       chatRoom?.warning = self
     }

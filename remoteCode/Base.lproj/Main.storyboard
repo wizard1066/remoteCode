@@ -28,7 +28,7 @@
                                             <constraint firstAttribute="width" constant="100" id="3Pu-x0-Z9S"/>
                                             <constraint firstAttribute="height" constant="100" id="v91-u7-XNK"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="up-y"/>
+                                        <state key="normal" title="Button" image="up"/>
                                         <connections>
                                             <action selector="upAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="vhv-yC-pIf"/>
                                         </connections>
@@ -43,7 +43,7 @@
                                                     <constraint firstAttribute="height" constant="100" id="YNv-oq-Gp6"/>
                                                     <constraint firstAttribute="width" constant="100" id="atV-Iz-W7b"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="left-y"/>
+                                                <state key="normal" title="Button" image="left"/>
                                                 <connections>
                                                     <action selector="leftAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="IHa-zf-ILq"/>
                                                 </connections>
@@ -54,9 +54,10 @@
                                                     <constraint firstAttribute="width" constant="100" id="Fny-wh-0kF"/>
                                                     <constraint firstAttribute="height" constant="100" id="vEc-LG-yad"/>
                                                 </constraints>
-                                                <state key="normal" title="Switch"/>
+                                                <state key="normal" title="Shuffle"/>
                                                 <connections>
                                                     <action selector="centAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="2nv-pb-fkN"/>
+                                                    <action selector="shuffleAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="Vpj-ua-r9M"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTf-uH-K1k">
@@ -66,7 +67,7 @@
                                                     <constraint firstAttribute="width" constant="100" id="EQb-1a-Bdt"/>
                                                     <constraint firstAttribute="height" constant="100" id="Emu-qD-oXE"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="right-y"/>
+                                                <state key="normal" title="Button" image="right"/>
                                                 <connections>
                                                     <action selector="rightAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="jGi-lq-nWM"/>
                                                 </connections>
@@ -80,13 +81,17 @@
                                             <constraint firstAttribute="width" constant="100" id="Gqo-zS-jfP"/>
                                             <constraint firstAttribute="height" constant="100" id="rHQ-ip-w0b"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="down-y"/>
+                                        <state key="normal" title="Button" image="down"/>
                                         <connections>
                                             <action selector="downAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="Tov-yW-EHQ"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peer" translatesAutoresizingMaskIntoConstraints="NO" id="hKN-fM-5F7">
+                                <rect key="frame" x="47" y="84" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -100,6 +105,7 @@
                         <outlet property="downOut" destination="HbD-9g-NGr" id="3HI-Ez-lnl"/>
                         <outlet property="leftOut" destination="Gdu-ci-qVE" id="hAD-16-u3e"/>
                         <outlet property="rightOut" destination="lTf-uH-K1k" id="z7n-9r-8Ji"/>
+                        <outlet property="shuffleOut" destination="5xI-dd-iZI" id="dvH-Gp-Q9U"/>
                         <outlet property="upOut" destination="P6L-7b-GY2" id="y48-lm-xOg"/>
                     </connections>
                 </viewController>
@@ -115,7 +121,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yp2-T3-Gvo">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red" translatesAutoresizingMaskIntoConstraints="NO" id="Yp2-T3-Gvo">
                                 <rect key="frame" x="159" y="177" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="CXi-xB-IBX"/>
@@ -171,7 +177,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7c-zC-wdm">
                                         <rect key="frame" x="0.0" y="199" width="256" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <state key="normal" title="Analog"/>
+                                        <state key="normal" title="Touch"/>
                                         <connections>
                                             <action selector="analogButton:" destination="Ebu-k6-UAt" eventType="touchUpInside" id="1xM-F4-cnn"/>
                                         </connections>
@@ -435,7 +441,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="digital" translatesAutoresizingMaskIntoConstraints="NO" id="5yk-AE-4jS">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch" translatesAutoresizingMaskIntoConstraints="NO" id="5yk-AE-4jS">
                                 <rect key="frame" x="47" y="84" width="320" height="568"/>
                             </imageView>
                         </subviews>
@@ -651,7 +657,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ql-EL-Eye">
-                                        <rect key="frame" x="117.66666666666666" y="183" width="31.333333333333343" height="14.333333333333343"/>
+                                        <rect key="frame" x="117.66666666666664" y="183" width="31.333333333333357" height="14.333333333333343"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -809,7 +815,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="analog" translatesAutoresizingMaskIntoConstraints="NO" id="gJs-ji-8HG">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pad" translatesAutoresizingMaskIntoConstraints="NO" id="gJs-ji-8HG">
                                 <rect key="frame" x="47" y="84" width="320" height="568"/>
                             </imageView>
                         </subviews>
@@ -852,12 +858,14 @@
     </scenes>
     <resources>
         <image name="Crosshair" width="800" height="800"/>
-        <image name="analog" width="320" height="568"/>
-        <image name="digital" width="320" height="568"/>
-        <image name="down-y" width="100" height="100"/>
-        <image name="left-y" width="100" height="100"/>
+        <image name="down" width="100" height="100"/>
+        <image name="left" width="100" height="100"/>
         <image name="motion" width="320" height="568"/>
-        <image name="right-y" width="100" height="100"/>
-        <image name="up-y" width="100" height="100"/>
+        <image name="pad" width="320" height="568"/>
+        <image name="peer" width="320" height="568"/>
+        <image name="red" width="328" height="328"/>
+        <image name="right" width="100" height="100"/>
+        <image name="touch" width="320" height="568"/>
+        <image name="up" width="100" height="100"/>
     </resources>
 </document>
