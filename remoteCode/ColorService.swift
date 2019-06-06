@@ -129,7 +129,9 @@ extension ColorService : MCSessionDelegate {
           let bon = tagX! & Int(parts[2])!
 //          print("parts \(parts) tag \(tagX) bon \(bon)")
           if bon > 0 {
-            print("parts \(parts) tag \(tagX) bon \(bon) fuck \(tag["R"])")
+            print("parts \(parts) ")
+            let transmit = parts.dropFirst(3).joined(separator: ":")
+            chatRoom?.sendMessage(message: transmit)
           }
 //          self.delegate?.colorChanged(manager: self, colorString: str)
         }

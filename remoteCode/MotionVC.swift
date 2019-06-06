@@ -13,31 +13,40 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   
   
-  @IBOutlet weak var theButton: UIButton!
-  @IBAction func theAction(_ sender: UIButton) {
-    
-    if motionManager.isDeviceMotionAvailable {
-        if !motionManager.isDeviceMotionActive {
-          postAlert(title: "Alert",message: "Make sure your device is flat")
-          motionUpdates()
-          theButton.backgroundColor = UIColor.orange
-          theButton.setTitle("Wait", for: .normal)
-          DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
-            self.theButton.backgroundColor = UIColor.red
-            self.theButton.setTitle("Stop", for: .normal)
-          })
-        } else {
-          theButton.backgroundColor = UIColor.green
-          theButton.setTitle("Go", for: .normal)
-          motionManager.stopDeviceMotionUpdates()
-          let figure2S = "@:0:0:0"
-          yCord = 0
-          xCord = 0
-//          chatRoom?.sendMessage(message: figure2S)
-          sendMessage(message: figure2S)
-        }
-      }
+  @IBOutlet weak var sensitivitySlider: UISlider!
+  
+  @IBOutlet weak var thewindow: UIView!
+  @IBAction func sensitivitySliderChanged(_ sender: UISlider) {
+    sensitivity = sender.value
+    print("\(sensitivity)")
   }
+  
+//  @IBOutlet weak var theButton: UIButton!
+//  @IBAction func theAction(_ sender: UIButton) {
+//
+//    if motionManager.isDeviceMotionAvailable {
+//        if !motionManager.isDeviceMotionActive {
+//          postAlert(title: "Alert",message: "Make sure your device is flat")
+//
+//          theButton.backgroundColor = UIColor.orange
+//          theButton.setTitle("Wait", for: .normal)
+//          DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
+//            self.theButton.backgroundColor = UIColor.red
+//            self.theButton.setTitle("Stop", for: .normal)
+//            self.motionUpdates()
+//          })
+//        } else {
+//          theButton.backgroundColor = UIColor.green
+//          theButton.setTitle("Go", for: .normal)
+//          motionManager.stopDeviceMotionUpdates()
+//          let figure2S = "@:0:0:0"
+//          yCord = 0
+//          xCord = 0
+////          chatRoom?.sendMessage(message: figure2S)
+//          sendMessage(message: figure2S)
+//        }
+//      }
+//  }
   
   @IBOutlet weak var port1: UILabel!
   @IBOutlet weak var port2: UILabel!
@@ -77,7 +86,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
   
   func motionUpdates() {
-//    if motionManager.isDeviceMotionAvailable {
+    if motionManager.isDeviceMotionAvailable {
       motionManager.deviceMotionUpdateInterval = refresh
       motionManager.startDeviceMotionUpdates(to: OperationQueue.main) { (data, error) in
         
@@ -89,9 +98,27 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         let rollLabel = String(format: "%.2f", ((self.xCord)))
         let yawLabel = String(format: "%.2f", ((self.zCord)))
         
-        self.rollLabel.text = rollLabel
-        self.pitchLabel.text = pitchLabel
-        self.yawLabel.text = yawLabel
+        if Float(self.xCord) > self.sensitivitySlider.value {
+          self.rollLabel.text = rollLabel
+          self.pitchLabel.text = pitchLabel
+          self.yawLabel.text = yawLabel
+        }
+        if Float(self.xCord) < -self.sensitivitySlider.value {
+          self.rollLabel.text = rollLabel
+          self.pitchLabel.text = pitchLabel
+          self.yawLabel.text = yawLabel
+        }
+        if Float(self.yCord) > self.sensitivitySlider.value {
+          self.rollLabel.text = rollLabel
+          self.pitchLabel.text = pitchLabel
+          self.yawLabel.text = yawLabel
+        }
+        if Float(self.yCord) < -self.sensitivitySlider.value {
+          self.rollLabel.text = rollLabel
+          self.pitchLabel.text = pitchLabel
+          self.yawLabel.text = yawLabel
+        }
+        
         
 //        if self.xCord > 20 && self.yCord < 20 {
 //                    self.theButton.image = UIImage(named: "topRight")
@@ -111,15 +138,17 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         sendMessage(message: message2D)
         
       }
-//    }
+    }
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     detectOrientation()
     motionManager = CMMotionManager()
-//    motionUpdates()
-    theButton.layer.cornerRadius = 48
+    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
+        self.motionUpdates()
+    })
+//    theButton.layer.cornerRadius = 48
     
     chatRoom?.delegate = self
     chatRoom?.connection = self
@@ -202,13 +231,13 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         lowXaxisSV.isActive = false
       }
     
-      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: theButton.topAnchor, constant: -32)
+      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: thewindow.topAnchor, constant: -32)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
     
-      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: theButton.bottomAnchor, constant: 32)
+      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: thewindow.bottomAnchor, constant: 32)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       lowXaxisSV.isActive = true

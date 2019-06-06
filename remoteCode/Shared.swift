@@ -13,6 +13,7 @@ var colorService:ColorService!
 var colorSearch:ColorSearch!
 var uniqueID: String = "R"
 var tag:[String:Int] = [:]
+var sensitivity: Float = 20
 
 enum team: String {
   case R
@@ -31,22 +32,39 @@ func sendMessage(message: String) {
     } else {
       let peas = message.components(separatedBy: ":")
 //      print("peas \(peas) \(peas.count)")
+      var roll:Float!
+      var pitch:Float!
       var match = 0
       if peas.count == 3 || peas.count == 4 {
-        let roll = peas[1]
-        let pitch = peas[2]
-        if Float(pitch)! > 0 {
+        roll = Float(peas[1])
+        pitch = Float(peas[2])
+//        if roll! > pitch! {
+//          pitch = 0.0
+//        } else {
+//          roll = 0.0
+//        }
+        
+        if Float(pitch!) > 0 {
           match = 1 // forward
         } else {
           match = 4 // back
         }
-        if Float(roll)! > 0 {
+        if Float(roll!) > 0 {
           match = match + 2 // right
         } else {
           match = match + 8 // left
         }
       }
-      colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+      if roll != nil && pitch != nil {
+        if roll! > Float(sensitivity) || pitch! > Float(sensitivity) {
+          colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+        }
+        if roll! < Float(-sensitivity) || pitch! < Float(-sensitivity) {
+          colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+        }
+      } else {
+        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+      }
     }
   }
 
