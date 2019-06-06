@@ -171,7 +171,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     let hitMe = UITapGestureRecognizer(target: self, action: #selector(toggleMotion))
     let hitMeLong = UILongPressGestureRecognizer(target: self, action: #selector(longMotion))
     hitMe.numberOfTapsRequired = 1
-
+    imgView.isUserInteractionEnabled = true
     imgView.addGestureRecognizer(hitMe)
     imgView.addGestureRecognizer(hitMeLong)
   }

@@ -15,9 +15,11 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   @IBOutlet weak var sensitivitySlider: UISlider!
   
+  @IBOutlet weak var theValue: UILabel!
   @IBOutlet weak var thewindow: UIView!
   @IBAction func sensitivitySliderChanged(_ sender: UISlider) {
     sensitivity = sender.value
+    theValue.text = String(Int(sender.value))
     print("\(sensitivity)")
   }
   
