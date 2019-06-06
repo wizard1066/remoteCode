@@ -484,22 +484,22 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   
   
   
-  override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-    if motion == .motionShake {
-      let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
-      let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-      let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-//        chatRoom?.sendMessage(message: "#:disconnect")
-        sendMessage(message: "#:disconnect")
-        chatRoom?.stopChat()
-        
-        self.performSegue(withIdentifier: "returnToSegue", sender: self)
-      }
-      alertController.addAction(ignoreAction)
-      alertController.addAction(okAction)
-      self.present(alertController, animated: true, completion: nil)
-    }
-  }
+//  override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+//    if motion == .motionShake {
+//      let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
+//      let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+//      let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
+////        chatRoom?.sendMessage(message: "#:disconnect")
+//        sendMessage(message: "#:disconnect")
+//        chatRoom?.stopChat()
+//
+//        self.performSegue(withIdentifier: "returnToSegue", sender: self)
+//      }
+//      alertController.addAction(ignoreAction)
+//      alertController.addAction(okAction)
+//      self.present(alertController, animated: true, completion: nil)
+//    }
+//  }
   
   func postAlert(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

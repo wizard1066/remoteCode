@@ -28,7 +28,7 @@
                                             <constraint firstAttribute="width" constant="100" id="3Pu-x0-Z9S"/>
                                             <constraint firstAttribute="height" constant="100" id="v91-u7-XNK"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="up"/>
+                                        <state key="normal" title="Button" image="up-y"/>
                                         <connections>
                                             <action selector="upAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="vhv-yC-pIf"/>
                                         </connections>
@@ -43,7 +43,7 @@
                                                     <constraint firstAttribute="height" constant="100" id="YNv-oq-Gp6"/>
                                                     <constraint firstAttribute="width" constant="100" id="atV-Iz-W7b"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="left"/>
+                                                <state key="normal" title="Button" image="left-y"/>
                                                 <connections>
                                                     <action selector="leftAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="IHa-zf-ILq"/>
                                                 </connections>
@@ -67,7 +67,7 @@
                                                     <constraint firstAttribute="width" constant="100" id="EQb-1a-Bdt"/>
                                                     <constraint firstAttribute="height" constant="100" id="Emu-qD-oXE"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="right"/>
+                                                <state key="normal" title="Button" image="right-y"/>
                                                 <connections>
                                                     <action selector="rightAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="jGi-lq-nWM"/>
                                                 </connections>
@@ -81,21 +81,22 @@
                                             <constraint firstAttribute="width" constant="100" id="Gqo-zS-jfP"/>
                                             <constraint firstAttribute="height" constant="100" id="rHQ-ip-w0b"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="down"/>
+                                        <state key="normal" title="Button" image="down-y"/>
                                         <connections>
                                             <action selector="downAction:" destination="CrF-sV-4JV" eventType="touchUpInside" id="Tov-yW-EHQ"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peer" translatesAutoresizingMaskIntoConstraints="NO" id="hKN-fM-5F7">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="peer" translatesAutoresizingMaskIntoConstraints="NO" id="hKN-fM-5F7">
                                 <rect key="frame" x="47" y="84" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="hKN-fM-5F7" firstAttribute="centerY" secondItem="dpI-Zd-KeY" secondAttribute="centerY" id="1iv-8E-8ze"/>
                             <constraint firstItem="Fcu-7t-8ES" firstAttribute="centerY" secondItem="dpI-Zd-KeY" secondAttribute="centerY" id="GrC-a9-PaQ"/>
+                            <constraint firstItem="hKN-fM-5F7" firstAttribute="centerX" secondItem="dpI-Zd-KeY" secondAttribute="centerX" id="IaA-JW-ice"/>
                             <constraint firstItem="Fcu-7t-8ES" firstAttribute="centerX" secondItem="dpI-Zd-KeY" secondAttribute="centerX" id="hLi-gn-A3I"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tGR-h1-qtO"/>
@@ -107,9 +108,11 @@
                         <outlet property="rightOut" destination="lTf-uH-K1k" id="z7n-9r-8Ji"/>
                         <outlet property="shuffleOut" destination="5xI-dd-iZI" id="dvH-Gp-Q9U"/>
                         <outlet property="upOut" destination="P6L-7b-GY2" id="y48-lm-xOg"/>
+                        <segue destination="Hbu-P2-cfi" kind="unwind" identifier="returnToSegue" unwindAction="unwindToContainerVCWithSegue:" id="cis-nx-Mdb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nBG-Nf-ghA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Hbu-P2-cfi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-378.26086956521743" y="-576.35869565217399"/>
         </scene>
@@ -657,7 +660,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ql-EL-Eye">
-                                        <rect key="frame" x="117.66666666666664" y="183" width="31.333333333333357" height="14.333333333333343"/>
+                                        <rect key="frame" x="117.66666666666663" y="183" width="31.333333333333371" height="14.333333333333343"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -858,14 +861,14 @@
     </scenes>
     <resources>
         <image name="Crosshair" width="800" height="800"/>
-        <image name="down" width="100" height="100"/>
-        <image name="left" width="100" height="100"/>
+        <image name="down-y" width="100" height="100"/>
+        <image name="left-y" width="100" height="100"/>
         <image name="motion" width="320" height="568"/>
         <image name="pad" width="320" height="568"/>
         <image name="peer" width="320" height="568"/>
         <image name="red" width="328" height="328"/>
-        <image name="right" width="100" height="100"/>
+        <image name="right-y" width="100" height="100"/>
         <image name="touch" width="320" height="568"/>
-        <image name="up" width="100" height="100"/>
+        <image name="up-y" width="100" height="100"/>
     </resources>
 </document>
