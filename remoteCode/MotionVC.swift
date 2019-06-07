@@ -13,6 +13,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   
   
+  @IBOutlet weak var color: UILabel!
   @IBOutlet weak var sensitivitySlider: UISlider!
   
   @IBOutlet weak var theValue: UILabel!
@@ -87,61 +88,92 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     print("MotionVC")
   }
   
+  var previousMessage:String?
+  
   func motionUpdates() {
     if motionManager.isDeviceMotionAvailable {
       motionManager.deviceMotionUpdateInterval = refresh
       motionManager.startDeviceMotionUpdates(to: OperationQueue.main) { (data, error) in
         
-        self.xCord = (data?.attitude.roll)! * 100
-        self.yCord = (data?.attitude.pitch)! * -100
-        self.zCord = (data?.attitude.yaw)! * 100
+        self.xCord = ((data?.attitude.roll)! * 100).rounded(.toNearestOrEven)
+        self.yCord = ((data?.attitude.pitch)! * -100).rounded(.toNearestOrEven)
+        self.zCord = ((data?.attitude.yaw)! * 100).rounded(.toNearestOrEven)
         
+//        let pitchLabel = String(format: "%.2f", ((self.yCord)))
+//        let rollLabel = String(format: "%.2f", ((self.xCord)))
+//        let yawLabel = String(format: "%.2f", ((self.zCord)))
+
         let pitchLabel = String(format: "%.2f", ((self.yCord)))
         let rollLabel = String(format: "%.2f", ((self.xCord)))
         let yawLabel = String(format: "%.2f", ((self.zCord)))
         
-        if Float(self.xCord) > self.sensitivitySlider.value {
-          self.rollLabel.text = rollLabel
-          self.pitchLabel.text = pitchLabel
-          self.yawLabel.text = yawLabel
+          self.rollLabel.alpha = 0.5
+          self.pitchLabel.alpha = 0.5
+          self.yawLabel.alpha = 0.5
+        
+        var zero = false
+        
+        if Float(self.xCord) > (self.sensitivitySlider.value) {
+          self.rollLabel.alpha = 1
+          self.pitchLabel.alpha = 1
+          self.yawLabel.alpha = 1
+          
+          zero = true
         }
-        if Float(self.xCord) < -self.sensitivitySlider.value {
-          self.rollLabel.text = rollLabel
-          self.pitchLabel.text = pitchLabel
-          self.yawLabel.text = yawLabel
+        if Float(self.xCord) < -(self.sensitivitySlider.value) {
+          self.rollLabel.alpha = 1
+          self.pitchLabel.alpha = 1
+          self.yawLabel.alpha = 1
+          
+          zero = true
         }
+        
+        
         if Float(self.yCord) > self.sensitivitySlider.value {
-          self.rollLabel.text = rollLabel
-          self.pitchLabel.text = pitchLabel
-          self.yawLabel.text = yawLabel
+          self.rollLabel.alpha = 1
+          self.pitchLabel.alpha = 1
+          self.yawLabel.alpha = 1
+         // self.yCord = self.yCord - 20
+          zero = true
         }
         if Float(self.yCord) < -self.sensitivitySlider.value {
-          self.rollLabel.text = rollLabel
-          self.pitchLabel.text = pitchLabel
-          self.yawLabel.text = yawLabel
+          self.rollLabel.alpha = 1
+          self.pitchLabel.alpha = 1
+          self.yawLabel.alpha = 1
+         // self.yCord = self.yCord + 20
+          zero = true
         }
         
         
-//        if self.xCord > 20 && self.yCord < 20 {
-//                    self.theButton.image = UIImage(named: "topRight")
-//        }
-//        if self.xCord < 20 && self.yCord < 20 {
-//                    self.theButton.image = UIImage(named: "topLeft")
-//        }
-//        if self.xCord < 20 && self.yCord > 20 {
-//                    self.theButton.image = UIImage(named: "lowLeft")
-//        }
-//        if self.xCord > 20 && self.yCord > 20 {
-//                    self.theButton.image = UIImage(named: "lowRight")
-//        }
+          self.rollLabel.text = rollLabel
+          self.pitchLabel.text = pitchLabel
+          self.yawLabel.text = yawLabel
         
-        let message2D = "@:" + rollLabel + ":" + pitchLabel + ":" + yawLabel
-//        chatRoom?.sendMessage(message: message2D)
-        sendMessage(message: message2D)
+        // configure for joystick
         
+        
+        
+       
+        var message2D = "@:" + String(self.xCord) + ":" + String(self.yCord) + ":" + yawLabel
+        if self.rollLabel!.alpha == 1 && self.pitchLabel!.alpha == 1 {
+          sendMessage(message: message2D)
+          self.previousMessage = message2D
+        }
+        if zero {
+          sendMessage(message:"@:0:0:0")
+        }
+//        else {
+//          if self.previousMessage != "@:0:0:0" {
+//            message2D = "@:0:0:0"
+//            sendMessage(message: message2D)
+//            self.previousMessage = message2D
+//          }
+//        }
       }
     }
   }
+  
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -150,7 +182,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
         self.motionUpdates()
     })
-//    theButton.layer.cornerRadius = 48
+    color.text = uniqueID
     
     chatRoom?.delegate = self
     chatRoom?.connection = self
@@ -307,69 +339,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     }
   }
   
-  
-  
-  var timer:Timer!
-  var loop:Int = 0
-  
-  @objc func slowDownAndStop() {
-    loop -= 1
-    
-    if xCord > yCord {
-      if xCord < 0 {
-        xCord = round(xCord * 2)
-      } else {
-        xCord = round(xCord / 2)
-      }
-      
-      if yCord < 0 {
-        yCord = round(yCord * 2)
-      } else {
-        yCord = round(yCord / 2)
-      }
-      
-      let string2R = "@:\(xCord):\(yCord):0"
-//      chatRoom?.sendMessage(message: string2R)
-      sendMessage(message: string2R)
-      
-      if loop == 0 {
-        let figure2S = "@:0:0:0"
-        yCord = 0
-        xCord = 0
-//        chatRoom?.sendMessage(message: figure2S)
-        sendMessage(message: figure2S)
-        if timer != nil {
-          timer.invalidate()
-        }
-      }
-    } else {
-      if xCord < 0 {
-        xCord = round(xCord * -2)
-      } else {
-        xCord = round(xCord / 2)
-      }
-      
-      if yCord < 0 {
-        yCord = round(yCord * -2)
-      } else {
-        yCord = round(yCord / 2)
-      }
-      
-      let string2R = "@:\(xCord):\(yCord):0"
-//      chatRoom?.sendMessage(message: string2R)
-      sendMessage(message: string2R)
-      if loop == 0 {
-        let figure2S = "@:0:0:0"
-        yCord = 0
-        xCord = 0
-//        chatRoom?.sendMessage(message: figure2S)
-        sendMessage(message: figure2S)
-        if timer != nil {
-          timer.invalidate()
-        }
-      }
-    }
-  }
+ 
   
   
 

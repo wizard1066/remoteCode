@@ -119,10 +119,11 @@ extension ColorService : MCSessionDelegate {
 //      NSLog("%@", "didReceiveData: \(data.count) bytes")
         let str = String(data: data, encoding: .utf8)!
 //        chatRoom?.sendMessage(message: str)
-        let parts = str.components(separatedBy: ":")
+        var parts = str.components(separatedBy: ":")
       
       
         // this is needed cause the stupid system connects to itself...
+        print("parts \(parts)")
         if tag[parts[1]] == nil {
           return
         }
@@ -131,7 +132,23 @@ extension ColorService : MCSessionDelegate {
             let tagX = tag[parts[1]]
             let bon = tagX! & Int(parts[2])!
             if bon > 0 {
-              print("parts \(parts) ")
+              print("parts BEFORE \(parts) ")
+//              let binary = Int(parts[2])!
+              let binary = tagX!
+              let forward = binary & 0b00000001
+              let backward = binary & 0b00000100
+              let left = binary & 00001000
+              let right = binary & 00000010
+              
+              if forward == 1 || backward == 4  {
+                parts[4] = "0"
+              }
+              if left == 8 || right == 2 {
+                parts[5] = "0"
+              }
+              print("parts AFTER \(parts) ")
+              print("\(forward) \(backward) \(left) \(right) \(binary)")
+              
               let transmit = parts.dropFirst(3).joined(separator: ":")
               chatRoom?.sendMessage(message: transmit)
             }

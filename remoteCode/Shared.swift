@@ -26,6 +26,8 @@ enum team: String {
   }
 }
 
+var lastMessage: String?
+
 func sendMessage(message: String) {
     if chatRoom != nil {
       chatRoom?.sendMessage(message: message)
@@ -34,15 +36,11 @@ func sendMessage(message: String) {
 //      print("peas \(peas) \(peas.count)")
       var roll:Float!
       var pitch:Float!
+
       var match = 0
       if peas.count == 3 || peas.count == 4 {
         roll = Float(peas[1])
         pitch = Float(peas[2])
-//        if roll! > pitch! {
-//          pitch = 0.0
-//        } else {
-//          roll = 0.0
-//        }
         
         if Float(pitch!) > 0 {
           match = 1 // forward
@@ -56,12 +54,7 @@ func sendMessage(message: String) {
         }
       }
       if roll != nil && pitch != nil {
-        if roll! > Float(sensitivity) || pitch! > Float(sensitivity) {
-          colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
-        }
-        if roll! < Float(-sensitivity) || pitch! < Float(-sensitivity) {
-          colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
-        }
+        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
       } else {
         colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }

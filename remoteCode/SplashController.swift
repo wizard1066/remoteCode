@@ -65,20 +65,42 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   @IBOutlet weak var imgView: UIImageView!
   
-  func animate_images()
-  {
-    let myimgArr = ["icon1.png","icon2.png","icon3.png","icon4.png","icon5.png","icon6.png"]
-    var images = [UIImage]()
-    
-    for i in 0..<myimgArr.count
-    {
-      images.append(UIImage(named: myimgArr[i])!)
+  func animate_images(based:String) {
+    print("animate \(based)")
+    imgView.stopAnimating()
+    var myimgArr:[String] = []
+    uniqueID = based
+    switch based {
+      case "R":
+        myimgArr = ["ricon1.png","ricon2.png","ricon3.png","ricon4.png","ricon5.png","ricon6.png"]
+        loadImages(images: myimgArr)
+      case "Y":
+        myimgArr = ["yicon1.png","yicon2.png","yicon3.png","yicon4.png","yicon5.png","yicon6.png"]
+        loadImages(images: myimgArr)
+      case "B":
+        myimgArr = ["bicon1.png","bicon2.png","bicon3.png","bicon4.png","bicon5.png","bicon6.png"]
+        loadImages(images: myimgArr)
+      case "G":
+        myimgArr = ["gicon1.png","gicon2.png","gicon3.png","gicon4.png","gicon5.png","gicon6.png"]
+        loadImages(images: myimgArr)
+      default:
+        print("stupid switch statements")
     }
     
-    imgView.animationImages = images
-    imgView.animationDuration = 4
-    imgView.animationRepeatCount = 24
-    imgView.startAnimating()
+  }
+  
+  func loadImages(images:[String]) {
+    var frames = [UIImage]()
+    
+    for i in 0..<images.count {
+      frames.append(UIImage(named: images[i])!)
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+      self.imgView.animationImages = frames
+      self.imgView.animationDuration = 4
+      self.imgView.animationRepeatCount = 24
+      self.imgView.startAnimating()
+    })
   }
   
   
@@ -165,8 +187,6 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   @IBOutlet weak var connectLabel: UIButton!
   
-  var uniqueID:String!
-  
   func configImgView() {
     let hitMe = UITapGestureRecognizer(target: self, action: #selector(toggleMotion))
     let hitMeLong = UILongPressGestureRecognizer(target: self, action: #selector(longMotion))
@@ -189,20 +209,24 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   }
   
   @objc func toggleMotion(sender: UITapGestureRecognizer) {
+    print("uniqueID \(uniqueID)")
     uniqueID = flip()
     print("uniqueID \(uniqueID)")
-    switch uniqueID {
-      case "R":
-        imgView.image = UIImage(named: "red")
-      case "G":
-        imgView.image = UIImage(named: "green")
-      case "B":
-        imgView.image = UIImage(named: "blue")
-      case "Y":
-        imgView.image = UIImage(named: "yellow")
-      default:
-        print("stupid switch statement")
-    }
+    animate_images(based: uniqueID)
+//    print("uniqueID \(uniqueID)")
+//    switch uniqueID {
+//      case "R":
+////        imgView.image = UIImage(named: "red")
+//
+//      case "G":
+//        imgView.image = UIImage(named: "green")
+//      case "B":
+//        imgView.image = UIImage(named: "blue")
+//      case "Y":
+//        imgView.image = UIImage(named: "yellow")
+//      default:
+//        print("stupid switch statement")
+//    }
   }
   
   @objc func longMotion(sender: UITapGestureRecognizer) {
@@ -225,6 +249,8 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     if chatRoom != nil {
       chatRoom?.warning = self
     }
+    animate_images(based: "R")
+    
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
