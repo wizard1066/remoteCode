@@ -61,21 +61,21 @@ func sendMessage(message: String) {
         } else {
           match = match + 8 // left
         }
-        let newP = pod(roll: roll, pitch: pitch, yaw: yaw, match: match)
-        pods.append(newP)
+//        let newP = pod(roll: roll, pitch: pitch, yaw: yaw, match: match)
+//        pods.append(newP)
       }
       if roll != nil && pitch != nil {
-
-        if pods.count > 9 {
-          let rtnMessage = returnPod()
-          if rtnMessage != nil {
-            let message2A = "*:" + uniqueID + ":"
-            let message2B = String(match) + ":" + rtnMessage! + "\n"
-            let message2C = message2A + message2B
-            print("message2C \(message2C)")
-            colorSearch.send(colorName: message2C)
-          }
-        }
+        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
+//        if pods.count > 9 {
+//          let rtnMessage = returnPod()
+//          if rtnMessage != nil {
+//            let message2A = "*:" + uniqueID + ":"
+//            let message2B = String(match) + ":" + rtnMessage! + "\n"
+//            let message2C = message2A + message2B
+////            print("message2C \(message2C)")
+//            colorSearch.send(colorName: message2C)
+//          }
+//        }
       } else {
         colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }
@@ -125,8 +125,9 @@ func sendMessage(message: String) {
     if rRoll < -20 {
       rRoll = rRoll + sensitivity
     }
-    previousMessage = "@:\(String(describing: rRoll)):\(String(describing: rPitch)):\(String(describing: rYaw))"
-    return(previousMessage!)
+    
+    let newMessage = "@:\(String(describing: rRoll)):\(String(describing: rPitch)):\(String(describing: rYaw))"
+    return(newMessage)
   }
 
 //  var xPort:Dictionary = ["P1":"P1","P2":"P2","P3":"P3","P4":"P4","PA":"PA","PB":"PB","PC":"PC","PD":"PD"]

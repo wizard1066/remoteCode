@@ -76,7 +76,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   var xmoving = false
   var ymoving = false
-  var refresh = 0.01
+  var refresh = 0.1
   
 //  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
 //                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
