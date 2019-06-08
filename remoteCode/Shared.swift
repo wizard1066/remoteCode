@@ -27,6 +27,13 @@ enum team: String {
 }
 
 var lastMessage: String?
+struct pod {
+  var roll: Float?
+  var pitch: Float?
+  var yaw: Float?
+  var match: Int?
+}
+var pods:[pod] = []
 
 func sendMessage(message: String) {
     if chatRoom != nil {
@@ -36,11 +43,13 @@ func sendMessage(message: String) {
 //      print("peas \(peas) \(peas.count)")
       var roll:Float!
       var pitch:Float!
+      var yaw:Float!
 
       var match = 0
       if peas.count == 3 || peas.count == 4 {
         roll = Float(peas[1])
         pitch = Float(peas[2])
+        yaw = Float(peas[3])
         
         if Float(pitch!) > 0 {
           match = 1 // forward
@@ -52,13 +61,72 @@ func sendMessage(message: String) {
         } else {
           match = match + 8 // left
         }
+        let newP = pod(roll: roll, pitch: pitch, yaw: yaw, match: match)
+        pods.append(newP)
       }
       if roll != nil && pitch != nil {
-        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
+
+        if pods.count > 9 {
+          let rtnMessage = returnPod()
+          if rtnMessage != nil {
+            let message2A = "*:" + uniqueID + ":"
+            let message2B = String(match) + ":" + rtnMessage! + "\n"
+            let message2C = message2A + message2B
+            print("message2C \(message2C)")
+            colorSearch.send(colorName: message2C)
+          }
+        }
       } else {
         colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }
     }
+  }
+
+  var previousMessage:String?
+
+  func returnPod() -> String? {
+    defer {
+      pods.removeAll()
+    }
+ 
+    var aPitch: Float? = 0
+    var aRoll: Float? = 0
+    var aYaw: Float? = 0
+    for peas in pods {
+//      print("peas \(peas)")
+      if (peas.pitch! < Float(-10) || peas.pitch! > Float(10)) || (peas.roll! < Float(-10) || peas.roll! > Float(10)) {
+      // capture an average everything below 10, above 10
+      aPitch = aPitch! + peas.pitch!
+      aRoll = aRoll! + peas.roll!
+      aYaw = aYaw! + peas.yaw!
+  } else {
+      // drop everything return zero this should happen if pitch is between -10 and 10.
+      if previousMessage != "@:0:0:0:255" {
+        previousMessage = "@:0:0:0:255"
+        return(previousMessage!)
+      } else {
+        return nil
+        }
+    
+  }
+    }
+    var rPitch = aPitch! / Float(pods.count)
+    var rRoll = aRoll! / Float(pods.count)
+    let rYaw = aYaw! / Float(pods.count)
+    if rPitch > 20 {
+      rPitch = rPitch - sensitivity
+    }
+    if rPitch < -20 {
+      rPitch = rPitch + sensitivity
+    }
+    if rRoll > 20 {
+      rRoll = rRoll - sensitivity
+    }
+    if rRoll < -20 {
+      rRoll = rRoll + sensitivity
+    }
+    previousMessage = "@:\(String(describing: rRoll)):\(String(describing: rPitch)):\(String(describing: rYaw))"
+    return(previousMessage!)
   }
 
 //  var xPort:Dictionary = ["P1":"P1","P2":"P2","P3":"P3","P4":"P4","PA":"PA","PB":"PB","PC":"PC","PD":"PD"]

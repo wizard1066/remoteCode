@@ -123,7 +123,7 @@ extension ColorService : MCSessionDelegate {
       
       
         // this is needed cause the stupid system connects to itself...
-        print("parts \(parts)")
+//        print("parts \(parts)")
         if tag[parts[1]] == nil {
           return
         }
@@ -132,25 +132,44 @@ extension ColorService : MCSessionDelegate {
             let tagX = tag[parts[1]]
             let bon = tagX! & Int(parts[2])!
             if bon > 0 {
-              print("parts BEFORE \(parts) ")
+//              print("parts BEFORE \(parts) ")
 //              let binary = Int(parts[2])!
               let binary = tagX!
-              let forward = binary & 0b00000001
-              let backward = binary & 0b00000100
-              let left = binary & 00001000
-              let right = binary & 00000010
+              let forward = binary & 0b00000001 // header = +:
+              let backward = binary & 0b00000100 // header = -:
+              let left = binary & 00001000 // header = <:
+              let right = binary & 00000010 // header = >:
               
-              if forward == 1 || backward == 4  {
-                parts[4] = "0"
+              print("\(parts) \(forward) \(backward) \(left) \(right)")
+              
+//              if left != 0 || right != 0 {
+//                parts[5] = "0"
+//              }
+//              if forward != 0 || backward != 0 {
+//                parts[4] = "0"
+//              }
+              
+              var header:String!
+              if forward != 0 {
+                header = "+:"
+              } else {
+                if backward != 0 {
+                  header = "+:"
+                } else {
+                  if left != 0 {
+                    header = "-:"
+                  } else {
+                    if right != 0 {
+                      header = "-:"
+                    }
+                  }
+                }
               }
-              if left == 8 || right == 2 {
-                parts[5] = "0"
-              }
-              print("parts AFTER \(parts) ")
-              print("\(forward) \(backward) \(left) \(right) \(binary)")
               
               let transmit = parts.dropFirst(3).joined(separator: ":")
-              chatRoom?.sendMessage(message: transmit)
+              let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
+              print("newTransmit \(newTransmit)")
+              chatRoom?.sendMessage(message: newTransmit)
             }
           }
       

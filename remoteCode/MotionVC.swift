@@ -76,7 +76,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   var xmoving = false
   var ymoving = false
-  var refresh = 0.1
+  var refresh = 0.01
   
 //  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
 //                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
@@ -96,12 +96,9 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       motionManager.startDeviceMotionUpdates(to: OperationQueue.main) { (data, error) in
         
         self.xCord = ((data?.attitude.roll)! * 100).rounded(.toNearestOrEven)
+//        self.yCord = ((data?.attitude.pitch)! * -100).rounded(.toNearestOrEven)
         self.yCord = ((data?.attitude.pitch)! * -100).rounded(.toNearestOrEven)
         self.zCord = ((data?.attitude.yaw)! * 100).rounded(.toNearestOrEven)
-        
-//        let pitchLabel = String(format: "%.2f", ((self.yCord)))
-//        let rollLabel = String(format: "%.2f", ((self.xCord)))
-//        let yawLabel = String(format: "%.2f", ((self.zCord)))
 
         let pitchLabel = String(format: "%.2f", ((self.yCord)))
         let rollLabel = String(format: "%.2f", ((self.xCord)))
@@ -111,64 +108,41 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           self.pitchLabel.alpha = 0.5
           self.yawLabel.alpha = 0.5
         
-        var zero = false
         
-        if Float(self.xCord) > (self.sensitivitySlider.value) {
+        
+        if Float(self.xCord) > (self.sensitivitySlider.value)  {
           self.rollLabel.alpha = 1
-          self.pitchLabel.alpha = 1
+//          self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
-          
-          zero = true
         }
         if Float(self.xCord) < -(self.sensitivitySlider.value) {
           self.rollLabel.alpha = 1
+//          self.pitchLabel.alpha = 1
+          self.yawLabel.alpha = 1
+        }
+        
+        if Float(self.yCord) > self.sensitivitySlider.value  {
+//          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
           
-          zero = true
-        }
-        
-        
-        if Float(self.yCord) > self.sensitivitySlider.value {
-          self.rollLabel.alpha = 1
-          self.pitchLabel.alpha = 1
-          self.yawLabel.alpha = 1
-         // self.yCord = self.yCord - 20
-          zero = true
         }
         if Float(self.yCord) < -self.sensitivitySlider.value {
-          self.rollLabel.alpha = 1
+//          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
-         // self.yCord = self.yCord + 20
-          zero = true
+      
         }
-        
         
           self.rollLabel.text = rollLabel
           self.pitchLabel.text = pitchLabel
           self.yawLabel.text = yawLabel
         
-        // configure for joystick
-        
-        
-        
-       
-        var message2D = "@:" + String(self.xCord) + ":" + String(self.yCord) + ":" + yawLabel
-        if self.rollLabel!.alpha == 1 && self.pitchLabel!.alpha == 1 {
+        let message2D = "@:" + String(self.xCord) + ":" + String(self.yCord) + ":" + yawLabel
+        if message2D != self.previousMessage {
           sendMessage(message: message2D)
           self.previousMessage = message2D
         }
-        if zero {
-          sendMessage(message:"@:0:0:0")
-        }
-//        else {
-//          if self.previousMessage != "@:0:0:0" {
-//            message2D = "@:0:0:0"
-//            sendMessage(message: message2D)
-//            self.previousMessage = message2D
-//          }
-//        }
       }
     }
   }
