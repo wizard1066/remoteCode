@@ -18,10 +18,6 @@ protocol ColorServiceDelegate {
 
 class ColorService : NSObject {
 
-  var lastPitch:String?
-  var lastRoll:String?
-  var duplicate:Bool!
-
     lazy var session : MCSession = {
         let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
@@ -33,9 +29,7 @@ class ColorService : NSObject {
     // Service type must be a unique string, at most 15 characters long
     // and can contain only ASCII lowercase letters, numbers and hyphens.
     private let ColorServiceType = "example-color"
-
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
-
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
 
     override init() {
@@ -52,10 +46,13 @@ class ColorService : NSObject {
         self.serviceAdvertiser.stopAdvertisingPeer()
     }
   
+    func stopAdvertising() {
+      self.serviceAdvertiser.stopAdvertisingPeer()
+  }
+  
     func send(colorName : String) {
         NSLog("%@", "sendColor: \(colorName) to \(session.connectedPeers.count) peers")
-      
-      
+
         if session.connectedPeers.count > 0 {
             do {
                 try self.session.send(colorName.data(using: .utf8)!, toPeers: session.connectedPeers, with: .reliable)
@@ -87,8 +84,7 @@ extension ColorService : MCNearbyServiceAdvertiserDelegate {
 
 
 
-
-extension ColorService : MCSessionDelegate {
+extension ColorService : MCSessionDelegate, StreamDelegate {
 
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.rawValue)")
@@ -97,7 +93,6 @@ extension ColorService : MCSessionDelegate {
     }
   
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        duplicate = false
 //      NSLog("%@", "didReceiveData: \(data.count) bytes")
         let str = String(data: data, encoding: .utf8)!
 //        chatRoom?.sendMessage(message: str)
@@ -132,38 +127,42 @@ extension ColorService : MCSessionDelegate {
                   header = "+:"
                 } else {
                   if left != 0 {
-                    header = "-:"
+                    header = "&:"
                   } else {
                     if right != 0 {
-                      header = "-:"
+                      header = "&:"
                     }
                   }
                 }
               }
               
-//              if header == "+:" && lastPitch == parts[5]{
-//                duplicate = true
-//              }
-//              if header == "-:" && lastRoll == parts[4] {
-//                duplicate = true
-//              }
-//              lastRoll = parts[4]
-//              lastPitch = parts[5]
+              if right == 10 {
+                header = "&:"
+              }
               
+              // part4 is roll
+              // part5 is pitch
+
               let transmit = parts.dropFirst(3).joined(separator: ":")
-              print("transmit p4 \(parts[4]) p5 \(parts[5])")
+              print("transmit p4 \(header!) \(parts[4]) p5 \(parts[5])")
               let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
-//              print("newTransmit \(newTransmit)")
-//              if !duplicate {
                 chatRoom?.sendMessage(message: newTransmit)
-//              }
             }
           }
-      
     }
+  
+  func closeSessions() {
+    for peer in session.connectedPeers {
+      session.cancelConnectPeer(peer)
+    }
+  }
+  
 
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveStream")
+        stream.delegate = self
+        stream.schedule(in: RunLoop.main, forMode: RunLoop.Mode.default)
+        stream.open()
     }
 
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
@@ -173,6 +172,66 @@ extension ColorService : MCSessionDelegate {
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         NSLog("%@", "didFinishReceivingResourceWithName")
     }
+  
+  func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
+    switch(eventCode){
+    case Stream.Event.hasBytesAvailable:
+      let input = aStream as! InputStream
+      
+      let dataMutablePointer = UnsafeMutablePointer<UInt8>.allocate(capacity: 1024)
+      //Copies the bytes to the Mutable Pointer
+      dataMutablePointer.initialize(to: 0)
+      let byteCount = input.read(dataMutablePointer, maxLength: 1024)
+      let data = Data(bytes: dataMutablePointer, count: byteCount)
+      let str = String(bytes: data, encoding: String.Encoding.utf8)
+      if str!.count < 4 {
+      // corrupted data
+        return
+      }
+//      chatRoom?.sendMessage(message: str!)
+      if tag.count == 0 {
+      // wrong peer
+        return
+      }
+      var parts = str!.components(separatedBy: ":")
+      let tagX = tag[parts[1]]
+      let bon = tagX! & Int(parts[2])!
+      if bon > 0 {
+        var header:String!
+        let binary = tagX!
+        let forward = binary & 0b00000001 // header = +:
+        let backward = binary & 0b00000100 // header = -:
+        let left = binary & 00001000 // header = <:
+        let right = binary & 00000010 // header = >:
+        print("binary \(binary) forward \(forward) backward \(backward) left \(left) right \(right)")
+        if forward == 1 {
+          header = "+:\(binary):"
+        } else {
+          if left == 8 {
+            header = "&:\(binary):"
+          } else {
+            if right == 2 {
+              header = "&:\(binary):"
+            } else {
+              if backward == 4 {
+                header = "+:\(binary):"
+              }
+            }
+          }
+        }
+        header = "&:\(binary):"
+        let transmit = parts.dropFirst(3).joined(separator: ":")
+        let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
+        chatRoom?.sendMessage(message: newTransmit)
+      }
+      
+    case Stream.Event.hasSpaceAvailable:
+      break
+    //output
+    default:
+      break
+    }
+}
   
   
 

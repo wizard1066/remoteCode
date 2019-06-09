@@ -45,10 +45,10 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   
   @IBOutlet weak var motionOut: UIButton!
+  
   @IBAction func motionButton(_ sender: Any) {
     if ok2Connect || peerConnection {
       colorService = ColorService()
-      
       self.performSegue(withIdentifier: "motion", sender: nil)
     }
   }
@@ -130,6 +130,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
       self.digitalOut.isEnabled = false
       self.analogOut.isEnabled = false
       self.motionOut.isEnabled = false
+      self.gameOut.isEnabled = false
       ipaddress.isEnabled = true
       portNumber.isEnabled = true
       connectLabel.isEnabled = true
@@ -213,20 +214,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     uniqueID = flip()
     print("uniqueID \(uniqueID)")
     animate_images(based: uniqueID)
-//    print("uniqueID \(uniqueID)")
-//    switch uniqueID {
-//      case "R":
-////        imgView.image = UIImage(named: "red")
-//
-//      case "G":
-//        imgView.image = UIImage(named: "green")
-//      case "B":
-//        imgView.image = UIImage(named: "blue")
-//      case "Y":
-//        imgView.image = UIImage(named: "yellow")
-//      default:
-//        print("stupid switch statement")
-//    }
+
   }
   
   @objc func longMotion(sender: UITapGestureRecognizer) {
@@ -340,6 +328,9 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
         chatRoom?.sendMessage(message: "#:disconnect")
         chatRoom?.stopChat()
+        colorSearch.closeStream()
+        colorService.closeSessions()
+        colorService.stopAdvertising()
         
         self.connectLabel.setTitle("Connect", for: .normal)
         self.connectLabel.isEnabled = true
@@ -349,6 +340,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
         self.digitalOut.isEnabled = false
         self.analogOut.isEnabled = false
         self.motionOut.isEnabled = false
+        self.gameOut.isEnabled = false
         
         //        self.performSegue(withIdentifier: "returnToSegue", sender: self)
       }

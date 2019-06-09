@@ -141,6 +141,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         let message2D = "@:" + String(self.xCord) + ":" + String(self.yCord) + ":" + yawLabel
         if message2D != self.previousMessage {
           sendMessage(message: message2D)
+          
           self.previousMessage = message2D
         }
       }

@@ -166,7 +166,6 @@
                                         <state key="normal" title="Peer"/>
                                         <connections>
                                             <action selector="gameButton:" destination="Ebu-k6-UAt" eventType="touchUpInside" id="dEp-Bo-fgx"/>
-                                            <action selector="motionButton:" destination="Ebu-k6-UAt" eventType="touchUpInside" id="rN4-Xx-R4i"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3s-Vx-vkb">
@@ -196,11 +195,19 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56L-XC-SYH">
+                                <rect key="frame" x="197" y="148.66666666666666" width="20.333333333333343" height="14.333333333333343"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Yp2-T3-Gvo" firstAttribute="centerX" secondItem="Dc7-Sp-veP" secondAttribute="centerX" id="3hM-Ak-SxN"/>
                             <constraint firstItem="ggM-Sl-eZu" firstAttribute="top" secondItem="Yp2-T3-Gvo" secondAttribute="bottom" constant="40" id="AQu-UX-dql"/>
+                            <constraint firstItem="56L-XC-SYH" firstAttribute="centerX" secondItem="Dc7-Sp-veP" secondAttribute="centerX" id="AcM-R4-KRb"/>
+                            <constraint firstItem="Yp2-T3-Gvo" firstAttribute="top" secondItem="56L-XC-SYH" secondAttribute="bottom" constant="14" id="UO8-Jt-wPN"/>
                             <constraint firstItem="ggM-Sl-eZu" firstAttribute="centerX" secondItem="Dc7-Sp-veP" secondAttribute="centerX" id="b4a-CE-VnJ"/>
                             <constraint firstItem="ggM-Sl-eZu" firstAttribute="centerY" secondItem="Dc7-Sp-veP" secondAttribute="centerY" constant="81.5" id="pQ5-dL-S5W"/>
                         </constraints>

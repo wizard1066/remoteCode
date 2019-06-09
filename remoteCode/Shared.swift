@@ -65,17 +65,9 @@ func sendMessage(message: String) {
 //        pods.append(newP)
       }
       if roll != nil && pitch != nil {
-        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
-//        if pods.count > 9 {
-//          let rtnMessage = returnPod()
-//          if rtnMessage != nil {
-//            let message2A = "*:" + uniqueID + ":"
-//            let message2B = String(match) + ":" + rtnMessage! + "\n"
-//            let message2C = message2A + message2B
-////            print("message2C \(message2C)")
-//            colorSearch.send(colorName: message2C)
-//          }
-//        }
+        let message2D = "*:" + uniqueID + ":" + String(match) + ":" + message + "\n"
+        colorSearch.sendStream(colorName: message2D)
+//        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
       } else {
         colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }
