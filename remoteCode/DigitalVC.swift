@@ -48,6 +48,7 @@ class MyLongGesture: UILongPressGestureRecognizer {
 
 class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, PostAlert, UIGestureRecognizerDelegate {
   
+  @IBOutlet weak var color: UILabel!
   // format label:oldLabel:newLabel
   @IBOutlet weak var vctype: UILabel!
   
@@ -374,6 +375,11 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     
     configButtons()
     
+    color.text = uniqueID
+    
+    colorService?.delegate = self
+    colorSearch?.delegate = self
+    
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
     edgePan.edges = .left
     edgePan.delegate = self
@@ -512,3 +518,24 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   }
 }
 
+extension DigitalVC: ColorSearchDelegate {
+  func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorSearch, colorString: String) {
+    print("colorChanged")
+  }
+}
+
+extension DigitalVC: ColorServiceDelegate {
+  func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorService, colorString: String) {
+    print("colorChanged")
+  }
+  
+
+}

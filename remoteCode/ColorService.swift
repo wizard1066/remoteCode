@@ -28,7 +28,8 @@ class ColorService : NSObject {
 
     // Service type must be a unique string, at most 15 characters long
     // and can contain only ASCII lowercase letters, numbers and hyphens.
-    private let ColorServiceType = "example-color"
+//    private let ColorServiceType = "example-color"
+    private let ColorServiceType = "remote-code"
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
 

@@ -10,7 +10,9 @@ import UIKit
 
 class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, PostAlert, UIGestureRecognizerDelegate {
   
-   func newName(_ value: String) {
+  @IBOutlet weak var color: UILabel!
+  
+  func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
     
     
@@ -225,6 +227,11 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom?.rename = self
     chatRoom?.warning = self
     configurePorts()
+    
+    color.text = uniqueID
+    
+    colorService?.delegate = self
+    colorSearch?.delegate = self
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
     edgePan.edges = .left
@@ -460,22 +467,6 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     detectOrientation()
   }
   
-//  override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-//    if motion == .motionShake {
-//      let alertController = UIAlertController(title: "Disconnect?", message: "Do you want to disconnect", preferredStyle: .alert)
-//      let ignoreAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-//      let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
-////        chatRoom?.sendMessage(message: "#:disconnect")
-//        sendMessage(message: "#:disconnect")
-//        chatRoom?.stopChat()
-//        self.performSegue(withIdentifier: "returnToSegue", sender: self)
-//      }
-//      alertController.addAction(ignoreAction)
-//      alertController.addAction(okAction)
-//      self.present(alertController, animated: true, completion: nil)
-//    }
-//  }
-  
   func postAlert(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     self.present(alert, animated: true, completion: nil)
@@ -487,3 +478,24 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   }
 }
 
+extension AnalogVC: ColorSearchDelegate {
+  func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorSearch, colorString: String) {
+    print("colorChanged")
+  }
+}
+
+extension AnalogVC: ColorServiceDelegate {
+  func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorService, colorString: String) {
+    print("colorChanged")
+  }
+  
+
+}

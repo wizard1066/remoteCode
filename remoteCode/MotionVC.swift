@@ -78,6 +78,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   var ymoving = false
   var refresh = 0.1
   
+  var warning: PostAlert?
+  
 //  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
 //                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
 //    -> Bool {
@@ -161,7 +163,12 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom?.connection = self
     chatRoom?.rename = self
     chatRoom?.warning = self
+    
     configurePorts()
+    
+ 
+    colorService?.delegate = self
+    colorSearch?.delegate = self
     
     let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
     edgePan.edges = .left
@@ -465,4 +472,28 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
       alert.dismiss(animated: true, completion: nil)
     })
   }
+}
+
+extension MotionVC: ColorServiceDelegate {
+  func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorService, colorString: String) {
+    print("colorChanged")
+  }
+  
+
+}
+
+extension MotionVC: ColorSearchDelegate {
+  func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
+    bad("Lost Connection")
+  }
+  
+  func colorChanged(manager: ColorSearch, colorString: String) {
+    print("colorChanged")
+  }
+  
+
 }
