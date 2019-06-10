@@ -71,19 +71,24 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     imgView.stopAnimating()
     var myimgArr:[String] = []
     uniqueID = based
+    let defaults = UserDefaults.standard
     switch based {
       case "R":
         myimgArr = ["ricon1.png","ricon2.png","ricon3.png","ricon4.png","ricon5.png","ricon6.png"]
         loadImages(images: myimgArr)
+        defaults.set("R",forKey: "color")
       case "Y":
         myimgArr = ["yicon1.png","yicon2.png","yicon3.png","yicon4.png","yicon5.png","yicon6.png"]
         loadImages(images: myimgArr)
+        defaults.set("Y",forKey: "color")
       case "B":
         myimgArr = ["bicon1.png","bicon2.png","bicon3.png","bicon4.png","bicon5.png","bicon6.png"]
         loadImages(images: myimgArr)
+        defaults.set("B",forKey: "color")
       case "G":
         myimgArr = ["gicon1.png","gicon2.png","gicon3.png","gicon4.png","gicon5.png","gicon6.png"]
         loadImages(images: myimgArr)
+        defaults.set("G",forKey: "color")
       default:
         print("stupid switch statements")
     }
@@ -233,12 +238,18 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   }
   
   override func viewDidAppear(_ animated: Bool) {
-//    animate_images()
+
     if chatRoom != nil {
       chatRoom?.warning = self
       chatRoom?.connection = self
     }
-    animate_images(based: "R")
+    let defaults = UserDefaults.standard
+    let color:String? = defaults.string(forKey: "color")
+    if color != nil {
+      animate_images(based: color!)
+    } else {
+      animate_images(based: "R")
+    }
     colorSearch = ColorSearch()
     colorSearch!.delegate = self
   }
