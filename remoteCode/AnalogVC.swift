@@ -483,7 +483,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 extension AnalogVC: ColorSearchDelegate {
   func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
-    ok("Lost Connection")
+    ok("Connection Changed")
   }
   
   func colorChanged(manager: ColorSearch, colorString: String) {
@@ -493,7 +493,7 @@ extension AnalogVC: ColorSearchDelegate {
 
 extension AnalogVC: ColorServiceDelegate {
   func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
-    ok("Lost Connection")
+    ok("Connection Changed")
   }
   
   func colorChanged(manager: ColorService, colorString: String) {

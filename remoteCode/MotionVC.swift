@@ -476,7 +476,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 extension MotionVC: ColorServiceDelegate {
   func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
-    ok("Lost Connection")
+    ok("Connection Changed")
   }
   
   func colorChanged(manager: ColorService, colorString: String) {
@@ -488,7 +488,7 @@ extension MotionVC: ColorServiceDelegate {
 
 extension MotionVC: ColorSearchDelegate {
   func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
-    ok("Lost Connection")
+    ok("Connection Changed")
   }
   
   func colorChanged(manager: ColorSearch, colorString: String) {
