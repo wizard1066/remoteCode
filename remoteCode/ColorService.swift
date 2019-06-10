@@ -99,57 +99,18 @@ extension ColorService : MCSessionDelegate, StreamDelegate {
 //        chatRoom?.sendMessage(message: str)
         var parts = str.components(separatedBy: ":")
       
+//        if tag[parts[1]] == nil {
+//          return
+//        }
+      var header:String!
       
-        // this is needed cause the stupid system connects to itself...
-//        print("parts \(parts)")
-        if tag[parts[1]] == nil {
-          return
-        }
+            header = "&:\(tag[parts[1]]):"
       
-          if parts.count > 5 {
-            let tagX = tag[parts[1]]
-            let bon = tagX! & Int(parts[2])!
-            if bon > 0 {
-//              print("parts BEFORE \(parts) ")
-//              let binary = Int(parts[2])!
-              let binary = tagX!
-              let forward = binary & 0b00000001 // header = +:
-              let backward = binary & 0b00000100 // header = -:
-              let left = binary & 00001000 // header = <:
-              let right = binary & 00000010 // header = >:
-              
-//              print("\(parts) \(forward) \(backward) \(left) \(right)")
-              
-              var header:String!
-              if forward != 0 {
-                header = "+:"
-              } else {
-                if backward != 0 {
-                  header = "+:"
-                } else {
-                  if left != 0 {
-                    header = "&:"
-                  } else {
-                    if right != 0 {
-                      header = "&:"
-                    }
-                  }
-                }
-              }
-              
-              if right == 10 {
-                header = "&:"
-              }
-              
-              // part4 is roll
-              // part5 is pitch
-
               let transmit = parts.dropFirst(3).joined(separator: ":")
-              print("transmit p4 \(header!) \(parts[4]) p5 \(parts[5])")
               let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
                 chatRoom?.sendMessage(message: newTransmit)
-            }
-          }
+//            }
+//          }
     }
   
   func closeSessions() {
@@ -185,41 +146,41 @@ extension ColorService : MCSessionDelegate, StreamDelegate {
       let byteCount = input.read(dataMutablePointer, maxLength: 1024)
       let data = Data(bytes: dataMutablePointer, count: byteCount)
       let str = String(bytes: data, encoding: String.Encoding.utf8)
-      if str!.count < 4 {
-      // corrupted data
+      if str!.count < 4 || str!.count > 80 {
+        print("corrupted data")
         return
       }
 //      chatRoom?.sendMessage(message: str!)
-      if tag.count == 0 {
-      // wrong peer
-        return
-      }
+//      if tag.count == 0 {
+//      // wrong peer
+//        return
+//      }
       var parts = str!.components(separatedBy: ":")
       let tagX = tag[parts[1]]
       let bon = tagX! & Int(parts[2])!
       if bon > 0 {
         var header:String!
         let binary = tagX!
-        let forward = binary & 0b00000001 // header = +:
-        let backward = binary & 0b00000100 // header = -:
-        let left = binary & 00001000 // header = <:
-        let right = binary & 00000010 // header = >:
-        print("binary \(binary) forward \(forward) backward \(backward) left \(left) right \(right)")
-        if forward == 1 {
-          header = "+:\(binary):"
-        } else {
-          if left == 8 {
-            header = "&:\(binary):"
-          } else {
-            if right == 2 {
-              header = "&:\(binary):"
-            } else {
-              if backward == 4 {
-                header = "+:\(binary):"
-              }
-            }
-          }
-        }
+//        let forward = binary & 0b00000001 // header = +:
+//        let backward = binary & 0b00000100 // header = -:
+//        let left = binary & 00001000 // header = <:
+//        let right = binary & 00000010 // header = >:
+//        print("binary \(binary) forward \(forward) backward \(backward) left \(left) right \(right)")
+//        if forward == 1 {
+//          header = "+:\(binary):"
+//        } else {
+//          if left == 8 {
+//            header = "&:\(binary):"
+//          } else {
+//            if right == 2 {
+//              header = "&:\(binary):"
+//            } else {
+//              if backward == 4 {
+//                header = "+:\(binary):"
+//              }
+//            }
+//          }
+//        }
         header = "&:\(binary):"
         let transmit = parts.dropFirst(3).joined(separator: ":")
         let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)

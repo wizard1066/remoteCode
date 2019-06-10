@@ -45,7 +45,7 @@ func sendMessage(message: String) {
 //      print("peas \(peas) \(peas.count)")
       var roll:Float!
       var pitch:Float!
-      var yaw:Float!
+      
 
       var match = 0
       if peas.count == 3 || peas.count == 4 {
@@ -68,10 +68,10 @@ func sendMessage(message: String) {
       }
       if roll != nil && pitch != nil {
         let message2D = "*:" + uniqueID + ":" + String(match) + ":" + message + "\n"
-        colorSearch!.sendStream(colorName: message2D)
+        colorSearch?.sendStream(colorName: message2D)
 //        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
       } else {
-        colorSearch!.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+        colorSearch?.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }
     }
   }

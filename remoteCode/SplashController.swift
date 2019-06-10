@@ -236,6 +236,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
 //    animate_images()
     if chatRoom != nil {
       chatRoom?.warning = self
+      chatRoom?.connection = self
     }
     animate_images(based: "R")
     colorSearch = ColorSearch()

@@ -148,8 +148,6 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     }
   }
   
-  
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     detectOrientation()
