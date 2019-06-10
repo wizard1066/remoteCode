@@ -247,13 +247,16 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
-      
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
   
   @objc func otherEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
@@ -480,7 +483,7 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 extension AnalogVC: ColorSearchDelegate {
   func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorSearch, colorString: String) {
@@ -490,7 +493,7 @@ extension AnalogVC: ColorSearchDelegate {
 
 extension AnalogVC: ColorServiceDelegate {
   func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorService, colorString: String) {

@@ -185,8 +185,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
       motionManager.stopDeviceMotionUpdates()
-      colorSearch?.closeStream()
-      colorSearch?.disconnect()
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
@@ -194,8 +194,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func otherEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
       motionManager.stopDeviceMotionUpdates()
-      colorSearch?.closeStream()
-      colorSearch?.disconnect()
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
@@ -476,7 +476,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
 
 extension MotionVC: ColorServiceDelegate {
   func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorService, colorString: String) {
@@ -488,7 +488,7 @@ extension MotionVC: ColorServiceDelegate {
 
 extension MotionVC: ColorSearchDelegate {
   func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorSearch, colorString: String) {

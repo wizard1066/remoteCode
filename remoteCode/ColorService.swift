@@ -57,7 +57,7 @@ class ColorService : NSObject {
 
         if session.connectedPeers.count > 0 {
             do {
-                try self.session.send(colorName.data(using: .utf8)!, toPeers: session.connectedPeers, with: .reliable)
+                try self.session.send(colorName.data(using: .utf8)!, toPeers: session.connectedPeers, with: .unreliable)
             }
             catch let error {
                 NSLog("%@", "Error for sending: \(error)")
@@ -117,6 +117,12 @@ extension ColorService : MCSessionDelegate, StreamDelegate {
   func closeSessions() {
     for peer in session.connectedPeers {
       session.cancelConnectPeer(peer)
+    }
+  }
+  
+  func showSessions() {
+    for peer in session.connectedPeers {
+      print("peer \(peer.displayName)")
     }
   }
   

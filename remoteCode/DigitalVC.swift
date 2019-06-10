@@ -400,6 +400,8 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
       
     }
@@ -407,6 +409,8 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   
   @objc func otherEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
+//      colorSearch?.closeStream()
+//      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
@@ -415,10 +419,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
     
   }
   
-  @IBAction func debug(_ sender: Any) {
-    chatRoom?.stopChat()
-    self.performSegue(withIdentifier: "go2motion", sender: self)
-  }
+
   
   
   
@@ -520,7 +521,7 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
 
 extension DigitalVC: ColorSearchDelegate {
   func connectedDevicesChanged(manager: ColorSearch, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorSearch, colorString: String) {
@@ -530,7 +531,7 @@ extension DigitalVC: ColorSearchDelegate {
 
 extension DigitalVC: ColorServiceDelegate {
   func connectedDevicesChanged(manager: ColorService, connectedDevices: [String]) {
-    bad("Lost Connection")
+    ok("Lost Connection")
   }
   
   func colorChanged(manager: ColorService, colorString: String) {

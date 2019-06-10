@@ -99,7 +99,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
       self.imgView.animationImages = frames
       self.imgView.animationDuration = 4
-      self.imgView.animationRepeatCount = 24
+      self.imgView.animationRepeatCount = 32
       self.imgView.startAnimating()
     })
   }
@@ -333,7 +333,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
         colorSearch!.closeStream()
         colorSearch!.disconnect()
         if colorService != nil {
-          colorService!.closeSessions()
+//          colorService!.closeSessions()
           colorService!.stopAdvertising()
         }
         
