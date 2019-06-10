@@ -48,7 +48,8 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   
   @IBAction func motionButton(_ sender: Any) {
     if ok2Connect || peerConnection {
-      colorService = ColorService()
+//      colorService = ColorService()
+      
       self.performSegue(withIdentifier: "motion", sender: nil)
     }
   }
@@ -57,7 +58,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   @IBOutlet weak var gameOut: UIButton!
   @IBAction func gameButton(_ sender: Any) {
   if ok2Connect {
-    colorSearch.stopSearch()
+    colorSearch!.stopSearch()
     self.performSegue(withIdentifier: "game", sender: nil)
     }
   }
@@ -227,8 +228,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     portNumber.delegate = self
     connectLabel.isEnabled = false
     doDefault()
-    colorSearch = ColorSearch()
-    colorSearch.delegate = self
+    
     configImgView() 
   }
   
@@ -238,7 +238,8 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
       chatRoom?.warning = self
     }
     animate_images(based: "R")
-    
+    colorSearch = ColorSearch()
+    colorSearch!.delegate = self
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -328,9 +329,12 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
       let okAction = UIAlertAction(title: "Disconnect", style: .default) { (action2T) in
         chatRoom?.sendMessage(message: "#:disconnect")
         chatRoom?.stopChat()
-        colorSearch.closeStream()
-        colorService.closeSessions()
-        colorService.stopAdvertising()
+        colorSearch!.closeStream()
+        colorSearch!.disconnect()
+        if colorService != nil {
+          colorService!.closeSessions()
+          colorService!.stopAdvertising()
+        }
         
         self.connectLabel.setTitle("Connect", for: .normal)
         self.connectLabel.isEnabled = true

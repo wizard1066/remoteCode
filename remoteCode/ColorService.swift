@@ -33,7 +33,8 @@ class ColorService : NSObject {
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
 
     override init() {
-        self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ColorServiceType)
+        let discover:[String:String] = ["prime":myPeerId.displayName]
+        self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discover, serviceType: ColorServiceType)
 
         super.init()
 

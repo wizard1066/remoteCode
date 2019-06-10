@@ -180,6 +180,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
       motionManager.stopDeviceMotionUpdates()
+      colorSearch?.closeStream()
+      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }
@@ -187,6 +189,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @objc func otherEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
     if recognizer.state == .recognized {
       motionManager.stopDeviceMotionUpdates()
+      colorSearch?.closeStream()
+      colorSearch?.disconnect()
       self.performSegue(withIdentifier: "returnToSegue", sender: self)
     }
   }

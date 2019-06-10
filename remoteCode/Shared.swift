@@ -9,8 +9,10 @@
 import UIKit
 
 var chatRoom:ChatRoom?
-var colorService:ColorService!
-var colorSearch:ColorSearch!
+var colorService:ColorService?
+var colorSearch:ColorSearch?
+var primePeer:String?
+
 var uniqueID: String = "R"
 var tag:[String:Int] = [:]
 var sensitivity: Float = 20
@@ -49,7 +51,7 @@ func sendMessage(message: String) {
       if peas.count == 3 || peas.count == 4 {
         roll = Float(peas[1])
         pitch = Float(peas[2])
-        yaw = Float(peas[3])
+        
         
         if Float(pitch!) > 0 {
           match = 1 // forward
@@ -66,10 +68,10 @@ func sendMessage(message: String) {
       }
       if roll != nil && pitch != nil {
         let message2D = "*:" + uniqueID + ":" + String(match) + ":" + message + "\n"
-        colorSearch.sendStream(colorName: message2D)
+        colorSearch!.sendStream(colorName: message2D)
 //        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message + "\n")
       } else {
-        colorSearch.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+        colorSearch!.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
       }
     }
   }
