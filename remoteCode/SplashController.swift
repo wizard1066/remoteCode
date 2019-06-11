@@ -234,7 +234,12 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
     connectLabel.isEnabled = false
     doDefault()
     
-    configImgView() 
+    configImgView()
+    
+
+    UserDefaults.standard.register(defaults: ["MotionTrigger" : "20"])
+    UserDefaults.standard.register(defaults: ["PeerNodeName" : "remote-code"])
+    
   }
   
   override func viewDidAppear(_ animated: Bool) {

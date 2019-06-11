@@ -36,19 +36,29 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Heartbeat Ping/Pong Protocol</string>
+			<string>Ping/Pong Protocol</string>
 			<key>Key</key>
 			<string>HeartBeat</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
-			<key>Key</key>
-			<string>ServiceFieldType</string>
 			<key>Title</key>
-			<string>Service Type</string>
+			<string>Motion Sensitivity</string>
+      <key>Key</key>
+      <string>MotionTrigger</string>
+			<key>DefaultValue</key>
+			<string>20</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+      <key>Key</key>
+      <string>PeerNodeName</string>
+			<key>Title</key>
+			<string>Peer Node</string>
 			<key>DefaultValue</key>
 			<string>remote-code</string>
 		</dict>

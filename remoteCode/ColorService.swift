@@ -29,13 +29,16 @@ class ColorService : NSObject {
     // Service type must be a unique string, at most 15 characters long
     // and can contain only ASCII lowercase letters, numbers and hyphens.
 //    private let ColorServiceType = "example-color"
-    private let ColorServiceType = "remote-code"
+    
+  
+    private let ColorServiceType = UserDefaults.standard.string(forKey: "PeerNodeName")!
+//    private let ColorServiceType = "remote-code"
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
 
     override init() {
-        let discover:[String:String] = ["prime":myPeerId.displayName]
-        self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discover, serviceType: ColorServiceType)
+      let discover:[String:String] = ["prime":myPeerId.displayName]
+      self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discover, serviceType: ColorServiceType)
 
         super.init()
 

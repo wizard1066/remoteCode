@@ -15,7 +15,7 @@ var primePeer:String?
 
 var uniqueID: String = "R"
 var tag:[String:Int] = [:]
-var sensitivity: Float = 20
+var sensitivity: Double = 20
 
 enum team: String {
   case R

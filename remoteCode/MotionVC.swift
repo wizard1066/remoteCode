@@ -19,37 +19,12 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   @IBOutlet weak var theValue: UILabel!
   @IBOutlet weak var thewindow: UIView!
   @IBAction func sensitivitySliderChanged(_ sender: UISlider) {
-    sensitivity = sender.value
-    theValue.text = String(Int(sender.value))
-    print("\(sensitivity)")
+//    sensitivity = sender.value
+//    theValue.text = String(Int(sender.value))
+//    print("\(sensitivity)")
   }
   
-//  @IBOutlet weak var theButton: UIButton!
-//  @IBAction func theAction(_ sender: UIButton) {
-//
-//    if motionManager.isDeviceMotionAvailable {
-//        if !motionManager.isDeviceMotionActive {
-//          postAlert(title: "Alert",message: "Make sure your device is flat")
-//
-//          theButton.backgroundColor = UIColor.orange
-//          theButton.setTitle("Wait", for: .normal)
-//          DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
-//            self.theButton.backgroundColor = UIColor.red
-//            self.theButton.setTitle("Stop", for: .normal)
-//            self.motionUpdates()
-//          })
-//        } else {
-//          theButton.backgroundColor = UIColor.green
-//          theButton.setTitle("Go", for: .normal)
-//          motionManager.stopDeviceMotionUpdates()
-//          let figure2S = "@:0:0:0"
-//          yCord = 0
-//          xCord = 0
-////          chatRoom?.sendMessage(message: figure2S)
-//          sendMessage(message: figure2S)
-//        }
-//      }
-//  }
+
   
   @IBOutlet weak var port1: UILabel!
   @IBOutlet weak var port2: UILabel!
@@ -80,15 +55,9 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   var warning: PostAlert?
   
-//  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-//                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-//    -> Bool {
-//      return true
+//  @IBAction func unwindMotionVC(segue: UIStoryboardSegue) {
+//    print("MotionVC")
 //  }
-  
-  @IBAction func unwindMotionVC(segue: UIStoryboardSegue) {
-    print("MotionVC")
-  }
   
   var previousMessage:String?
   
@@ -112,24 +81,24 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         
         
         
-        if Float(self.xCord) > (self.sensitivitySlider.value)  {
+        if self.xCord > sensitivity  {
           self.rollLabel.alpha = 1
 //          self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
         }
-        if Float(self.xCord) < -(self.sensitivitySlider.value) {
+        if self.xCord < -sensitivity {
           self.rollLabel.alpha = 1
 //          self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
         }
         
-        if Float(self.yCord) > self.sensitivitySlider.value  {
+        if self.yCord > sensitivity  {
 //          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
           
         }
-        if Float(self.yCord) < -self.sensitivitySlider.value {
+        if self.yCord < -sensitivity {
 //          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
@@ -178,8 +147,18 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     otherPan.delegate = self
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
-//    chatRoom?.sendMessage(message: "#:begin")
+
+
+   
+
+    
+    let temp = UserDefaults.standard.string(forKey: "MotionTrigger")!
+    sensitivity = Double(temp)!
     sendMessage(message: "#:begin")
+  }
+  
+  @objc func defaultsChanged(_ notification: Notification){
+    sensitivity = Double(UserDefaults.standard.integer(forKey: "MotionTrigger"))
   }
   
   @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -207,6 +186,8 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
    
 //    configTheButton()
     confirmPortNames()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(MotionVC.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
   }
   
   
