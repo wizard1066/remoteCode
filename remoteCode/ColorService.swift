@@ -97,25 +97,24 @@ extension ColorService : MCSessionDelegate, StreamDelegate {
         session.connectedPeers.map{$0.displayName})
     }
   
-    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-//      NSLog("%@", "didReceiveData: \(data.count) bytes")
-        let str = String(data: data, encoding: .utf8)!
-//        chatRoom?.sendMessage(message: str)
-        var parts = str.components(separatedBy: ":")
-      
-//        if tag[parts[1]] == nil {
-//          return
-//        }
-      var header:String!
-      
-            header = "&:\(tag[parts[1]]):"
-      
-              let transmit = parts.dropFirst(3).joined(separator: ":")
-              let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
-                chatRoom?.sendMessage(message: newTransmit)
-//            }
-//          }
+  func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+    let str = String(data: data, encoding: .utf8)!
+    // keyboard message
+    if str.first == "%" {
+      chatRoom?.sendMessage(message: str)
+      return
     }
+    
+    var parts = str.components(separatedBy: ":")
+    var header:String!
+    
+    header = "&:\(tag[parts[1]]):"
+    
+    let transmit = parts.dropFirst(3).joined(separator: ":")
+    let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
+    chatRoom?.sendMessage(message: newTransmit)
+    
+  }
   
   func closeSessions() {
     for peer in session.connectedPeers {

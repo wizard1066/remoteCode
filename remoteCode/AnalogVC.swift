@@ -11,6 +11,7 @@ import UIKit
 class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, ChangeTag, PostAlert, UIGestureRecognizerDelegate {
   
   @IBOutlet weak var color: UILabel!
+  @IBOutlet weak var theWindow: UIImageView!
   
   func newName(_ value: String) {
     let blob = value.components(separatedBy: ":")
@@ -448,13 +449,13 @@ class AnalogVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         lowXaxisSV.isActive = false
       }
       
-      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: touchPad.topAnchor, constant: -32)
+      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: touchPad.topAnchor, constant: -24)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
       
-      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: touchPad.bottomAnchor, constant: 32)
+      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: touchPad.bottomAnchor, constant: 24)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       lowXaxisSV.isActive = true

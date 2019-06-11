@@ -14,15 +14,9 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
   
   
   @IBOutlet weak var color: UILabel!
-  @IBOutlet weak var sensitivitySlider: UISlider!
   
-  @IBOutlet weak var theValue: UILabel!
-  @IBOutlet weak var thewindow: UIView!
-  @IBAction func sensitivitySliderChanged(_ sender: UISlider) {
-//    sensitivity = sender.value
-//    theValue.text = String(Int(sender.value))
-//    print("\(sensitivity)")
-  }
+  @IBOutlet weak var theWindow: UIImageView!
+
   
 
   
@@ -79,30 +73,37 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
           self.pitchLabel.alpha = 0.5
           self.yawLabel.alpha = 0.5
         
+        let xPos = self.sourceCords.x
+        let yPos = self.sourceCords.y
         
+        self.shapeLayer.position = CGPoint(x: xPos + CGFloat(self.xCord), y: yPos + CGFloat(self.yCord))
+        
+        var move = false
         
         if self.xCord > sensitivity  {
           self.rollLabel.alpha = 1
 //          self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
+          move = true
         }
         if self.xCord < -sensitivity {
           self.rollLabel.alpha = 1
 //          self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
+          move = true
         }
         
         if self.yCord > sensitivity  {
 //          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
-          
+          move = true
         }
         if self.yCord < -sensitivity {
 //          self.rollLabel.alpha = 1
           self.pitchLabel.alpha = 1
           self.yawLabel.alpha = 1
-      
+          move = true
         }
         
           self.rollLabel.text = rollLabel
@@ -111,9 +112,10 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         
         let message2D = "@:" + String(self.xCord) + ":" + String(self.yCord) + ":" + yawLabel
         if message2D != self.previousMessage {
-          sendMessage(message: message2D)
-          
-          self.previousMessage = message2D
+          if move {
+            sendMessage(message: message2D)
+            self.previousMessage = message2D
+          }
         }
       }
     }
@@ -134,7 +136,7 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     chatRoom?.warning = self
     
     configurePorts()
-    
+    configureTheWindow()
  
     colorService?.delegate = self
     colorSearch?.delegate = self
@@ -148,10 +150,6 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     view.addGestureRecognizer(edgePan)
     view.addGestureRecognizer(otherPan)
 
-
-   
-
-    
     let temp = UserDefaults.standard.string(forKey: "MotionTrigger")!
     sensitivity = Double(temp)!
     sendMessage(message: "#:begin")
@@ -188,9 +186,48 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     confirmPortNames()
     
     NotificationCenter.default.addObserver(self, selector: #selector(MotionVC.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
+    drawCircle()
   }
   
+  var shapeLayer:CAShapeLayer!
+  var sourceCords:CGPoint!
   
+  func drawCircle() {
+    let xCordinates = self.view.bounds.midX
+    let yCordinates = self.view.bounds.midY
+    let circlePath = UIBezierPath(arcCenter: CGPoint(x: xCordinates,y: yCordinates), radius: CGFloat(40), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+
+    shapeLayer = CAShapeLayer()
+    shapeLayer.path = circlePath.cgPath
+    shapeLayer.frame = theWindow.bounds
+
+    shapeLayer.fillColor = UIColor.clear.cgColor
+    shapeLayer.strokeColor = UIColor.gray.cgColor
+    shapeLayer.lineWidth = 2.0
+
+    view.layer.addSublayer(shapeLayer)
+    sourceCords = shapeLayer.position
+    
+    let setLayer = CAShapeLayer()
+    setLayer.path = circlePath.cgPath
+
+    setLayer.fillColor = UIColor.clear.cgColor
+    setLayer.strokeColor = UIColor.blue.cgColor
+    setLayer.lineWidth = 2.0
+    
+    view.layer.addSublayer(setLayer)
+    
+    let limitedPath = UIBezierPath(arcCenter: CGPoint(x: xCordinates,y: yCordinates), radius: CGFloat(40 + sensitivity), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+    
+    let limitLayer = CAShapeLayer()
+    limitLayer.path = limitedPath.cgPath
+
+    limitLayer.fillColor = UIColor.clear.cgColor
+    limitLayer.strokeColor = UIColor.red.cgColor
+    limitLayer.lineWidth = 2.0
+
+    view.layer.addSublayer(limitLayer)
+  }
 
   
   var topYaxisSV:NSLayoutConstraint!
@@ -230,13 +267,13 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
         lowXaxisSV.isActive = false
       }
     
-      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: thewindow.topAnchor, constant: -32)
+      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: theWindow.topAnchor, constant: -24)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
     
-      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: thewindow.bottomAnchor, constant: 32)
+      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: theWindow.bottomAnchor, constant: 24)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       lowXaxisSV.isActive = true
@@ -304,7 +341,37 @@ class MotionVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Cha
     }
   }
   
- 
+  func configureTheWindow() {
+    let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(sender:)))
+    tap.numberOfTapsRequired = 1
+    theWindow.addGestureRecognizer(tap)
+    theWindow.isUserInteractionEnabled = true
+    let long = UILongPressGestureRecognizer(target: self, action: #selector(longed(sender:)))
+    theWindow.addGestureRecognizer(long)
+    theWindow.isUserInteractionEnabled = true
+    let double = UITapGestureRecognizer(target: self, action: #selector(double(sender:)))
+    double.numberOfTapsRequired = 2
+    theWindow.addGestureRecognizer(double)
+    theWindow.isUserInteractionEnabled = true
+  }
+  
+  @objc func tapped(sender : UITapGestureRecognizer) {
+    if sender.state == .ended {
+      sendMessage(message: "#:short")
+    }
+  }
+  
+  @objc func double(sender : UITapGestureRecognizer) {
+    if sender.state == .ended {
+      sendMessage(message: "#:double")
+    }
+  }
+  
+  @objc func longed(sender : UILongPressGestureRecognizer) {
+    if sender.state == .ended {
+      sendMessage(message: "#:long")
+    }
+  }
   
   
 

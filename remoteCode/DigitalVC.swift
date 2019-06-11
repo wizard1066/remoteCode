@@ -280,8 +280,9 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   @objc func openShortCall(sender : MyTapGesture) {
     let tag = String(sender.tag!)
     if sender.state == .recognized {
-//      chatRoom?.sendMessage(message: xButton[tag]!)
-      sendMessage(message: xButton[tag]!)
+
+      let message2D = "=:" + xButton[tag]!
+      sendMessage(message: message2D)
     }
   }
   
@@ -290,8 +291,9 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       let tag = String(sender.tag!)
       if (xButton[tag] != nil) {
       if sender.state == .began {
-//        chatRoom?.sendMessage(message: xButton[tag]!)
-        sendMessage(message: xButton[tag]!)
+
+      let message2D = "=:" + xButton[tag]!
+        sendMessage(message: message2D)
       }
       }
     }
@@ -308,16 +310,18 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
   @objc func openPortLong(sender : MyPortLong) {
     let tag = sender.port! + "Q"
     if sender.state == .recognized {
-//    chatRoom?.sendMessage(message: tag)
-    sendMessage(message: tag)
+      
+    let message2D = "=:" + tag
+    sendMessage(message: message2D)
     }
   }
   
   @objc func openPortTap(sender : MyPortTapGesture) {
     let tag = sender.port! + "P"
     if sender.state == .recognized {
-//    chatRoom?.sendMessage(message: tag)
-    sendMessage(message: tag)
+
+    let message2D = "=:" + tag
+    sendMessage(message: message2D)
     }
   }
   
@@ -462,13 +466,13 @@ class DigitalVC: UIViewController, UpdateDisplayDelegate, FeedBackConnection, Ch
       }
       
       
-      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: nineButtonGroupSV.topAnchor, constant: -32)
+      topYaxisSV = topSV.bottomAnchor.constraint(equalTo: nineButtonGroupSV.topAnchor, constant: -24)
       topYaxisSV.isActive = true
       topXaxisSV = topSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       topXaxisSV.isActive = true
       
       
-      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: nineButtonGroupSV.bottomAnchor, constant: 32)
+      lowYaxisSV = lowSV.topAnchor.constraint(equalTo: nineButtonGroupSV.bottomAnchor, constant: 24)
       lowYaxisSV.isActive = true
       lowXaxisSV = lowSV.centerXAnchor.constraint(equalTo: margins.centerXAnchor, constant: 1)
       lowXaxisSV.isActive = true
