@@ -59,6 +59,7 @@ class SplashController: UIViewController, FeedBackConnection, UITextFieldDelegat
   @IBAction func gameButton(_ sender: Any) {
   if ok2Connect {
     colorSearch!.stopSearch()
+    peerMode = true
     self.performSegue(withIdentifier: "game", sender: nil)
     }
   }

@@ -12,6 +12,7 @@ var chatRoom:ChatRoom?
 var colorService:ColorService?
 var colorSearch:ColorSearch?
 var primePeer:String?
+var peerMode = false
 
 var uniqueID: String = "R"
 var tag:[String:Int] = [:]
@@ -30,44 +31,52 @@ enum team: String {
 
 func sendMessage(message: String) {
     if chatRoom != nil {
-      chatRoom?.sendMessage(message: message)
-    } else {
-      let peas = message.components(separatedBy: ":")
-      var roll:Float!
-      var pitch:Float!
-      
-
-      var match = 0
-      if peas.count > 3 && peas[0] != "=" {
-        roll = Float(peas[1])
-        pitch = Float(peas[2])
-        
-        
-        if Float(pitch!) > 0 {
-          match = 1 // forward
-        } else {
-          match = 4 // back
-        }
-        if Float(roll!) > 0 {
-          match = match + 2 // right
-        } else {
-          match = match + 8 // left
-        }
-
-      }
-      if roll != nil && pitch != nil {
-        let message2D = "*:" + uniqueID + ":" + String(match) + ":" + message + "\n"
-        colorSearch?.sendStream(colorName: message2D)
+      if peerMode {
+        peerModer(message: message)
       } else {
-        if peas[0] == "=" {
-          let replaced = message.replacingOccurrences(of: "=", with: "%:\(uniqueID)")
-          colorSearch?.send(colorName:replaced)
-        } else {
-          colorSearch?.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
-        }
+        chatRoom?.sendMessage(message: message)
       }
+    } else {
+      peerModer(message: message)
     }
   }
+
+func peerModer(message: String) {
+  let peas = message.components(separatedBy: ":")
+  var roll:Float!
+  var pitch:Float!
+  
+  
+  var match = 0
+  if peas.count > 3 && peas[0] != "=" {
+    roll = Float(peas[1])
+    pitch = Float(peas[2])
+    
+    
+    if Float(pitch!) > 0 {
+      match = 1 // forward
+    } else {
+      match = 4 // back
+    }
+    if Float(roll!) > 0 {
+      match = match + 2 // right
+    } else {
+      match = match + 8 // left
+    }
+    
+  }
+  if roll != nil && pitch != nil {
+    let message2D = "*:" + uniqueID + ":" + String(match) + ":" + message + "\n"
+    colorSearch?.sendStream(colorName: message2D)
+  } else {
+    if peas[0] == "=" {
+      let replaced = message.replacingOccurrences(of: "=", with: "%:\(uniqueID)")
+      colorSearch?.send(colorName:replaced)
+    } else {
+      colorSearch?.send(colorName: "*:" + uniqueID + ":" + String(match) + ":" + message)
+    }
+  }
+}
 
 //  var xPort:Dictionary = ["P1":"P1","P2":"P2","P3":"P3","P4":"P4","PA":"PA","PB":"PB","PC":"PC","PD":"PD"]
   var iPort:Dictionary = ["1P":"1P","2P":"2P","3P":"3P","4P":"4P","AP":"AP","BP":"BP","CP":"CP","DP":"DP"]

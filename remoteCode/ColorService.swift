@@ -108,7 +108,7 @@ extension ColorService : MCSessionDelegate, StreamDelegate {
     var parts = str.components(separatedBy: ":")
     var header:String!
     
-    header = "&:\(tag[parts[1]]):"
+    header = "&:\(tag[parts[1]]!):"
     
     let transmit = parts.dropFirst(3).joined(separator: ":")
     let newTransmit = transmit.replacingOccurrences(of: "@:", with: header)
